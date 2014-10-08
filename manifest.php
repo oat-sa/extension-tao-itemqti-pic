@@ -27,11 +27,16 @@ return array(
     'version' => '0.1',
 	'author' => 'Open Assessment Technologies',
 	'requires' => array('taoQtiItem' => '>=2.6'),
-	// for compatibility
-	'dependencies' => array('taoQtiItem'),
-	'managementRole' => 'http://www.tao.lu/Ontologies/generis.rdf#qtiItemPicManager',
     'acl' => array(
         array('grant', 'http://www.tao.lu/Ontologies/generis.rdf#qtiItemPicManager', array('ext'=>'qtiItemPic')),
+    ),
+    'install' => array(
+        'rdf' => array(
+		    dirname(__FILE__). '/install/ontology/role.rdf'
+		),
+        'php'	=> array(
+			dirname(__FILE__).'/scripts/install/addHook.php'
+		)
     ),
     'uninstall' => array(
     ),

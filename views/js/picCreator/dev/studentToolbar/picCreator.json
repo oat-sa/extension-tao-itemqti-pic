@@ -1,0 +1,20 @@
+{
+    "typeIdentifier": "studentToolbar",
+    "label": "Student Toolbar",
+    "description": "The container of student tools",
+    "version": "0.1",
+    "author": "Sam Sipasseuth",
+    "email": "sam@taotesting.com",
+    "libraries": {
+        "jquery": "runtime/libs/jquery.amd.js"
+    },
+    "css": [
+        "runtime/css/studentToolbar.css"
+    ],
+    "entryPoint": "runtime/studentToolbar.amd.js",
+    "tags": [
+        "tools"
+    ],
+    "icon" : "creator/img/icon.svg",
+    "short" : "Toolbar"
+}
