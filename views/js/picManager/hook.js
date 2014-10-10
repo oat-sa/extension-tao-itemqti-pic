@@ -13,6 +13,7 @@ define([
     function addStudentToolManager($itemPropPanel){
         
         //get item
+        
         //get list of all info controls available
         //get list of all info controls set in the item
         //feed the tools lists (including checked or not)
