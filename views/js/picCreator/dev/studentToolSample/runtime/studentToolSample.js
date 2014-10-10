@@ -1,9 +1,9 @@
 define(['IMSGlobal/jquery_2_1_1', 'qtiInfoControlContext'], function($, qtiInfoControlContext){
 
-    var studentToolbar = {
+    var studentToolSample = {
         id : -1,
         getTypeIdentifier : function(){
-            return 'studentToolbar';
+            return 'studentToolSample';
         },
         /**
          * Initialize the PIC
@@ -19,7 +19,7 @@ define(['IMSGlobal/jquery_2_1_1', 'qtiInfoControlContext'], function($, qtiInfoC
             this.config = config || {};
 
             var $container = $(dom);
-            
+
             console.log('init', this.getTypeIdentifier(), $container);
         },
         /**
@@ -57,5 +57,5 @@ define(['IMSGlobal/jquery_2_1_1', 'qtiInfoControlContext'], function($, qtiInfoC
         }
     };
 
-    qtiInfoControlContext.register(studentToolbar);
+    qtiInfoControlContext.register(studentToolSample);
 });

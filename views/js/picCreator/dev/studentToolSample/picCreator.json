@@ -1,7 +1,7 @@
 {
-    "typeIdentifier": "studentToolbar",
-    "label": "Student Toolbar",
-    "description": "The container of student tools",
+    "typeIdentifier": "studentToolSample",
+    "label": "Student Sample",
+    "description": "a sample student tool",
     "version": "0.1",
     "author": "Sam Sipasseuth",
     "email": "sam@taotesting.com",
@@ -9,12 +9,12 @@
         "IMSGlobal/jquery_2_1_1"
     ],
     "css": [
-        "runtime/css/studentToolbar.css"
+        "runtime/css/studentToolSample.css"
     ],
-    "entryPoint": "runtime/studentToolbar.js",
+    "entryPoint": "runtime/studentToolSample.js",
     "tags": [
         "tools"
     ],
     "icon" : "creator/img/icon.svg",
-    "short" : "Toolbar"
+    "short" : "Sample"
 }
