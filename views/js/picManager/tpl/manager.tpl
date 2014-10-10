@@ -1,5 +1,5 @@
 <h2>{{__ "Student tools"}}</h2>
-<ul class="plain">
+<ul class="plain" data-role="pic-manager">
     {{#each tools}}
     <li>
         <label>
