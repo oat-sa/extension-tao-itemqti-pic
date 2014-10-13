@@ -5,9 +5,9 @@ define([
     'tpl!likertScaleInteraction/creator/tpl/markup'
 ], function(_, registry, Widget, markupTpl){
 
-    var _typeIdentifier = 'studentToolbar';
+    var _typeIdentifier = 'studentToolSample';
 
-    var studentToolbarCreator = {
+    var studentToolSampleCreator = {
         /**
          * (required) Get the typeIdentifier of the custom interaction
          * 
@@ -67,5 +67,5 @@ define([
 
     //since we assume we are in a tao context, there is no use to expose the a global object for lib registration
     //all libs should be declared here
-    return studentToolbarCreator;
+    return studentToolSampleCreator;
 });

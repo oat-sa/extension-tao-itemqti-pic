@@ -13,7 +13,7 @@
     ],
     "entryPoint": "runtime/studentToolSample.js",
     "tags": [
-        "tools"
+        "student-tool"
     ],
     "icon" : "creator/img/icon.svg",
     "short" : "Sample"

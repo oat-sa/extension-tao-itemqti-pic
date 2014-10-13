@@ -12,9 +12,7 @@
         "runtime/css/studentToolbar.css"
     ],
     "entryPoint": "runtime/studentToolbar.js",
-    "tags": [
-        "tools"
-    ],
+    "tags": [],
     "icon" : "creator/img/icon.svg",
     "short" : "Toolbar"
 }
