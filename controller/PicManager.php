@@ -44,11 +44,10 @@ class PicManager extends tao_actions_CommonModule
         }
     }
 
-    private function renderFile($pciTypeIdentifier, $relPath){
+    private function renderFile($typeIdentifier, $relPath){
 
-        $base = common_ext_ExtensionsManager::singleton()->getExtensionById('qtiItemPic')->getConstant('DIR_VIEWS');
-        $folder = $base.'js'.DIRECTORY_SEPARATOR.'picCreator'.DIRECTORY_SEPARATOR.'dev'.DIRECTORY_SEPARATOR.$pciTypeIdentifier.DIRECTORY_SEPARATOR;
-
+        $folder = $this->registry->getDevInfoControlDirectory($typeIdentifier);
+        
         if(tao_helpers_File::securityCheck($relPath, true)){
             $filename = $folder.$relPath;
             //@todo : find better way to to this

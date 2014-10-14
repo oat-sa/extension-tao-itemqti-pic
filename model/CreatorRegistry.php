@@ -108,4 +108,13 @@ class CreatorRegistry
         }
         return null;
     }
+    
+    public function getDevInfoControlDirectory($typeIdentifier){
+        $dir = $this->baseDevDir.$typeIdentifier;
+        if(file_exists($dir)){
+            return $dir;
+        }else{
+            throw new \common_Exception('the type identifier cannot be found');
+        }
+    }
 }
