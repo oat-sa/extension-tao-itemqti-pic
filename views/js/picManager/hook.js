@@ -37,7 +37,7 @@ define([
 
             //get list of all info controls available
             icRegistry.loadAll(function(allInfoControls){
-                
+
                 //prepare data for the tpl:
                 var tools = {},
                     alreadySet = _.pluck(item.getElements('infoControl'), 'typeIdentifier'),
@@ -62,12 +62,12 @@ define([
                 $itemPropPanel.append(managerTpl({
                     tools : tools
                 }));
-                
+
                 //init event listeners:
                 $('[data-role="pic-manager"]').on('change.picmanager', 'input:checkbox', function(e){
-                    
+
                     e.stopPropagation();
-                    
+
                     var $checkbox = $(this),
                         name = $checkbox.attr('name'),
                         checked = $checkbox.prop('checked');
@@ -78,12 +78,12 @@ define([
                         removeStudentTool(name);
                     }
                 });
-                
+
                 function removeInfoControl(serial){
-                    
+
                     //remove the widget from dom
                     $editable.find('.widget-box[data-serial=' + serial + ']').remove();
-                    
+
                     //remove form model
                     item.removeElement(serial);
                 }
@@ -109,12 +109,12 @@ define([
                     containerHelper.createElements(item.getBody(), contentHelper.getContent($editable), function(newElts){
 
                         //load creator hook here to allow creating
-                        for(var serial in newElts){
+                        _.each(newElts, function(elt){
 
-                            var elt = newElts[serial];
                             var id = elt.typeIdentifier;
                             var hook = icRegistry.get(id);
-                            
+
+                            //add required resources for the newly created info control (css, js, lib etc.)
                             $.getJSON(hook.addRequiredResources, {typeIdentifier : elt.typeIdentifier, uri : config.uri}, function(r){
 
                                 var $widget,
@@ -125,12 +125,12 @@ define([
                                     //render it
                                     elt.setRenderer(creatorRenderer.get());
 
-                                    if($placeholderToolbar){
+                                    if(id === _studentToolbarId){
 
                                         elt.render($placeholderToolbar);
                                         $placeholderToolbar = null;
 
-                                    }else if($placeholderTool){
+                                    }else{
 
                                         elt.render($placeholderTool);
                                         $placeholderTool = null;
@@ -147,7 +147,8 @@ define([
                                     throw 'failed to add requried resoruce for the info control';
                                 }
                             });
-                        }
+
+                        });
 
                     });
                 }
@@ -156,7 +157,7 @@ define([
 
                     var infoControls = item.getElements('infoControl'),
                         studentTool = _.find(infoControls, {typeIdentifier : name});
-                    
+
                     //remove it
                     removeInfoControl(studentTool.serial);
 
@@ -176,7 +177,7 @@ define([
 
     var pciManagerHook = {
         init : function(config){
-            
+
             //load infoControl model first into the creator renderer
             creatorRenderer.get().load(function(){
 
