@@ -30,20 +30,13 @@ use \common_ext_ExtensionsManager;
  */
 class CreatorRegistry
 {
-
+    
     /**
      * The singleton
      * 
      * @var CreatorRegistry 
      */
     protected static $instance;
-    
-    /**
-     * The extension the creator operates on
-     * 
-     * @var common_ext_Extension 
-     */
-    protected $extension;
     
     /**
      * @return tao_models_classes_service_FileStorage
@@ -58,7 +51,9 @@ class CreatorRegistry
     }
 
     protected function __construct(){
-        $this->extension = common_ext_ExtensionsManager::singleton()->getExtensionById('qtiItemPic');
+        $extension = common_ext_ExtensionsManager::singleton()->getExtensionById('qtiItemPic');
+        $this->baseDevDir = $extension->getConstant('DIR_VIEWS').'js/picCreator/dev/';
+        $this->baseDevUrl = $extension->getConstant('BASE_WWW').'js/picCreator/dev/';
     }
     
     protected function getEntryPointFile($baseUrl){
@@ -68,16 +63,13 @@ class CreatorRegistry
     /**
      * Get PIC Creator hook directly located in views/js/picCreator/myCustomInteraction:
      * 
-     * @return array
+     * @return arrayallow
      */
     public function getDevInfoControls(){
 
         $returnValue = array();
 
-        $baseDir = $this->extension->getConstant('DIR_VIEWS');
-        $baseWWW = $this->extension->getConstant('BASE_WWW').'js/picCreator/dev/';
-
-        foreach(glob($baseDir.'js/picCreator/dev/*/picCreator.js') as $file){
+        foreach(glob($this->baseDevDir.'*/picCreator.js') as $file){
 
             $dir = str_replace('picCreator.js', '', $file);
             $manifestFile = $dir.'picCreator.json';
@@ -85,7 +77,7 @@ class CreatorRegistry
             if(file_exists($manifestFile)){
                 
                 $typeIdentifier = basename($dir);
-                $baseUrl = $baseWWW.$typeIdentifier.'/';
+                $baseUrl = $this->baseDevUrl.$typeIdentifier.'/';
                 $manifest = json_decode(file_get_contents($manifestFile), true);
 
                 $returnValue[] = array(
@@ -97,6 +89,7 @@ class CreatorRegistry
                     'manifest' => $manifest,
                     'dev' => true
                 );
+                
             }else{
                 \common_Logger::d('missing manifest file picCreator.json');
             }

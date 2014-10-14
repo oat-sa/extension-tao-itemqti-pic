@@ -17,37 +17,39 @@ define([
         addRequiredResources : helpers._url('addRequiredResources', 'PicManager', 'qtiItemPic')
     };
 
-    function itemLoaded(config, callback){
+    function itemWidgetLoaded(config, callback){
         var $editor = config.dom.getEditorScope();
-        if($editor.data('item')){
-            callback($editor.data('item'));
+        if($editor.data('widget')){
+            callback($editor.data('widget'));
         }else{
-            $(document).on('itemloaded.qticreator', function(e, item){
+            $(document).one('widgetloaded.qticreator', function(e, item){
                 callback(item);
             });
         }
     }
 
     function getNewInfoControlNode(typeIdentifier){
-        return $('<span data-new="true"  data-qti-class="infoControl" data-typeIdentifier="' + typeIdentifier + '" class="widget-box">&nbsp;</span>');
+        return $('<span data-new="true"  data-qti-class="infoControl.' + typeIdentifier + '" class="widget-box">&nbsp;</span>');
     }
 
-    function addStudentToolManager(config){
+    function initStudentToolManager(config){
 
         //get item
-        itemLoaded(config, function(item){
+        itemWidgetLoaded(config, function(itemWidget){
 
+            var item = itemWidget.element;
             var $itemPropPanel = config.dom.getItemPropertyPanel();
 
             //get list of all info controls available
-            icRegistry.loadAll(function(infoControls){
+            icRegistry.loadAll(function(allInfoControls){
 
                 //prepare data for the tpl:
                 var tools = {},
-                    alreadySet = _.pluck(item.getElements('infoControl'), 'typeIdentifier');
+                    alreadySet = _.pluck(item.getElements('infoControl'), 'typeIdentifier'),
+                    $editable = config.dom.getEditorScope().find('.qti-itemBody');
 
                 //feed the tools lists (including checked or not)
-                _.each(infoControls, function(creator){
+                _.each(allInfoControls, function(creator){
 
                     var id = creator.getTypeIdentifier(),
                         ic = icRegistry.get(id),
@@ -60,93 +62,105 @@ define([
                             checked : (_.indexOf(alreadySet, id) > 0)
                         };
                     }
-
                 });
 
                 $itemPropPanel.append(managerTpl({
                     tools : tools
                 }));
-            });
+                
+                //init event listeners:
+                $('[data-role="pic-manager"]').on('change.picmanager', 'input:checkbox', function(){
 
-            var $editable = $('.qti-itemBody');
+                    var $checkbox = $(this),
+                        name = $checkbox.attr('name'),
+                        checked = $checkbox.prop('checked');
 
-            function removeInfoControl(serial){
+                    if(checked){
+                        createStudentTool(name);
+                    }else{
+                        removeStudentTool(name);
+                    }
+                });
+                
+                function removeInfoControl(serial){
+                    
+                    //remove the widget from dom
+                    $editable.find('.widget-box[data-serial=' + serial + ']').remove();
+                    
+                    //remove form model
+                    item.removeElement(serial);
+                }
 
-                $editable.find('.widget-box[data-serial+' + serial + ']').remove();
-                item.removeElement(serial);
-            }
+                function createStudentTool(name){
 
-            //init event listeners:
-            $('[data-role="pic-manager"]').on('change.picmanager', 'input:checkbox', function(){
-
-                var $checkbox = $(this),
-                    name = $checkbox.attr('name'),
-                    checked = $checkbox.prop('checked'),
-                    infoControls = item.getElements('infoControl'),
-                    $placeholderToolbar,
-                    $placeholderTool;
-
-                if(checked){
+                    var infoControls = item.getElements('infoControl'),
+                        $placeholderToolbar,
+                        $placeholderTool;
 
                     //search if the required info control "toolbar" is set
                     var studentToolbar = _.find(infoControls, {typeIdentifier : _studentToolbarId});
                     if(!studentToolbar){
-
                         //if not, create one and add it to the item
-                        var $placeholderToolbar = getNewInfoControlNode(_studentToolbarId);
+                        $placeholderToolbar = getNewInfoControlNode(_studentToolbarId);
                         $editable.append($placeholderToolbar);
-
                     }
 
                     //create an info control (student tool) and add it to the them
-                    var $placeholderTool = getNewInfoControlNode(name);
+                    $placeholderTool = getNewInfoControlNode(name);
                     $editable.append($placeholderTool);
 
-                    //create them
                     containerHelper.createElements(item.getBody(), contentHelper.getContent($editable), function(newElts){
 
-                        creatorRenderer.get().load(function(){
-                            
-                            //load creator hook here to allow creating
-                            
-                            for(var serial in newElts){
+                        //load creator hook here to allow creating
+                        for(var serial in newElts){
 
-                                var elt = newElts[serial],
-                                    $widget,
+                            var elt = newElts[serial];
+
+                            $.getJSON(_urls.addRequiredResources, {typeIdentifier : elt.typeIdentifier, uri : config.uri}, function(r){
+
+                                var $widget,
                                     widget;
 
-                                elt.setRenderer(this);
+                                if(r.success){
 
-                                if($placeholderToolbar){
+                                    //render it
+                                    elt.setRenderer(creatorRenderer.get());
 
-                                    elt.render($placeholderToolbar);
-                                    elt.typeIdentifier = _studentToolbarId;
+                                    if($placeholderToolbar){
 
-                                    $placeholderToolbar = null;
+                                        elt.render($placeholderToolbar);
+                                        $placeholderToolbar = null;
 
-                                }else if($placeholderTool){
+                                    }else if($placeholderTool){
 
-                                    elt.render($placeholderTool);
-                                    elt.typeIdentifier = name;
+                                        elt.render($placeholderTool);
+                                        $placeholderTool = null;
+                                    }
 
-                                    $placeholderTool = null;
+                                    widget = elt.postRender({});
+                                    $widget = widget.$container;
+
+                                    //inform height modification
+                                    $widget.trigger('contentChange.gridEdit');
+                                    $widget.trigger('resize.gridEdit');
+
+                                    console.log(elt, widget);
+
+                                }else{
+                                    throw 'failed to add requried resoruce for the info control';
                                 }
+                            });
+                        }
 
-                                widget = elt.postRender();
-                                $widget = widget.$container;
-
-                                //inform height modification
-                                $widget.trigger('contentChange.gridEdit');
-                                $widget.trigger('resize.gridEdit');
-                            }
-
-                        }, this.getUsedClasses());
                     });
+                }
 
-                }else{
+                function removeStudentTool(name){
 
+                    var infoControls = item.getElements('infoControl'),
+                        studentTool = _.find(infoControls, {typeIdentifier : name});
+                    
                     //remove it
-                    var studentTool = _.find(infoControls, {typeIdentifier : name});
                     removeInfoControl(studentTool.serial);
 
                     //search for existing info control, if there is only one with the typeIdentifier "studentToolbar" delete it:
@@ -158,14 +172,21 @@ define([
                 }
 
             });
+
         });
 
     }
 
     var pciManagerHook = {
         init : function(config){
+            
+            //load infoControl model first into the creator renderer
+            creatorRenderer.get().load(function(){
 
-            addStudentToolManager(config);
+                initStudentToolManager(config);
+
+            }, ['infoControl']);
+
         }
     };
 

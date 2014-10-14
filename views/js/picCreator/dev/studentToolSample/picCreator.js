@@ -1,9 +1,7 @@
 define([
-    'lodash',
-    'taoQtiItem/qtiCreator/editor/infoControlRegistry',
-    'likertScaleInteraction/creator/widget/Widget',
-    'tpl!likertScaleInteraction/creator/tpl/markup'
-], function(_, registry, Widget, markupTpl){
+    'studentToolSample/creator/widget/Widget',
+    'tpl!studentToolSample/creator/tpl/markup'
+], function(Widget, markupTpl){
 
     var _typeIdentifier = 'studentToolSample';
 
@@ -31,7 +29,7 @@ define([
          * 
          * @returns {Object}
          */
-        getDefaultPciProperties : function(pic){
+        getDefaultProperties : function(pic){
             return {
                 movable : false,
                 theme : 'tao-light'
