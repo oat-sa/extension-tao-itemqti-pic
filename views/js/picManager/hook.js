@@ -8,7 +8,7 @@ define([
     'taoQtiItem/qtiCreator/model/helper/container',
     'taoQtiItem/qtiCreator/editor/gridEditor/content',
     'tpl!qtiItemPic/picManager/tpl/manager',
-    'css!qtiItemPic_css/pic-manager'
+    'css!qtiItemPicCss/pic-manager'
 ], function(__, $, _, helpers, icRegistry, creatorRenderer, containerHelper, contentHelper, managerTpl){
 
     var _studentToolTag = 'student-tool';
