@@ -44,7 +44,10 @@ class CreatorHook implements Hook
         //get info controls directly located in views/js/pic/myInfoControl:
         $hooks = $registry->getDevInfoControls();
         foreach($hooks as $hook){
+            
             unset($hook['directory']);
+            $hook['addRequiredResources'] = _url('addRequiredResources', 'PicManager', 'qtiItemPic');
+            
             $config->addInfoControl($hook);
         }
 

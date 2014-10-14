@@ -1,21 +1,16 @@
 define([
-    'i18n',
     'jquery',
     'lodash',
-    'helpers',
     'taoQtiItem/qtiCreator/editor/infoControlRegistry',
     'taoQtiItem/qtiCreator/helper/creatorRenderer',
     'taoQtiItem/qtiCreator/model/helper/container',
     'taoQtiItem/qtiCreator/editor/gridEditor/content',
     'tpl!qtiItemPic/picManager/tpl/manager',
     'css!qtiItemPicCss/pic-manager'
-], function(__, $, _, helpers, icRegistry, creatorRenderer, containerHelper, contentHelper, managerTpl){
+], function($, _, icRegistry, creatorRenderer, containerHelper, contentHelper, managerTpl){
 
     var _studentToolTag = 'student-tool';
     var _studentToolbarId = 'studentToolbar';
-    var _urls = {
-        addRequiredResources : helpers._url('addRequiredResources', 'PicManager', 'qtiItemPic')
-    };
 
     function itemWidgetLoaded(config, callback){
         var $editor = config.dom.getEditorScope();
@@ -42,7 +37,7 @@ define([
 
             //get list of all info controls available
             icRegistry.loadAll(function(allInfoControls){
-
+                
                 //prepare data for the tpl:
                 var tools = {},
                     alreadySet = _.pluck(item.getElements('infoControl'), 'typeIdentifier'),
@@ -69,8 +64,10 @@ define([
                 }));
                 
                 //init event listeners:
-                $('[data-role="pic-manager"]').on('change.picmanager', 'input:checkbox', function(){
-
+                $('[data-role="pic-manager"]').on('change.picmanager', 'input:checkbox', function(e){
+                    
+                    e.stopPropagation();
+                    
                     var $checkbox = $(this),
                         name = $checkbox.attr('name'),
                         checked = $checkbox.prop('checked');
@@ -115,8 +112,10 @@ define([
                         for(var serial in newElts){
 
                             var elt = newElts[serial];
-
-                            $.getJSON(_urls.addRequiredResources, {typeIdentifier : elt.typeIdentifier, uri : config.uri}, function(r){
+                            var id = elt.typeIdentifier;
+                            var hook = icRegistry.get(id);
+                            
+                            $.getJSON(hook.addRequiredResources, {typeIdentifier : elt.typeIdentifier, uri : config.uri}, function(r){
 
                                 var $widget,
                                     widget;
@@ -143,8 +142,6 @@ define([
                                     //inform height modification
                                     $widget.trigger('contentChange.gridEdit');
                                     $widget.trigger('resize.gridEdit');
-
-                                    console.log(elt, widget);
 
                                 }else{
                                     throw 'failed to add requried resoruce for the info control';
