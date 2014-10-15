@@ -21,6 +21,9 @@ define(['IMSGlobal/jquery_2_1_1', 'qtiInfoControlContext'], function($, qtiInfoC
             var $container = $(dom);
             
             console.log('init', this.getTypeIdentifier(), $container);
+            
+            $container.parent().addClass('sts-scope');
+            $container.css('min-width', 200);
         },
         /**
          * Reverse operation performed by render()

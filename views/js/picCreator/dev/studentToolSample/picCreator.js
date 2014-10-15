@@ -1,7 +1,9 @@
 define([
+    'lodash',
+    'taoQtiItem/qtiCreator/editor/infoControlRegistry',
     'studentToolSample/creator/widget/Widget',
     'tpl!studentToolSample/creator/tpl/markup'
-], function(Widget, markupTpl){
+], function(_, registry, Widget, markupTpl){
 
     var _typeIdentifier = 'studentToolSample';
 
@@ -58,7 +60,15 @@ define([
          * @returns {function} handlebar template
          */
         getMarkupData : function(pic, defaultData){
-            defaultData.someData = pic.data('someData');
+
+            var manifest = registry.get(_typeIdentifier).manifest;
+
+            defaultData = _.defaults(defaultData, {
+                typeIdentifier : _typeIdentifier,
+                title : manifest.description,
+                icon : registry.getBaseUrl(_typeIdentifier) + 'runtime/media/simple-calculator.svg',
+                alt : manifest.short
+            });
             return defaultData;
         }
     };

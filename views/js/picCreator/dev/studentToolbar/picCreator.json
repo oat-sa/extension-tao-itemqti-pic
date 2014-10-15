@@ -9,6 +9,7 @@
         "IMSGlobal/jquery_2_1_1"
     ],
     "css": [
+        "runtime/css/common.css",
         "runtime/css/studentToolbar.css"
     ],
     "entryPoint": "runtime/studentToolbar.js",

@@ -12,5 +12,11 @@ define([
         Widget.initCreator.call(this);
     };
     
+    StudentToolbarWidget.buildContainer = function(){
+        
+        this.$container = this.$original;
+        this.$container.addClass('widget-box');
+    };
+    
     return StudentToolbarWidget;
 });

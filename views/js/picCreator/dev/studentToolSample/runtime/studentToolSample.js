@@ -21,6 +21,13 @@ define(['IMSGlobal/jquery_2_1_1', 'qtiInfoControlContext'], function($, qtiInfoC
             var $container = $(dom);
 
             console.log('init', this.getTypeIdentifier(), $container);
+            
+            //hook it into the toolbar:
+            var toolbarId = 'studentToolbar1';
+            
+            this.$toolbar = $('#'+toolbarId);
+            this.$toolbar.find('.sts-content').append($container);
+            
         },
         /**
          * Reverse operation performed by render()
@@ -31,8 +38,7 @@ define(['IMSGlobal/jquery_2_1_1', 'qtiInfoControlContext'], function($, qtiInfoC
          */
         destroy : function(){
 
-            var $container = $(this.dom);
-            $container.off().empty();
+            $(this.dom).remove();
         },
         /**
          * Restore the state of the interaction from the serializedState.

@@ -1,5 +1,5 @@
 define([
-    'taoQtiItem/qtiCreator/widgets/static/Widget',
+    'taoQtiItem/qtiCreator/widgets/Widget',
     'studentToolSample/creator/widget/states/states'
 ], function(Widget, states){
 
@@ -10,6 +10,12 @@ define([
         this.registerStates(states);
         
         Widget.initCreator.call(this);
+    };
+    
+    StudentToolSampleWidget.buildContainer = function(){
+        
+        this.$container = this.$original;
+        this.$container.addClass('widget-box');
     };
     
     return StudentToolSampleWidget;
