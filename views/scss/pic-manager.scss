@@ -2,4 +2,13 @@
 
 .pci-manager-panel{
     padding : 15px 5px 8px;
+    li {
+        position:relative;
+        margin-bottom:2px;
+        .icon-help{
+            position:absolute;
+            right:1px;
+            top:2px;
+        }
+    }
 }
