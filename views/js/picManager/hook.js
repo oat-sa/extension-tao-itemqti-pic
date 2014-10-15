@@ -1,13 +1,14 @@
 define([
     'jquery',
     'lodash',
+    'ui/tooltipster',
     'taoQtiItem/qtiCreator/editor/infoControlRegistry',
     'taoQtiItem/qtiCreator/helper/creatorRenderer',
     'taoQtiItem/qtiCreator/model/helper/container',
     'taoQtiItem/qtiCreator/editor/gridEditor/content',
     'tpl!qtiItemPic/picManager/tpl/manager',
     'css!qtiItemPicCss/pic-manager'
-], function($, _, icRegistry, creatorRenderer, containerHelper, contentHelper, managerTpl){
+], function($, _, tooltip, icRegistry, creatorRenderer, containerHelper, contentHelper, managerTpl){
 
     var _studentToolTag = 'student-tool';
     var _studentToolbarId = 'studentToolbar';
@@ -37,11 +38,13 @@ define([
 
             //get list of all info controls available
             icRegistry.loadAll(function(allInfoControls){
-
+                
+                //get item body container
+                var $editable = config.dom.getEditorScope().find('.qti-itemBody');
+                
                 //prepare data for the tpl:
                 var tools = {},
-                    alreadySet = _.pluck(item.getElements('infoControl'), 'typeIdentifier'),
-                    $editable = config.dom.getEditorScope().find('.qti-itemBody');
+                    alreadySet = _.pluck(item.getElements('infoControl'), 'typeIdentifier');
 
                 //feed the tools lists (including checked or not)
                 _.each(allInfoControls, function(creator){
@@ -58,11 +61,15 @@ define([
                         };
                     }
                 });
-
-                $itemPropPanel.append(managerTpl({
+                
+                var $managerPanel = managerTpl({
                     tools : tools
-                }));
-
+                });
+                $itemPropPanel.append($managerPanel);
+                
+                //init tooltips
+                tooltip($itemPropPanel);
+                
                 //init event listeners:
                 $('[data-role="pic-manager"]').on('change.picmanager', 'input:checkbox', function(e){
 
