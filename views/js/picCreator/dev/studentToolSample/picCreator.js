@@ -60,15 +60,16 @@ define([
          * @returns {function} handlebar template
          */
         getMarkupData : function(pic, defaultData){
-
+            
             var manifest = registry.get(_typeIdentifier).manifest;
 
             defaultData = _.defaults(defaultData, {
                 typeIdentifier : _typeIdentifier,
                 title : manifest.description,
-                icon : registry.getBaseUrl(_typeIdentifier) + 'runtime/media/simple-calculator.svg',
+                icon : 'runtime/media/tool-icon.svg',//referenced as a required file in manifest.media[]
                 alt : manifest.short
             });
+            
             return defaultData;
         }
     };

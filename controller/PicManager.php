@@ -96,6 +96,11 @@ class PicManager extends tao_actions_CommonModule
             $required = array_merge($required, array_values($manifest['css']));
         }
         
+        //include media in the item
+        if(isset($manifest['media'])){
+            $required = array_merge($required, array_values($manifest['media']));
+        }
+        
         //add them to the rdf item
         $resources = Authoring::addRequiredResources($directory, $required, $item, '');
         

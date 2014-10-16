@@ -12,12 +12,12 @@
         "runtime/css/studentToolSample.css"
     ],
     "media": [
-        "runtime/media/simple-calculator.svg"
+        "runtime/media/tool-icon.svg"
     ],
     "entryPoint": "runtime/studentToolSample.js",
     "tags": [
         "student-tool"
     ],
-    "icon": "runtime/media/simple-calculator.svg",
+    "icon": "runtime/media/tool-icon.svg",
     "short": "Sample"
 }

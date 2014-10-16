@@ -59,7 +59,8 @@ define([
          * @returns {function} handlebar template
          */
         getMarkupData : function(pic, defaultData){
-            defaultData.someData = pic.data('someData');
+            defaultData.id = 'studentToolbar1';
+            defaultData.title = 'Student Tools';
             return defaultData;
         }
     };
