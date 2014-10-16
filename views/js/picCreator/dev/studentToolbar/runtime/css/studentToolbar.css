@@ -1,3 +1,4 @@
 //hide the display of the button when it is outside of the scope
-.sts-button, sts-container {display:none;}
+.sts-button {display:none;}
+.sts-container {display:none;}
 .sts-scope .sts-button, .sts-scope .sts-container {display:block;}

@@ -1,7 +1,6 @@
 define([
     'studentToolbar/creator/widget/Widget',
-    'tpl!studentToolbar/creator/tpl/markup',
-    'css!studentToolbar/runtime/css/common.css'//to be moved to runtime hook
+    'tpl!studentToolbar/creator/tpl/markup'
 ], function(Widget, markupTpl){
 
     var _typeIdentifier = 'studentToolbar';
