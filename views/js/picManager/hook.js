@@ -86,13 +86,16 @@ define([
                     }
                 });
 
-                function removeInfoControl(serial){
-
+                function removeInfoControl(infoControl){
+                    
+                    //call ic hook destroy() method
+                    infoControl.data('pic').destroy();
+                    
                     //remove the widget from dom
-                    $editable.find('.widget-box[data-serial=' + serial + ']').remove();
+                    $editable.find('.widget-box[data-serial=' + infoControl.serial + ']').remove();
 
                     //remove form model
-                    item.removeElement(serial);
+                    item.removeElement(infoControl.serial);
                 }
 
                 function createStudentTool(name){
@@ -166,12 +169,12 @@ define([
                         studentTool = _.find(infoControls, {typeIdentifier : name});
 
                     //remove it
-                    removeInfoControl(studentTool.serial);
+                    removeInfoControl(studentTool);
 
                     //search for existing info control, if there is only one with the typeIdentifier "studentToolbar" delete it:
                     if(_.size(infoControls) === 2){
                         _.each(infoControls, function(infoControl){
-                            removeInfoControl(infoControl.serial);
+                            removeInfoControl(infoControl);
                         });
                     }
                 }
