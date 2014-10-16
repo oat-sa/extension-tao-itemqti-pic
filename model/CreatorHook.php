@@ -23,6 +23,7 @@ namespace oat\qtiItemPic\model;
 use oat\taoQtiItem\model\Hook;
 use oat\taoQtiItem\model\Config;
 use oat\qtiItemPic\model\CreatorRegistry;
+use \tao_helpers_Uri;
 
 /**
  * The hook used in the item creator
@@ -46,7 +47,7 @@ class CreatorHook implements Hook
         foreach($hooks as $hook){
             
             unset($hook['directory']);
-            $hook['addRequiredResources'] = _url('addRequiredResources', 'PicManager', 'qtiItemPic');
+            $hook['addRequiredResources'] = tao_helpers_Uri::url('addRequiredResources', 'PicManager', 'qtiItemPic');
             
             $config->addInfoControl($hook);
         }

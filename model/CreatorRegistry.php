@@ -90,8 +90,6 @@ class CreatorRegistry
                     'dev' => true
                 );
                 
-            }else{
-                \common_Logger::d('missing manifest file picCreator.json');
             }
         }
 
