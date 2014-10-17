@@ -28,11 +28,17 @@ use oat\taoQtiItem\helpers\Authoring;
 class PicManager extends tao_actions_CommonModule
 {
     
+    /**
+     * Instanciate the controller
+     */
     public function __construct(){
         parent::__construct();
         $this->registry = CreatorRegistry::singleton();
     }
     
+    /**
+     * Returns the list of registered info controls and their data
+     */
     public function getFile(){
 
         if($this->hasRequestParameter('file')){
@@ -43,7 +49,14 @@ class PicManager extends tao_actions_CommonModule
             $this->renderFile($pciTypeIdentifier, $relPath);
         }
     }
-
+    
+    /**
+     * Render the file to the browser
+     * 
+     * @param string $typeIdentifier
+     * @param string $relPath
+     * @throws common_exception_Error
+     */
     private function renderFile($typeIdentifier, $relPath){
 
         $folder = $this->registry->getDevInfoControlDirectory($typeIdentifier);
@@ -62,7 +75,7 @@ class PicManager extends tao_actions_CommonModule
     }
 
     /**
-     * Add required resources from a custom interaction (css, js) to the RDF Item
+     * Add required resources for an info control (css, js) to the item directory
      * 
      * @throws common_exception_Error
      */
