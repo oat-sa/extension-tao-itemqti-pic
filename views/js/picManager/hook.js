@@ -120,12 +120,8 @@ define([
 
                         //load creator hook here to allow creating
                         _.each(newElts, function(elt){
-
-                            var id = elt.typeIdentifier;
-                            var hook = icRegistry.get(id);
-
-                            //add required resources for the newly created info control (css, js, lib etc.)
-                            $.getJSON(hook.addRequiredResources, {typeIdentifier : elt.typeIdentifier, uri : config.uri}, function(r){
+                            
+                            icRegistry.addRequiredResources(elt.typeIdentifier, config.uri, function(r){
 
                                 var $widget,
                                     widget;
@@ -135,7 +131,7 @@ define([
                                     //render it
                                     elt.setRenderer(creatorRenderer.get());
 
-                                    if(id === _studentToolbarId){
+                                    if(elt.typeIdentifier === _studentToolbarId){
 
                                         elt.render($placeholderToolbar);
                                         $placeholderToolbar = null;
