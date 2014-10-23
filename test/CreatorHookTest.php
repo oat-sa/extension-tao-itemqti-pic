@@ -39,7 +39,7 @@ class CreatorHookTest extends TaoPhpUnitTestRunner
      */
     public function setUp(){
         TaoPhpUnitTestRunner::initTest();
-        $this->registry = CreatorRegistry::singleton();
+        $this->registry = new CreatorRegistry();
     }
     
     public function testInit(){

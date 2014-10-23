@@ -33,7 +33,7 @@ class PicManager extends tao_actions_CommonModule
      */
     public function __construct(){
         parent::__construct();
-        $this->registry = CreatorRegistry::singleton();
+        $this->registry = new CreatorRegistry();
     }
     
     /**
@@ -59,7 +59,7 @@ class PicManager extends tao_actions_CommonModule
      */
     private function renderFile($typeIdentifier, $relPath){
 
-        $folder = $this->registry->getDevInfoControlDirectory($typeIdentifier);
+        $folder = $this->registry->getDevImplementationDirectory($typeIdentifier);
         
         if(tao_helpers_File::securityCheck($relPath, true)){
             $filename = $folder.$relPath;
@@ -87,7 +87,7 @@ class PicManager extends tao_actions_CommonModule
         $item = new core_kernel_classes_Resource($itemUri);
         
         //find the interaction in the registry
-        $infoControl = $this->registry->getDevInfoControl($typeIdentifier);
+        $infoControl = $this->registry->getDevImplementation($typeIdentifier);
         if(is_null($infoControl)){
             throw new common_exception_Error('no PIC found with the type identifier '.$typeIdentifier);
         }

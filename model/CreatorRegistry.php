@@ -20,7 +20,7 @@
 
 namespace oat\qtiItemPic\model;
 
-use \tao_models_classes_service_FileStorage;
+use oat\taoQtiItem\model\CreatorRegistry as ParentRegistry;
 use \common_ext_ExtensionsManager;
 
 /**
@@ -28,91 +28,21 @@ use \common_ext_ExtensionsManager;
  *
  * @package qtiItemPci
  */
-class CreatorRegistry
+class CreatorRegistry extends ParentRegistry
 {
     
-    /**
-     * The singleton
-     * 
-     * @var CreatorRegistry 
-     */
-    protected static $instance;
-    
-    /**
-     * @return tao_models_classes_service_FileStorage
-     */
-    public static function singleton(){
-
-        if(is_null(self::$instance)){
-            self::$instance = new self();
-        }
-
-        return self::$instance;
-    }
-
-    protected function __construct(){
+    protected function getBaseDevDir(){
         $extension = common_ext_ExtensionsManager::singleton()->getExtensionById('qtiItemPic');
-        $this->baseDevDir = $extension->getConstant('DIR_VIEWS').'js/picCreator/dev/';
-        $this->baseDevUrl = $extension->getConstant('BASE_WWW').'js/picCreator/dev/';
+        return $extension->getConstant('DIR_VIEWS').'js/picCreator/dev/'; 
     }
     
-    protected function getEntryPointFile($baseUrl){
-        return $baseUrl.'/picCreator';
+    protected function getBaseDevUrl(){
+        $extension = common_ext_ExtensionsManager::singleton()->getExtensionById('qtiItemPic');
+        return $extension->getConstant('BASE_WWW').'js/picCreator/dev/'; 
     }
     
-    /**
-     * Get PIC Creator hook directly located in views/js/picCreator/myCustomInteraction:
-     * 
-     * @return arrayallow
-     */
-    public function getDevInfoControls(){
-
-        $returnValue = array();
-
-        foreach(glob($this->baseDevDir.'*/picCreator.js') as $file){
-
-            $dir = str_replace('picCreator.js', '', $file);
-            $manifestFile = $dir.'picCreator.json';
-            
-            if(file_exists($manifestFile)){
-                
-                $typeIdentifier = basename($dir);
-                $baseUrl = $this->baseDevUrl.$typeIdentifier.'/';
-                $manifest = json_decode(file_get_contents($manifestFile), true);
-
-                $returnValue[] = array(
-                    'typeIdentifier' => $typeIdentifier,
-                    'label' => $manifest['label'],
-                    'directory' => $dir,
-                    'baseUrl' => $baseUrl,
-                    'file' => $this->getEntryPointFile($typeIdentifier),
-                    'manifest' => $manifest,
-                    'dev' => true
-                );
-                
-            }
-        }
-
-        return $returnValue;
+    protected function getHookFileName(){
+        return 'picCreator';
     }
-    
-    public function getDevInfoControl($typeIdentifier){
-        
-        $devInfoControls = $this->getDevInfoControls();
-        foreach($devInfoControls as $infoControl){
-            if($infoControl['typeIdentifier'] == $typeIdentifier){
-                return $infoControl;
-            }
-        }
-        return null;
-    }
-    
-    public function getDevInfoControlDirectory($typeIdentifier){
-        $dir = $this->baseDevDir.$typeIdentifier;
-        if(file_exists($dir)){
-            return $dir;
-        }else{
-            throw new \common_Exception('the type identifier cannot be found');
-        }
-    }
+   
 }
