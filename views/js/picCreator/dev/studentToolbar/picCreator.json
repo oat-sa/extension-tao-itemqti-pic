@@ -9,11 +9,11 @@
         "IMSGlobal/jquery_2_1_1"
     ],
     "css": [
-        "runtime/css/common.css",
-        "runtime/css/studentToolbar.css"
+        "./runtime/css/common.css",
+        "./runtime/css/studentToolbar.css"
     ],
-    "entryPoint": "runtime/studentToolbar.js",
+    "entryPoint": "./runtime/studentToolbar.js",
     "tags": [],
-    "icon" : "creator/img/icon.svg",
+    "icon" : "./creator/img/icon.svg",
     "short" : "Toolbar"
 }

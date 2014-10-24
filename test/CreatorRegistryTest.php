@@ -35,7 +35,7 @@ class CreatorRegistryTest extends TaoPhpUnitTestRunner
      */
     public function setUp(){
         TaoPhpUnitTestRunner::initTest();
-        $this->registry = CreatorRegistry::singleton();
+        $this->registry = new CreatorRegistry();
     }
     
     public function testGetDevInteractions(){
@@ -43,16 +43,16 @@ class CreatorRegistryTest extends TaoPhpUnitTestRunner
         $existingId = 'studentToolSample';
         $noExistingId = 'studenttoolsample';
         
-        $devInteractions = $this->registry->getDevInfoControls();
+        $devInteractions = $this->registry->getDevImplementations();
         $this->assertEquals(2, count($devInteractions));
         
-        $this->assertNotNull($this->registry->getDevInfoControl($existingId));
+        $this->assertNotNull($this->registry->getDevImplementation($existingId));
         
-        $this->assertNull($this->registry->getDevInfoControl($noExistingId));
+        $this->assertNull($this->registry->getDevImplementation($noExistingId));
         
-        $this->assertNotNull($this->registry->getDevInfoControlDirectory($existingId));
+        $this->assertNotNull($this->registry->getDevImplementationDirectory($existingId));
         
         $this->setExpectedException('common_Exception');
-        $this->assertNull($this->registry->getDevInfoControlDirectory($noExistingId));
+        $this->assertNull($this->registry->getDevImplementationDirectory($noExistingId));
     }
 }

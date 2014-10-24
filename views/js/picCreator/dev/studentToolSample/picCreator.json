@@ -9,15 +9,15 @@
         "IMSGlobal/jquery_2_1_1"
     ],
     "css": [
-        "runtime/css/studentToolSample.css"
+        "./runtime/css/studentToolSample.css"
     ],
     "media": [
-        "runtime/media/tool-icon.svg"
+        "./runtime/media/tool-icon.svg"
     ],
-    "entryPoint": "runtime/studentToolSample.js",
+    "entryPoint": "./runtime/studentToolSample.js",
     "tags": [
         "student-tool"
     ],
-    "icon": "runtime/media/tool-icon.svg",
+    "icon": "./creator/img/tool-icon.svg",
     "short": "Sample"
 }

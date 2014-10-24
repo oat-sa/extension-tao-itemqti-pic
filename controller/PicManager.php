@@ -20,107 +20,14 @@
 
 namespace oat\qtiItemPic\controller;
 
-use \tao_actions_CommonModule;
-use \core_kernel_classes_Resource;
+use oat\taoQtiItem\controller\AbstractPortableElementManager;
 use oat\qtiItemPic\model\CreatorRegistry;
-use oat\taoQtiItem\helpers\Authoring;
 
-class PicManager extends tao_actions_CommonModule
+class PicManager extends AbstractPortableElementManager
 {
     
-    /**
-     * Instanciate the controller
-     */
-    public function __construct(){
-        parent::__construct();
-        $this->registry = CreatorRegistry::singleton();
-    }
-    
-    /**
-     * Returns the list of registered info controls and their data
-     */
-    public function getFile(){
-
-        if($this->hasRequestParameter('file')){
-            $file = urldecode($this->getRequestParameter('file'));
-            $filePathTokens = explode('/', $file);
-            $pciTypeIdentifier = array_shift($filePathTokens);
-            $relPath = implode(DIRECTORY_SEPARATOR, $filePathTokens);
-            $this->renderFile($pciTypeIdentifier, $relPath);
-        }
-    }
-    
-    /**
-     * Render the file to the browser
-     * 
-     * @param string $typeIdentifier
-     * @param string $relPath
-     * @throws common_exception_Error
-     */
-    private function renderFile($typeIdentifier, $relPath){
-
-        $folder = $this->registry->getDevInfoControlDirectory($typeIdentifier);
-        
-        if(tao_helpers_File::securityCheck($relPath, true)){
-            $filename = $folder.$relPath;
-            //@todo : find better way to to this
-            //load amd module
-            if(!file_exists($filename) && file_exists($filename.'.js')){
-                $filename = $filename.'.js';
-            }
-            tao_helpers_Http::returnFile($filename);
-        }else{
-            throw new common_exception_Error('invalid item preview file path');
-        }
-    }
-
-    /**
-     * Add required resources for an info control (css, js) to the item directory
-     * 
-     * @throws common_exception_Error
-     */
-    public function addRequiredResources(){
-        
-        //get params
-        $typeIdentifier = $this->getRequestParameter('typeIdentifier');
-        $itemUri = urldecode($this->getRequestParameter('uri'));
-        $item = new core_kernel_classes_Resource($itemUri);
-        
-        //find the interaction in the registry
-        $infoControl = $this->registry->getDevInfoControl($typeIdentifier);
-        if(is_null($infoControl)){
-            throw new common_exception_Error('no PIC found with the type identifier '.$typeIdentifier);
-        }
-        
-        //get the root directory of the interaction
-        $directory = $infoControl['directory'];
-        
-        //get the lists of all required resources
-        $manifest = $infoControl['manifest'];
-        $required = array($manifest['entryPoint']);
-        
-        //include libraries remotely only, so this block is temporarily disabled
-        if(isset($manifest['libraries']) && false){
-            $required = array_merge($required, array_values($manifest['libraries']));
-        }
-        
-        //include custom interaction specific css in the item
-        if(isset($manifest['css'])){
-            $required = array_merge($required, array_values($manifest['css']));
-        }
-        
-        //include media in the item
-        if(isset($manifest['media'])){
-            $required = array_merge($required, array_values($manifest['media']));
-        }
-        
-        //add them to the rdf item
-        $resources = Authoring::addRequiredResources($directory, $required, $item, '');
-        
-        $this->returnJson(array(
-            'success' => true,
-            'resources' => $resources
-        ));
+    protected function getCreatorRegistry(){
+        return new CreatorRegistry();
     }
 
 }
