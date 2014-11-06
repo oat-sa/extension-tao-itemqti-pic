@@ -23,7 +23,6 @@ namespace oat\qtiItemPic\model;
 use oat\taoQtiItem\model\Hook;
 use oat\taoQtiItem\model\Config;
 use oat\qtiItemPic\model\CreatorRegistry;
-use \tao_helpers_Uri;
 
 /**
  * The hook used in the item creator
@@ -45,15 +44,11 @@ class CreatorHook implements Hook
         //get info controls directly located in views/js/pic/myInfoControl:
         $hooks = $registry->getDevImplementations();
         foreach($hooks as $hook){
-            
-            unset($hook['directory']);
-            $hook['addRequiredResources'] = tao_helpers_Uri::url('addRequiredResources', 'PicManager', 'qtiItemPic');
-            
             $config->addInfoControl($hook);
         }
 
         //finally add the info control manager "hook"
         $config->addHook('qtiItemPic/picManager/hook');
     }
-
+    
 }
