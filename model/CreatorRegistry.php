@@ -44,5 +44,5 @@ class CreatorRegistry extends ParentRegistry
     protected function getHookFileName(){
         return 'picCreator';
     }
-   
+    
 }
