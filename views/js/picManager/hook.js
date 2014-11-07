@@ -150,7 +150,7 @@ define([
                                     $widget.trigger('resize.gridEdit');
 
                                 }else{
-                                    throw 'failed to add requried resoruce for the info control';
+                                    throw 'failed to add required resource for the info control';
                                 }
                             });
 

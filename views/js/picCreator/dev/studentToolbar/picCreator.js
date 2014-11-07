@@ -1,9 +1,36 @@
 define([
+    'lodash',
+    'taoQtiItem/qtiCreator/editor/infoControlRegistry',
     'studentToolbar/creator/widget/Widget',
-    'tpl!studentToolbar/creator/tpl/markup'
-], function(Widget, markupTpl){
+    'tpl!studentToolbar/creator/tpl/student-toolbar'
+], 
+function(_, registry, Widget, markupTpl){
 
-    var _typeIdentifier = 'studentToolbar';
+
+    /**
+     * Retrieve data from manifest
+     */
+    var manifest = registry.get('studentToolbar').manifest;
+
+    /**
+     * Configuration of the container
+     */
+    var is = {
+        transparent: false, 
+        movable: true, 
+        rotatable: {
+            tl: false,
+            tr: false,
+            br: false,
+            bl: false
+        },
+        adjustable: {
+            x:  false,
+            y:  false,
+            xy: false
+        } 
+    };
+    is.transmutable = _.some(is.rotatable, Boolean) || _.some(is.adjustable, Boolean);
 
     var studentToolbarCreator = {
         /**
@@ -12,7 +39,7 @@ define([
          * @returns {String}
          */
         getTypeIdentifier : function(){
-            return _typeIdentifier;
+            return manifest.typeIdentifier;
         },
         /**
          * (required) Get the widget prototype
@@ -24,16 +51,13 @@ define([
             return Widget;
         },
         /**
-         * (optional) Get the default properties values of the pic.
-         * Used on new pic instance creation
+         * (optional) Get the default properties values of the PIC.
+         * Used on new PIC instance creation
          * 
          * @returns {Object}
          */
         getDefaultProperties : function(pic){
-            return {
-                movable : false,
-                theme : 'tao-light'
-            };
+            return {};
         },
         /**
          * (optional) Callback to execute on the 
@@ -45,7 +69,7 @@ define([
             //do some stuff
         },
         /**
-         * (required) Gives the qti pic xml template 
+         * (required) Returns the QTI PIC XML template 
          * 
          * @returns {function} handlebar template
          */
@@ -58,8 +82,17 @@ define([
          * @returns {function} handlebar template
          */
         getMarkupData : function(pic, defaultData){
-            defaultData.id = 'studentToolbar1';
-            defaultData.title = 'Student Tools';
+            
+            defaultData = _.defaults(defaultData, {
+                id: 'studentToolbar1',
+                typeIdentifier : manifest.typeIdentifier,
+                title : manifest.label,
+                is: is,
+                //referenced as a required file in manifest.media[]
+                icon : manifest.typeIdentifier + '/runtime/media/student-toolbar.svg',
+                alt : manifest.short || manifest.label
+            });
+
             return defaultData;
         }
     };

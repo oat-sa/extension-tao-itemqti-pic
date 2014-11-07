@@ -10,7 +10,7 @@
     ],
     "css": [
         "./runtime/css/common.css",
-        "./runtime/css/studentToolbar.css"
+        "./runtime/css/student-toolbar.css"
     ],
     "entryPoint": "./runtime/studentToolbar.js",
     "tags": [],
