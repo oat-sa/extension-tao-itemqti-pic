@@ -38,10 +38,10 @@ define([
 
             //get list of all info controls available
             icRegistry.loadAll(function(allInfoControls){
-                
+
                 //get item body container
                 var $editable = config.dom.getEditorScope().find('.qti-itemBody');
-                
+
                 //prepare data for the tpl:
                 var tools = {},
                     alreadySet = _.pluck(item.getElements('infoControl'), 'typeIdentifier');
@@ -61,15 +61,15 @@ define([
                         };
                     }
                 });
-                
+
                 var $managerPanel = managerTpl({
                     tools : tools
                 });
                 $itemPropPanel.append($managerPanel);
-                
+
                 //init tooltips
                 tooltip($itemPropPanel);
-                
+
                 //init event listeners:
                 $('[data-role="pic-manager"]').on('change.picmanager', 'input:checkbox', function(e){
 
@@ -87,10 +87,10 @@ define([
                 });
 
                 function removeInfoControl(infoControl){
-                    
+
                     //call ic hook destroy() method
                     infoControl.data('pic').destroy();
-                    
+
                     //remove the widget from dom
                     $editable.find('.widget-box[data-serial=' + infoControl.serial + ']').remove();
 
@@ -120,7 +120,7 @@ define([
 
                         //load creator hook here to allow creating
                         _.each(newElts, function(elt){
-                            
+
                             icRegistry.addRequiredResources(elt.typeIdentifier, config.uri, function(r){
 
                                 var $widget,
@@ -185,11 +185,13 @@ define([
         init : function(config){
 
             //load infoControl model first into the creator renderer
-            creatorRenderer.get().load(function(){
+            creatorRenderer
+                .get()
+                .load(function(){
 
-                initStudentToolManager(config);
+                    initStudentToolManager(config);
 
-            }, ['infoControl']);
+                }, ['infoControl']);
 
         }
     };
