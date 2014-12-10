@@ -120,7 +120,10 @@ define([
 
                         //load creator hook here to allow creating
                         _.each(newElts, function(elt){
-
+                            
+                            //add the student tool css scope
+                            elt.attr('class', 'sts-scope');
+                            
                             icRegistry.addRequiredResources(elt.typeIdentifier, config.uri, function(r){
 
                                 var $widget,
