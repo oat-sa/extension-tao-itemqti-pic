@@ -3,5 +3,11 @@
 .sts-scope {
     .sts-studentToolbar-container {
         min-width: 200px;
+        position: relative;
+        z-index: 1000;
+        top: 0px;
+        -ms-transform: translate(0px,0px);
+        -webkit-transform: translate(0px,0px);
+        transform: translate(0px, 0px);
     }
 }

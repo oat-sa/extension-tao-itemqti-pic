@@ -108,7 +108,7 @@ define(['handlebars', 'i18n', 'lodash'], function(Handlebars, __, _){
         write : function(pluginName, moduleName, write){
             if(moduleName in buildMap){
                 var compiled = Handlebars.precompile(buildMap[moduleName]);
-                // Write out precompiled version of the template function as AMD definition.
+                // Write out pre-compiled version of the template function as AMD definition.
                 write(
                     "define('tpl!" + moduleName + "', ['handlebars'], function(Handlebars){ \n" +
                     "return Handlebars.template(" + compiled.toString() + ");\n" +

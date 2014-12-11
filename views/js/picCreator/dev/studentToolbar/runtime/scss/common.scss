@@ -40,8 +40,16 @@
         display:inline-block;
         width: auto;
         @extend %visible-container;
-        position: relative;
-        z-index: 1000; 
+        position: absolute;
+        z-index: 1001;
+        left:0;
+        top: 0px;
+        -ms-transform: translate(0px,100px);
+        -webkit-transform: translate(0px,100px);
+        transform: translate(0px, 100px);
+        &.sts-hidden-container {
+            display:none;
+        }
         &.sts-transparent-container {
             @extend %invisible-container; 
             .sts-content {   
@@ -81,6 +89,9 @@
             @include simple-border();
             cursor: default;
             text-align:center;
+            &.sts-launch-button {
+                cursor: pointer;
+            }
         }
         .sts-title-bar {
             background: $stsTitleBar;             

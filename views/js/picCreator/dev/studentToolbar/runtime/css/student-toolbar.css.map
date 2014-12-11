@@ -1,6 +1,6 @@
 {
 "version": 3,
-"mappings": "AAGI,wCAA8B;EAC1B,SAAS,EAAE,KAAK",
+"mappings": "AAGI,wCAA8B;EAC1B,SAAS,EAAE,KAAK;EAChB,QAAQ,EAAE,QAAQ;EAClB,OAAO,EAAE,IAAI;EACb,GAAG,EAAE,GAAG;EACR,aAAa,EAAE,mBAAkB;EACjC,iBAAiB,EAAE,mBAAkB;EACrC,SAAS,EAAE,mBAAmB",
 "sources": ["../scss/student-toolbar.scss"],
 "names": [],
 "file": "student-toolbar.css"
