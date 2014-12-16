@@ -383,10 +383,7 @@
   position: absolute;
   z-index: 1001;
   left: 0;
-  top: 0px;
-  -ms-transform: translate(0px, 100px);
-  -webkit-transform: translate(0px, 100px);
-  transform: translate(0px, 100px); }
+  top: 100px; }
   .sts-scope .sts-container.sts-hidden-container {
     display: none; }
   .sts-scope .sts-container.sts-transparent-container .sts-content {

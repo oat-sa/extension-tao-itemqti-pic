@@ -1,7 +1,7 @@
 @import "inc/sts-bootstrap";
 
 .sts-scope {
-    .sts-studentToolbar-container {
+    .sts-container.sts-studentToolbar-container {
         min-width: 200px;
         position: relative;
         z-index: 1000;
@@ -9,5 +9,10 @@
         -ms-transform: translate(0px,0px);
         -webkit-transform: translate(0px,0px);
         transform: translate(0px, 0px);
+        .sts-content {
+            min-height: 36px;
+        }
     }
+
+
 }

@@ -383,7 +383,7 @@
   position: absolute;
   z-index: 1001;
   left: 0;
-  top: 0px;
+  top: 100px;
   -ms-transform: translate(0px, 100px);
   -webkit-transform: translate(0px, 100px);
   transform: translate(0px, 100px); }
