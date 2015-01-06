@@ -461,4 +461,8 @@
       .sts-scope .sts-container .sts-content .sts-button img {
         display: block; }
 
+@media print {
+  .sts-scope {
+    display: none; } }
+
 /*# sourceMappingURL=common.css.map */
