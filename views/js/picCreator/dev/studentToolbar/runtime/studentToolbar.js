@@ -26,7 +26,7 @@ define([
 
             var $container = $(dom);
             
-            console.log('init', this.getTypeIdentifier(), $container);
+            //console.log('init', this.getTypeIdentifier(), $container);
         },
         /**
          * Reverse operation performed by render()
@@ -48,7 +48,7 @@ define([
          */
         setSerializedState : function(state){
 
-            console.log('state set to', state);
+            //console.log('state set to', state);
         },
         /**
          * Get the current state of the interaction as a string.
