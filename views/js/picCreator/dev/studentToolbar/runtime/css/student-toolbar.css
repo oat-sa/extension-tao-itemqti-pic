@@ -1,5 +1,8 @@
 .sts-scope .sts-container.sts-studentToolbar-container {
-  min-width: 200px;
+  margin-top: -35px;
+  margin-left: -15px;
+  display: block;
+  margin-right: -15px;
   position: relative;
   z-index: 1000;
   top: 0px;

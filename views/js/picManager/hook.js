@@ -13,6 +13,8 @@ define([
     var _studentToolTag = 'student-tool';
     var _studentToolbarId = 'studentToolbar';
 
+
+
     function itemWidgetLoaded(config, callback){
         var $editor = config.dom.getEditorScope();
         if($editor.data('widget')){
@@ -39,8 +41,9 @@ define([
             //get list of all info controls available
             icRegistry.loadAll(function(allInfoControls){
 
+
                 //get item body container
-                var $editable = config.dom.getEditorScope().find('.qti-itemBody');
+                var $itemBody = config.dom.getEditorScope().find('.qti-itemBody');
 
                 //prepare data for the tpl:
                 var tools = {},
@@ -49,17 +52,20 @@ define([
                 //feed the tools lists (including checked or not)
                 _.each(allInfoControls, function(creator){
 
-                    var id = creator.getTypeIdentifier(),
-                        ic = icRegistry.get(id),
+                    var name = creator.getTypeIdentifier(),
+                        ic = icRegistry.get(name),
                         manifest = ic.manifest;
 
                     if(manifest.tags && manifest.tags[0] === _studentToolTag){
-                        tools[id] = {
+                        tools[name] = {
                             label : manifest.label,
                             description : manifest.description,
-                            checked : (_.indexOf(alreadySet, id) > 0)
+                            checked : (_.indexOf(alreadySet, name) > 0)
                         };
                     }
+
+                    // set the toolbar itself to 'queued' as in 'there is none created yet'
+                    allInfoControls[name].queued = name === _studentToolbarId;
                 });
 
                 var $managerPanel = managerTpl({
@@ -92,74 +98,112 @@ define([
                     infoControl.data('pic').destroy();
 
                     //remove the widget from dom
-                    $editable.find('.widget-box[data-serial=' + infoControl.serial + ']').remove();
+                    $itemBody.find('.widget-box[data-serial=' + infoControl.serial + ']').remove();
 
                     //remove form model
                     item.removeElement(infoControl.serial);
                 }
 
-                function createStudentTool(name){
+                /**
+                 * Process one single entry of the queue
+                 *
+                 * @param entry
+                 */
+                function processQueueEntry(entry) {
 
-                    var infoControls = item.getElements('infoControl'),
-                        $placeholderToolbar,
+                }
+
+                /**
+                 * Process all queued items
+                 */
+                function processQueue(){
+
+                    var $placeholderToolbar,
                         $placeholderTool;
 
-                    //search if the required info control "toolbar" is set
-                    var studentToolbar = _.find(infoControls, {typeIdentifier : _studentToolbarId});
-                    if(!studentToolbar){
-                        //if not, create one and add it to the item
-                        $placeholderToolbar = getNewInfoControlNode(_studentToolbarId);
-                        $editable.append($placeholderToolbar);
-                    }
+                    // args are something like Object {} and "dictionary"
+                    _.each(allInfoControls, function(control, name) {
 
-                    //create an info control (student tool) and add it to the them
-                    $placeholderTool = getNewInfoControlNode(name);
-                    $editable.append($placeholderTool);
+                        if(!control.queued) {
+                            return;
+                        }
 
-                    containerHelper.createElements(item.getBody(), contentHelper.getContent($editable), function(newElts){
+                        //create an info control (student tool) and add it to the them
+                        $placeholderTool = getNewInfoControlNode(name);
+                        $itemBody.append($placeholderTool);
 
-                        //load creator hook here to allow creating
-                        _.each(newElts, function(elt){
-                            
-                            //add the student tool css scope
-                            elt.attr('class', 'sts-scope');
-                            
-                            icRegistry.addRequiredResources(elt.typeIdentifier, config.uri, function(r){
+                        containerHelper.createElements(item.getBody(), contentHelper.getContent($itemBody), function(newElts){
 
-                                var $widget,
-                                    widget;
+                            //load creator hook here to allow creating
+                            _.each(newElts, function(elt){
 
-                                if(r.success){
+                                //add the student tool css scope
+                                elt.attr('class', 'sts-scope');
 
-                                    //render it
-                                    elt.setRenderer(creatorRenderer.get());
+                                icRegistry.addRequiredResources(elt.typeIdentifier, config.uri, function(r){
 
-                                    if(elt.typeIdentifier === _studentToolbarId){
+                                    var $widget,
+                                        widget;
 
-                                        elt.render($placeholderToolbar);
-                                        $placeholderToolbar = null;
+                                    if(r.success){
+
+                                        //render it
+                                        elt.setRenderer(creatorRenderer.get());
+
+                                        if(elt.typeIdentifier === _studentToolbarId){
+
+                                            elt.render($placeholderToolbar);
+                                            $placeholderToolbar = null;
+
+                                        }else{
+
+                                            elt.render($placeholderTool);
+                                            $placeholderTool = null;
+                                        }
+
+                                        widget = elt.postRender({});
+                                        $widget = widget.$container;
+
+                                        //inform height modification
+                                        $widget.trigger('contentChange.gridEdit');
+                                        $widget.trigger('resize.gridEdit');
 
                                     }else{
-
-                                        elt.render($placeholderTool);
-                                        $placeholderTool = null;
+                                        throw 'failed to add required resource for the info control';
                                     }
+                                });
 
-                                    widget = elt.postRender({});
-                                    $widget = widget.$container;
-
-                                    //inform height modification
-                                    $widget.trigger('contentChange.gridEdit');
-                                    $widget.trigger('resize.gridEdit');
-
-                                }else{
-                                    throw 'failed to add required resource for the info control';
-                                }
                             });
 
                         });
-
+                        allInfoControls[name].queued = false;
                     });
+                }
+
+                /**
+                 * Create a new tool and add it to the toolbar.
+                 * In case there is no toolbar yet, create one.
+                 *
+                 * @param name
+                 */
+                function createStudentTool(name){
+
+                    // add tool to queue, this can never be the toolbar
+                    allInfoControls[name].queued = true;
+
+
+                    // if no toolbar has been created yet, do this now
+                    if(allInfoControls[_studentToolbarId].queued) {
+                        $.when(getNewInfoControlNode(_studentToolbarId)).then(function($placeholderToolbar) {
+                            console.log($placeholderToolbar)
+                            $itemBody.prepend($placeholderToolbar);
+                            processQueue();
+                        });
+                    }
+                    // or add the tools currently queued straight away
+                    else {
+                        //processQueue();
+                    }
                 }
 
                 function removeStudentTool(name){
