@@ -1,5 +1,5 @@
 <div class="sts-scope">
-    <div{{#if id}} id="{{id}}"{{/if}} class="sts-container sts-{{typeIdentifier}}-container{{#if is.movable}} sts-movable-container{{/if}}{{#if is.transparent}} sts-transparent-container{{/if}}">
+    <div id="sts-{{typeIdentifier}}" class="sts-container sts-{{typeIdentifier}}-container{{#if is.movable}} sts-movable-container{{/if}}{{#if is.transparent}} sts-transparent-container{{/if}}">
         <div class="sts-title-bar">
             <div class="sts-title">{{title}}</div>
         </div>

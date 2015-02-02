@@ -8,19 +8,18 @@ define([
     'taoQtiItem/qtiCreator/editor/gridEditor/content',
     'tpl!qtiItemPic/picManager/tpl/manager',
     'css!qtiItemPicCss/pic-manager'
-], function($, _, tooltip, icRegistry, creatorRenderer, containerHelper, contentHelper, managerTpl){
+], function ($, _, tooltip, icRegistry, creatorRenderer, containerHelper, contentHelper, managerTpl) {
 
     var _studentToolTag = 'student-tool';
     var _studentToolbarId = 'studentToolbar';
 
-
-
-    function itemWidgetLoaded(config, callback){
+    function itemWidgetLoaded(config, callback) {
         var $editor = config.dom.getEditorScope();
-        if($editor.data('widget')){
+        if ($editor.data('widget')) {
             callback($editor.data('widget'));
-        }else{
-            $(document).one('widgetloaded.qticreator', function(e, item){
+        }
+        else {
+            $(document).one('widgetloaded.qticreator', function (e, item) {
                 callback(item);
             });
         }
@@ -32,34 +31,26 @@ define([
      * @param typeIdentifier
      * @returns {*|HTMLElement}
      */
-    function getNewInfoControlNode(typeIdentifier){
+    function getNewInfoControlNode(typeIdentifier) {
         return $('<span/>')
-            .addClass('widget-box')
+            .addClass('widget-box sts-tmp-element')
             .attr('data-new', true)
             .attr('data-qti-class', 'infoControl.' + typeIdentifier);
     }
 
-    function initStudentToolManager(config){
-
-        /**
-         * Number of all controls
-         *
-         * @type {number}
-         */
-        var controlCount = 0,
-            controlPosition = 0;
+    function initStudentToolManager(config) {
 
         var $placeholderToolbar,
             $placeholderTool;
 
         //get item
-        itemWidgetLoaded(config, function(itemWidget){
+        itemWidgetLoaded(config, function (itemWidget) {
 
             var item = itemWidget.element;
             var $itemPropPanel = config.dom.getItemPropertyPanel();
 
             //get list of all info controls available
-            icRegistry.loadAll(function(allInfoControls){
+            icRegistry.loadAll(function (allInfoControls) {
 
                 //get item body container
                 var $itemBody = config.dom.getEditorScope().find('.qti-itemBody');
@@ -68,40 +59,47 @@ define([
                 var tools = {},
                     alreadySet = _.pluck(item.getElements('infoControl'), 'typeIdentifier');
 
+                var i = 0;
+
                 //feed the tools lists (including checked or not)
-                _.each(allInfoControls, function(creator){
+                _.each(allInfoControls, function (creator) {
 
                     var name = creator.getTypeIdentifier(),
                         ic = icRegistry.get(name),
-                        manifest = ic.manifest;
+                        manifest = ic.manifest,
+                        controlExists = _.indexOf(alreadySet, name) > -1;
 
-                    if(manifest.tags && manifest.tags[0] === _studentToolTag){
+                    if (manifest.tags && manifest.tags[0] === _studentToolTag) {
                         tools[name] = {
-                            label : manifest.label,
-                            description : manifest.description,
-                            checked : (_.indexOf(alreadySet, name) > 0)
+                            label: manifest.label,
+                            description: manifest.description,
+                            checked: controlExists
                         };
                     }
 
                     // store the name also in the value for convenience
                     allInfoControls[name].name = name;
 
-                    // originally only the toolbar is up for installation
-                    allInfoControls[name].checked = name === _studentToolbarId;
+                    // determine where to position a tool on the toolbar
+                    allInfoControls[name].position = i;
 
-                    // originally none of the controls is installed
-                    allInfoControls[name].installed = false;
+                    // on load we assume that everything that already exists is also checked
+                    // this counts also for the toolbar which has no actual checkbox
+                    allInfoControls[name].checked = controlExists;
 
-                    // have the resources already been copied, i.e. has tool been installed before?
-                    allInfoControls[name].copied = false;
+                    // have the resources already been copied,
+                    // i.e. is the tool currently installed
+                    allInfoControls[name].installed = controlExists;
 
+                    // have the resources already been copied,
+                    // i.e. has tool been installed before?
+                    allInfoControls[name].copied = controlExists;
 
-                    // the number of all controls
-                    controlCount++;
+                    i++;
                 });
 
                 var $managerPanel = managerTpl({
-                    tools : tools
+                    tools: tools
                 });
                 $itemPropPanel.append($managerPanel);
 
@@ -109,19 +107,19 @@ define([
                 tooltip($itemPropPanel);
 
                 //init event listeners:
-                $('[data-role="pic-manager"]').on('change.picmanager', 'input:checkbox', function(e){
+                $('[data-role="pic-manager"]')
+                    .on('change.picmanager', 'input:checkbox', function (e) {
 
-                    e.stopPropagation();
+                        e.stopPropagation();
 
-                    var $checkbox = $(this),
-                        name = $checkbox.attr('name'),
-                        checked = $checkbox.prop('checked');
+                        // install toolbar if required
+                        if (this.checked && !allInfoControls[_studentToolbarId].installed) {
+                            allInfoControls[_studentToolbarId].checked = true;
+                        }
 
-                    allInfoControls[name].checked = $checkbox.prop('checked');
-
-                    processAllControls();
-                });
-
+                        allInfoControls[this.name].checked = this.checked;
+                        processAllControls();
+                    });
 
 
                 /**
@@ -129,27 +127,25 @@ define([
                  */
                 function processAllControls() {
 
-                    // _.forOwn callback args are value, key
-                    _.forOwn(allInfoControls, function(control) {
+                    // _.forOwn callback args are value, name
+                    // name is also available as value.name
+                    _.forOwn(allInfoControls, function (control) {
 
                         // is there any action required at all?
-                        // if not and if there are still items left proceed to the next one
-                        if(control.checked === control.installed) {
+                        // if not and if there are still items
+                        // left proceed to the next one
+                        if (control.checked === control.installed) {
                             return true;
                         }
 
-                        // either install or uninstall control
-                        controlPosition++;
-                        if(controlPosition > controlCount) {
-                            controlPosition = 0;
-                        }
                         processControl(control);
 
-                        // break here and wait for the next call executed from processControl
+                        // break here and wait for the next call
+                        // to be executed from processControl()
                         return false;
                     });
-
                 }
+
 
                 /**
                  * Render tool|toolbar
@@ -158,20 +154,23 @@ define([
                  */
                 function renderControl(elt) {
                     var $widgetContainer,
-                        widget;
+                        widget,
+                        stsClassName = elt.typeIdentifier === _studentToolbarId
+                            ? 'sts-scope'
+                            : 'sts-scope sts-tmp-element';
 
                     //add the student tool css scope
-                    elt.attr('class', 'sts-scope');
+                    elt.attr('class', stsClassName);
 
                     //render it
                     elt.setRenderer(creatorRenderer.get());
 
-                    if(elt.typeIdentifier === _studentToolbarId){
+                    if (elt.typeIdentifier === _studentToolbarId) {
                         elt.render($placeholderToolbar);
                         $placeholderToolbar = null;
 
                     }
-                    else{
+                    else {
                         elt.render($placeholderTool);
                         $placeholderTool = null;
                     }
@@ -185,19 +184,18 @@ define([
                 }
 
 
-
                 /**
                  * Remove a student tool
                  *
                  * @param control
                  */
-                function removeControl(control){
+                function removeControl(control) {
 
                     var infoControls = item.getElements('infoControl'),
                         studentTool = _.find(infoControls, {
-                            typeIdentifier : control.name
+                            typeIdentifier: control.name
                         }),
-                        remove = function() {
+                        remove = function () {
                             //call ic hook destroy() method
                             studentTool.data('pic').destroy();
 
@@ -211,9 +209,10 @@ define([
                     //remove it
                     remove();
 
-                    //search for existing info control, if there is only one with the typeIdentifier "studentToolbar" delete it:
-                    if(_.size(infoControls) === 2){
-                        _.each(infoControls, function(){
+                    // in case there only two elements left, one of them
+                    // must be the toolbar and needs to be removed too
+                    if (_.size(infoControls) === 2) {
+                        _.each(infoControls, function () {
                             remove();
                         });
                     }
@@ -225,19 +224,20 @@ define([
                  * @param control
                  * @returns {boolean}
                  */
-                function processControl(control){
+                function processControl(control) {
 
                     // what needs to be done to the control? install|uninstall
-                    if(!control.checked) {
-                        removeControl(control);
+                    if (!control.checked) {
                         allInfoControls[control.name].installed = false;
+                        removeControl(control);
                         return processAllControls();
                     }
 
                     // is this the toolbar or a tool?
-                    // we know at this point already whether it requires installation at all
-                    // because otherwise it had been skipped inside processAllControls()
-                    if(control.name === _studentToolbarId) {
+                    // we know at this point already whether it requires
+                    // installation at all because otherwise it had been
+                    // skipped inside processAllControls()
+                    if (control.name === _studentToolbarId) {
                         //if not, create one and add it to the item
                         $placeholderToolbar = getNewInfoControlNode(_studentToolbarId);
                         $itemBody.prepend($placeholderToolbar);
@@ -247,39 +247,46 @@ define([
                     $itemBody.prepend($placeholderTool);
 
                     // install procedure
-                    containerHelper.createElements(item.getBody(), contentHelper.getContent($itemBody), function(newElts){
+                    containerHelper.createElements(
+                        item.getBody(),
+                        contentHelper.getContent($itemBody),
+                        function (newElts) {
 
-                        // although newElts appears to be a collection it holds only _one_ element
-                        // due to the callback mechanism between processControl() and processAllControls()
-                        _.each(newElts, function(elt){
+                            // although newElts appears to be a collection it holds
+                            // only _one_ element due to the callback mechanism
+                            // between processControl() and processAllControls()
+                            _.each(newElts, function (elt, eltId) {
 
-                            // if the required resources have not been copied yet
-                            if(!control.copied) {
-                                $.when(icRegistry.addRequiredResources(elt.typeIdentifier, config.uri))
-                                    .then(function( data, textStatus, jqXHR ) {
+                                // if the required resources have not been copied yet
+                                if (!control.copied) {
+                                    $.when(icRegistry.addRequiredResources(
+                                            elt.typeIdentifier, config.uri))
+                                        .then(function (data, textStatus, jqXHR) {
 
-                                        if(jqXHR.status !== 200) {
-                                            throw 'Failed to add required resources for the info control';
-                                        }
+                                            if (jqXHR.status !== 200) {
+                                                throw 'Failed to add required resources for the info control';
+                                            }
 
-                                        allInfoControls[control.name].copied = true;
+                                            // update look-up list
+                                            allInfoControls[control.name].copied = true;
+                                            allInfoControls[control.name].installed = true;
+                                            elt.prop('position', allInfoControls[control.name].position);
+                                            elt.prop('toolbarId', 'sts-' + _studentToolbarId);
+                                            renderControl(elt);
 
-                                        renderControl(elt);
-                                        allInfoControls[control.name].installed = true;
+                                            // continue with the next element of allInfoControls
+                                            processAllControls();
 
-                                        // continue with the next element of allInfoControls
-                                        processAllControls();
+                                        });
+                                }
+                                else {
+                                    allInfoControls[control.name].installed = true;
+                                    renderControl(elt);
+                                    processAllControls();
+                                }
 
-                                    });
-                            }
-                            else {
-                                renderControl(elt);
-                                allInfoControls[control.name].installed = true;
-                                processAllControls();
-                            }
-
+                            });
                         });
-                    });
 
 
                 }
@@ -291,12 +298,12 @@ define([
     }
 
     var pciManagerHook = {
-        init : function(config){
+        init: function (config) {
 
             //load infoControl model first into the creator renderer
             creatorRenderer
                 .get()
-                .load(function(){
+                .load(function () {
 
                     initStudentToolManager(config);
 

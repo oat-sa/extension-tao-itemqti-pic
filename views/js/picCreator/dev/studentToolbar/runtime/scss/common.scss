@@ -4,8 +4,15 @@
 @import "inc/sts-base";
 
 
+.sts-tmp-element {
+    display: none;
+}
 
 .sts-scope {
+
+    &.sts-tmp-element {
+        display: none;
+    }
 
     // list of sccs that are _not_ name spaced
     @import "inc/sts-grid";
@@ -35,6 +42,7 @@
             visibility: hidden;
         }
     }
+
     
     .sts-container {
         display:inline-block;

@@ -212,6 +212,11 @@
   cursor: default;
   opacity: .7; }
 
+.sts-tmp-element {
+  display: none; }
+
+.sts-scope.sts-tmp-element {
+  display: none; }
 .sts-scope [class*=" sts-col-"], .sts-scope [class^="sts-col-"] {
   float: left;
   min-height: 1rem; }
