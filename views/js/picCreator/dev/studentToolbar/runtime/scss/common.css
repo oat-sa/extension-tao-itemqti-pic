@@ -215,6 +215,9 @@
 .sts-tmp-element {
   display: none; }
 
+.sts-toolcontainer {
+  display: none; }
+
 .sts-scope.sts-tmp-element {
   display: none; }
 .sts-scope [class*=" sts-col-"], .sts-scope [class^="sts-col-"] {

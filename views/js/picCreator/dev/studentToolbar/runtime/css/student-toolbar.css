@@ -9,6 +9,8 @@
   transform: translate(0px, 0px); }
   .sts-scope .sts-container.sts-studentToolbar-container .sts-content {
     min-height: 36px; }
+    .sts-scope .sts-container.sts-studentToolbar-container .sts-content .sts-toolcontainer {
+      display: block; }
 
 .runtime.qti-item .sts-container.sts-studentToolbar-container {
   margin-top: -15px; }

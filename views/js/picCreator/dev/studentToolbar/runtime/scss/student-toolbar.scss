@@ -12,6 +12,9 @@
         transform: translate(0px, 0px);
         .sts-content {
             min-height: 36px;
+            .sts-toolcontainer {
+                display: block;
+            }
         }
     }
 }
