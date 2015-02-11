@@ -38,10 +38,10 @@ define([
             .attr('data-qti-class', 'infoControl.' + typeIdentifier);
     }
 
+
     function initStudentToolManager(config) {
 
-        var $placeholderToolbar,
-            $placeholderTool;
+        var $placeholder;
 
         //get item
         itemWidgetLoaded(config, function (itemWidget) {
@@ -91,9 +91,9 @@ define([
                     // i.e. is the tool currently installed
                     allInfoControls[name].installed = controlExists;
 
-                    // have the resources already been copied,
-                    // i.e. has tool been installed before?
-                    allInfoControls[name].copied = controlExists;
+                    // must be false, even if tool has been installed
+                    // before, resources might have changed
+                    allInfoControls[name].copied = false;
 
                     i++;
                 });
@@ -153,8 +153,8 @@ define([
                  * @param elt
                  */
                 function renderControl(elt) {
-                    var $widgetContainer,
-                        widget,
+
+                    var widget,
                         stsClassName = elt.typeIdentifier === _studentToolbarId
                             ? 'sts-scope'
                             : 'sts-scope sts-tmp-element';
@@ -162,25 +162,27 @@ define([
                     //add the student tool css scope
                     elt.attr('class', stsClassName);
 
+                    elt.prop('position', allInfoControls[elt.typeIdentifier].position);
+                    elt.prop('toolbarId', 'sts-' + _studentToolbarId);
+
                     //render it
                     elt.setRenderer(creatorRenderer.get());
 
-                    if (elt.typeIdentifier === _studentToolbarId) {
-                        elt.render($placeholderToolbar);
-                        $placeholderToolbar = null;
+                    elt.render($placeholder);
 
-                    }
-                    else {
-                        elt.render($placeholderTool);
-                        $placeholderTool = null;
-                    }
+                    $placeholder = null;
 
                     widget = elt.postRender({});
-                    $widgetContainer = widget.$container;
 
                     //inform height modification
-                    $widgetContainer.trigger('contentChange.gridEdit');
-                    $widgetContainer.trigger('resize.gridEdit');
+                    widget.$container.trigger('contentChange.gridEdit');
+                    widget.$container.trigger('resize.gridEdit');
+
+
+                    allInfoControls[elt.typeIdentifier].installed = true;
+
+                    // continue with the next element of allInfoControls
+                    processAllControls();
                 }
 
 
@@ -192,30 +194,37 @@ define([
                 function removeControl(control) {
 
                     var infoControls = item.getElements('infoControl'),
-                        studentTool = _.find(infoControls, {
-                            typeIdentifier: control.name
-                        }),
-                        remove = function () {
+
+                        remove = function (_control) {
+                            var studentTool = _.find(infoControls, {
+                                typeIdentifier: _control.name
+                            });
                             //call ic hook destroy() method
                             studentTool.data('pic').destroy();
 
                             //remove the widget from dom
+                            $('#sts-' + _control.name).remove();
                             $itemBody.find('.widget-box[data-serial=' + studentTool.serial + ']').remove();
 
                             //remove form model
                             item.removeElement(studentTool.serial);
+
+                            allInfoControls[_control.name].checked = false;
+                            allInfoControls[_control.name].installed = false;
                         };
 
                     //remove it
-                    remove();
-
+                    remove(control);
                     // in case there only two elements left, one of them
                     // must be the toolbar and needs to be removed too
-                    if (_.size(infoControls) === 2) {
-                        _.each(infoControls, function () {
-                            remove();
-                        });
+                    if (_.size(infoControls) > 2) {
+                        processAllControls();
+                        return;
                     }
+
+                    // reset to checked:true on click of any tool
+                    remove(allInfoControls[_studentToolbarId]);
+                    processAllControls();
                 }
 
                 /**
@@ -228,34 +237,23 @@ define([
 
                     // what needs to be done to the control? install|uninstall
                     if (!control.checked) {
-                        allInfoControls[control.name].installed = false;
                         removeControl(control);
-                        return processAllControls();
+                        return true;
                     }
 
-                    // is this the toolbar or a tool?
-                    // we know at this point already whether it requires
-                    // installation at all because otherwise it had been
-                    // skipped inside processAllControls()
-                    if (control.name === _studentToolbarId) {
-                        //if not, create one and add it to the item
-                        $placeholderToolbar = getNewInfoControlNode(_studentToolbarId);
-                        $itemBody.prepend($placeholderToolbar);
-                    }
-                    //create an info control (student tool) and add it to the them
-                    $placeholderTool = getNewInfoControlNode(control.name);
-                    $itemBody.prepend($placeholderTool);
+                    //create an info control (student tool|toolbar) and add it to the them
+                    $placeholder = getNewInfoControlNode(control.name);
+                    $itemBody.prepend($placeholder);
 
                     // install procedure
                     containerHelper.createElements(
                         item.getBody(),
                         contentHelper.getContent($itemBody),
                         function (newElts) {
-
                             // although newElts appears to be a collection it holds
                             // only _one_ element due to the callback mechanism
                             // between processControl() and processAllControls()
-                            _.each(newElts, function (elt, eltId) {
+                            _.each(newElts, function (elt) {
 
                                 // if the required resources have not been copied yet
                                 if (!control.copied) {
@@ -269,20 +267,13 @@ define([
 
                                             // update look-up list
                                             allInfoControls[control.name].copied = true;
-                                            allInfoControls[control.name].installed = true;
-                                            elt.prop('position', allInfoControls[control.name].position);
-                                            elt.prop('toolbarId', 'sts-' + _studentToolbarId);
                                             renderControl(elt);
 
-                                            // continue with the next element of allInfoControls
-                                            processAllControls();
 
                                         });
                                 }
                                 else {
-                                    allInfoControls[control.name].installed = true;
                                     renderControl(elt);
-                                    processAllControls();
                                 }
 
                             });
