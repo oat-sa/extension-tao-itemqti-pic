@@ -46,8 +46,7 @@ define([
         var dfd = $.Deferred();
         var cnt = 1;
         var checkSelector = setInterval(function () {
-            console.log($(selector), $(selector).length, $(selector).is(':visible'))
-            if(cnt > 45) {
+            if(cnt > 25) {
                 throw 'Tool takes too long to load';
             }
             if ($(selector).is(':visible')) {
