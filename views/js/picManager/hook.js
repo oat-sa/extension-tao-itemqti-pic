@@ -13,6 +13,54 @@ define([
     var _studentToolTag = 'student-tool';
     var _studentToolbarId = 'studentToolbar';
 
+
+    /**
+     * Toggle the disabled state of checkboxes
+     *
+     * @param $checkBoxes
+     * @param state
+     */
+    function toggleCheckboxState($checkBoxes, state) {
+
+        $checkBoxes.each(function() {
+
+            // @todo this is tmp code that needs to go as soon all tools are available
+            // see also further down above check event for another portion of the code
+            if(this.className.indexOf('not-available') > -1) {
+                return true;
+            }
+            // end tmp code
+
+            this.disabled = state;
+        });
+    }
+
+
+    /**
+     * Wait for a toolbar item to be completely rendered
+     *
+     * @param selector
+     * @returns {*}
+     */
+    function buttonAdded(selector) {
+        var dfd = $.Deferred();
+        var cnt = 1;
+        var checkSelector = setInterval(function () {
+            if(cnt > 25) {
+                throw 'Tool takes too long to load';
+            }
+            if ($(selector).is(':visible')) {
+                dfd.resolve();
+                clearInterval(checkSelector);
+            }
+            cnt++;
+        }, 500);
+
+        return dfd.promise();
+    }
+
+
+
     function itemWidgetLoaded(config, callback) {
         var $editor = config.dom.getEditorScope();
         if ($editor.data('widget')) {
@@ -33,12 +81,16 @@ define([
      */
     function getNewInfoControlNode(typeIdentifier) {
         return $('<span/>')
-            .addClass('widget-box sts-tmp-element')
+            .addClass('widget-box sts-tmp-element sts-placeholder-' + typeIdentifier)
             .attr('data-new', true)
             .attr('data-qti-class', 'infoControl.' + typeIdentifier);
     }
 
 
+    /**
+     *
+     * @param config
+     */
     function initStudentToolManager(config) {
 
         var $placeholder;
@@ -57,9 +109,12 @@ define([
 
                 //prepare data for the tpl:
                 var tools = {},
-                    alreadySet = _.pluck(item.getElements('infoControl'), 'typeIdentifier');
+                    toolArray = [],
+                    alreadySet = _.pluck(item.getElements('infoControl'), 'typeIdentifier'),
+                    allInfoControlsSize,
+                    $managerPanel
+                    i = 0;
 
-                var i = 0;
 
                 //feed the tools lists (including checked or not)
                 _.each(allInfoControls, function (creator) {
@@ -67,13 +122,18 @@ define([
                     var name = creator.getTypeIdentifier(),
                         ic = icRegistry.get(name),
                         manifest = ic.manifest,
-                        controlExists = _.indexOf(alreadySet, name) > -1;
+                        controlExists = _.indexOf(alreadySet, name) > -1,
+                        defaultProperties = creator.getDefaultProperties(),
+                        position = defaultProperties.position || 100 + i;
+
 
                     if (manifest.tags && manifest.tags[0] === _studentToolTag) {
                         tools[name] = {
                             label: manifest.label,
                             description: manifest.description,
-                            checked: controlExists
+                            checked: controlExists,
+                            position: position,
+                            name: name
                         };
                     }
 
@@ -81,7 +141,7 @@ define([
                     allInfoControls[name].name = name;
 
                     // determine where to position a tool on the toolbar
-                    allInfoControls[name].position = i;
+                    allInfoControls[name].position = position;
 
                     // on load we assume that everything that already exists is also checked
                     // this counts also for the toolbar which has no actual checkbox
@@ -96,10 +156,15 @@ define([
                     allInfoControls[name].copied = false;
 
                     i++;
+
                 });
 
-                var $managerPanel = managerTpl({
-                    tools: tools
+                toolArray = _.sortBy(tools, 'position');
+
+                allInfoControlsSize = _.size(allInfoControls);
+
+                $managerPanel = managerTpl({
+                    tools: toolArray
                 });
                 $itemPropPanel.append($managerPanel);
 
@@ -107,25 +172,49 @@ define([
                 tooltip($itemPropPanel);
 
                 //init event listeners:
-                $('[data-role="pic-manager"]')
-                    .on('change.picmanager', 'input:checkbox', function (e) {
+                var $checkBoxes = $('[data-role="pic-manager"]').find('input:checkbox');
 
-                        e.stopPropagation();
+                /**
+                 * @todo this is tmp code that needs to go as soon all tools are available
+                 * @see toggleCheckboxState() for another portion of this code
+                 *
+                 * @type {string[]}
+                 */
+                var enabledNames = ['parccCmRuler', 'parccInchRuler', 'parccProtractor'];
+                $checkBoxes.each(function() {
+                    if(_.indexOf(enabledNames, this.name) === -1) {
+                        this.disabled = true;
+                        this.className += ' not-available';
+                    }
+                });
+                // end of tmp code
 
-                        // install toolbar if required
-                        if (this.checked && !allInfoControls[_studentToolbarId].installed) {
-                            allInfoControls[_studentToolbarId].checked = true;
-                        }
 
-                        allInfoControls[this.name].checked = this.checked;
-                        processAllControls();
-                    });
+
+                $checkBoxes.on('change.picmanager', function(e) {
+
+                    e.stopPropagation();
+
+                    // install toolbar if required
+                    if (this.checked && !allInfoControls[_studentToolbarId].installed) {
+                        allInfoControls[_studentToolbarId].checked = true;
+                    }
+
+                    allInfoControls[this.name].checked = this.checked;
+
+                    toggleCheckboxState($checkBoxes, true);
+
+                    processAllControls();
+
+                });
 
 
                 /**
                  * Iterate over all controls and launch the actual installer/un-installer
                  */
                 function processAllControls() {
+
+                    var cnt = 0;
 
                     // _.forOwn callback args are value, name
                     // name is also available as value.name
@@ -135,6 +224,7 @@ define([
                         // if not and if there are still items
                         // left proceed to the next one
                         if (control.checked === control.installed) {
+                            cnt++;
                             return true;
                         }
 
@@ -144,6 +234,10 @@ define([
                         // to be executed from processControl()
                         return false;
                     });
+
+                    if(cnt === allInfoControlsSize) {
+                        toggleCheckboxState($checkBoxes, false);
+                    }
                 }
 
 
@@ -170,19 +264,28 @@ define([
 
                     elt.render($placeholder);
 
+
                     $placeholder = null;
 
                     widget = elt.postRender({});
 
-                    //inform height modification
-                    widget.$container.trigger('contentChange.gridEdit');
-                    widget.$container.trigger('resize.gridEdit');
-
-
                     allInfoControls[elt.typeIdentifier].installed = true;
 
-                    // continue with the next element of allInfoControls
-                    processAllControls();
+                    $.when(buttonAdded('#sts-' + elt.typeIdentifier))
+                        .then(function() {
+
+                            //inform height modification
+                            widget.$container.trigger('contentChange.gridEdit');
+                            widget.$container.trigger('resize.gridEdit');
+
+                            if(elt.typeIdentifier !== _studentToolbarId) {
+                                toggleCheckboxState($checkBoxes, false);
+                            }
+
+
+                            // continue with the next element of allInfoControls
+                            processAllControls();
+                        })
                 }
 
 
@@ -224,6 +327,8 @@ define([
 
                     // reset to checked:true on click of any tool
                     remove(allInfoControls[_studentToolbarId]);
+
+                    toggleCheckboxState($checkBoxes, false);
                     processAllControls();
                 }
 
