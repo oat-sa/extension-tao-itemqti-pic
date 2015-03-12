@@ -4,7 +4,7 @@
         {{#each tools}}
         <li>
             <label>
-                <input name="{{@key}}" type="checkbox" {{#if checked}}checked="checked"{{/if}}/>
+                <input name="{{name}}" type="checkbox" {{#if checked}}checked="checked"{{/if}}/>
                        <span class="icon-checkbox"></span>
                 {{label}}
             </label>

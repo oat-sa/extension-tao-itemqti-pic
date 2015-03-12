@@ -2,10 +2,8 @@
 
 .sts-scope {
     .sts-container.sts-studentToolbar-container {
-        margin-top: -35px;
-        margin-left: -15px;
+        margin: -36px -16px 15px -16px;
         display: block;
-        margin-right: -15px;
         position: relative;
         z-index: 1000;
         top: 0px;
@@ -14,8 +12,15 @@
         transform: translate(0px, 0px);
         .sts-content {
             min-height: 36px;
+            .sts-toolcontainer {
+                display: block;
+            }
         }
     }
+}
 
-
+.runtime.qti-item {
+    .sts-container.sts-studentToolbar-container {
+        margin-top: -15px;
+    }
 }

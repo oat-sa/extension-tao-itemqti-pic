@@ -30,7 +30,7 @@ define([
         },
         /**
          * Reverse operation performed by render()
-         * After this function is executed, only the inital naked markup remains 
+         * After this function is executed, only the initial naked markup remains
          * Event listeners are removed and the state and the response are reset
          * 
          * @param {Object} interaction
