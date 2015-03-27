@@ -86,8 +86,8 @@ label {
             @include simple-border;
             @extend .truncate;
             &:before {
-               @extend %tao-icon-setup; 
-               @extend %icon-document; 
+               @include tao-icon-setup; 
+               @include tao-icon-setup-document; 
                @include font-size(14);
                line-height: 14px;
                margin-right: 5px;
@@ -103,19 +103,19 @@ label {
                right: 30px;
                top: 6px;
                &.sending:before {
-                   @extend %tao-icon-setup; 
-                   @extend %icon-download;
+                   @include tao-icon-setup; 
+                   @include icon-download;
                    @include fade(2s);
                    @include repeat;
                }
                &.success:before{
-                   @extend %tao-icon-setup; 
-                   @extend %icon-success;
+                   @include tao-icon-setup; 
+                   @include icon-success;
                    color: $success;
                }
                &.error:before{
-                   @extend %tao-icon-setup; 
-                   @extend %icon-error;
+                   @include tao-icon-setup; 
+                   @include icon-error;
                    color: $error;
                }
             }

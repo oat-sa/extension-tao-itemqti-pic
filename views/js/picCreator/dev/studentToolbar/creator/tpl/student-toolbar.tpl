@@ -1,25 +1,25 @@
-<div class="sts-scope">
-    <div{{#if id}} id="{{id}}"{{/if}} class="sts-container sts-{{typeIdentifier}}-container{{#if is.movable}} sts-movable-container{{/if}}{{#if is.transparent}} sts-transparent-container{{/if}}">
-        <div class="sts-title-bar">
-            <div class="sts-title">{{title}}</div>
-        </div>
-        <div class="sts-content">
+<html5:div class="sts-scope">
+    <html5:div id="sts-{{typeIdentifier}}" class="sts-container sts-{{typeIdentifier}}-container{{#if is.movable}} sts-movable-container{{/if}}{{#if is.transparent}} sts-transparent-container{{/if}}">
+        <html5:div class="sts-title-bar">
+            <html5:div class="sts-title">{{title}}</html5:div>
+        </html5:div>
+        <html5:div class="sts-content">
             <!-- Actual tools go here -->
-        </div>
+        </html5:div>
         {{#if is.transmutable}}
-        <div class="sts-container-controls">
+        <html5:div class="sts-container-controls">
             {{#each is.rotatable}}
                 {{#if this}}
-                    <div class="sts-handle-rotate-{{@key}}"></div>
+                    <html5:div class="sts-handle-rotate-{{@key}}"></html5:div>
                 {{/if}}
             {{/each}}
             {{#each is.adjustable}}
                 {{#if this}}
-                    <div class="sts-handle-adjustable-{{@key}}"></div>
+                    <html5:div class="sts-handle-adjustable-{{@key}}"></html5:div>
                 {{/if}}
 
             {{/each}}
-        </div>
+        </html5:div>
         {{/if}}
-    </div>
-</div>
+    </html5:div>
+</html5:div>
