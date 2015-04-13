@@ -9,10 +9,14 @@ msgstr ""
 "targetLanguage: en-US\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Poedit-Basepath: ../../\n"
-"X-Poedit-KeywordsList: __\n"
-"X-Poedit-SearchPath-0: .\n"
 
-msgid "Student tools"
+# http://www.tao.lu/Ontologies/generis.rdf#qtiItemPicManager
+msgctxt "http://www.w3.org/2000/01/rdf-schema#label"
+msgid "QTI PIC Manager"
+msgstr ""
+
+# http://www.tao.lu/Ontologies/generis.rdf#qtiItemPicManager
+msgctxt "http://www.w3.org/2000/01/rdf-schema#comment"
+msgid "QTI PIC Manager Role"
 msgstr ""
 
