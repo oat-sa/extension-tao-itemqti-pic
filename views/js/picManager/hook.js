@@ -180,7 +180,7 @@ define([
                  *
                  * @type {string[]}
                  */
-                var enabledNames = ['parccCmRuler', 'parccInchRuler', 'parccProtractor'];
+                var enabledNames = ['parccCmRuler', 'parccInchRuler', 'parccProtractor', 'parccEliminateAnswerChoices'];
                 $checkBoxes.each(function() {
                     if(_.indexOf(enabledNames, this.name) === -1) {
                         this.disabled = true;
