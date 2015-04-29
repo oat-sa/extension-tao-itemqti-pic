@@ -112,7 +112,7 @@ define([
                     toolArray = [],
                     alreadySet = _.pluck(item.getElements('infoControl'), 'typeIdentifier'),
                     allInfoControlsSize,
-                    $managerPanel
+                    $managerPanel,
                     i = 0;
 
 
@@ -173,23 +173,6 @@ define([
 
                 //init event listeners:
                 var $checkBoxes = $('[data-role="pic-manager"]').find('input:checkbox');
-
-                /**
-                 * @todo this is tmp code that needs to go as soon all tools are available
-                 * @see toggleCheckboxState() for another portion of this code
-                 *
-                 * @type {string[]}
-                 */
-                var enabledNames = ['parccCmRuler', 'parccInchRuler', 'parccProtractor', 'parccEliminateAnswerChoices'];
-                $checkBoxes.each(function() {
-                    if(_.indexOf(enabledNames, this.name) === -1) {
-                        this.disabled = true;
-                        this.className += ' not-available';
-                    }
-                });
-                // end of tmp code
-
-
 
                 $checkBoxes.on('change.picmanager', function(e) {
 
