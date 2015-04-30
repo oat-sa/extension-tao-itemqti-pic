@@ -118,14 +118,16 @@ define([
 
                 //feed the tools lists (including checked or not)
                 _.each(allInfoControls, function (creator) {
-
                     var name = creator.getTypeIdentifier(),
                         ic = icRegistry.get(name),
                         manifest = ic.manifest,
                         controlExists = _.indexOf(alreadySet, name) > -1,
                         defaultProperties = creator.getDefaultProperties(),
                         position = defaultProperties.position || 100 + i;
-
+                        
+                    if (manifest.disabled) {
+                        return;
+                    }
 
                     if (manifest.tags && manifest.tags[0] === _studentToolTag) {
                         tools[name] = {
