@@ -112,20 +112,22 @@ define([
                     toolArray = [],
                     alreadySet = _.pluck(item.getElements('infoControl'), 'typeIdentifier'),
                     allInfoControlsSize,
-                    $managerPanel
+                    $managerPanel,
                     i = 0;
 
 
                 //feed the tools lists (including checked or not)
                 _.each(allInfoControls, function (creator) {
-
                     var name = creator.getTypeIdentifier(),
                         ic = icRegistry.get(name),
                         manifest = ic.manifest,
                         controlExists = _.indexOf(alreadySet, name) > -1,
                         defaultProperties = creator.getDefaultProperties(),
                         position = defaultProperties.position || 100 + i;
-
+                        
+                    if (manifest.disabled) {
+                        return;
+                    }
 
                     if (manifest.tags && manifest.tags[0] === _studentToolTag) {
                         tools[name] = {
@@ -173,23 +175,6 @@ define([
 
                 //init event listeners:
                 var $checkBoxes = $('[data-role="pic-manager"]').find('input:checkbox');
-
-                /**
-                 * @todo this is tmp code that needs to go as soon all tools are available
-                 * @see toggleCheckboxState() for another portion of this code
-                 *
-                 * @type {string[]}
-                 */
-                var enabledNames = ['parccCmRuler', 'parccInchRuler', 'parccProtractor', 'parccEliminateAnswerChoices'];
-                $checkBoxes.each(function() {
-                    if(_.indexOf(enabledNames, this.name) === -1) {
-                        this.disabled = true;
-                        this.className += ' not-available';
-                    }
-                });
-                // end of tmp code
-
-
 
                 $checkBoxes.on('change.picmanager', function(e) {
 
