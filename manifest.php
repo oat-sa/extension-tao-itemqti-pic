@@ -24,7 +24,7 @@ return array(
 	'label' => 'QTI Portable Info Control',
 	'description' => '',
     'license' => 'GPL-2.0',
-    'version' => '0.1',
+    'version' => '0.2',
 	'author' => 'Open Assessment Technologies',
 	'requires' => array('taoQtiItem' => '>=2.6'),
     'acl' => array(
@@ -40,11 +40,7 @@ return array(
     ),
     'uninstall' => array(
     ),
-    'autoload' => array (
-        'psr-4' => array(
-            'oat\\qtiItemPic\\' => dirname(__FILE__).DIRECTORY_SEPARATOR
-        )
-    ),
+    'update' => 'oat\\qtiItemPic\\scripts\\update\\Updater',
     'routes' => array(
         '/qtiItemPic' => 'oat\\qtiItemPic\\controller'
     ),    
