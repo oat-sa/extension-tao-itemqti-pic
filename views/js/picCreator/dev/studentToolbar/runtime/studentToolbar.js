@@ -6,6 +6,8 @@ define([
     qtiInfoControlContext
     ){
 
+    'use strict';
+
     var studentToolbar = {
         id : -1,
         getTypeIdentifier : function(){
@@ -24,7 +26,7 @@ define([
             this.dom = dom;
             this.config = config || {};
 
-            var $container = $(dom);
+            //var $container = $(dom);
             
             //console.log('init', this.getTypeIdentifier(), $container);
         },

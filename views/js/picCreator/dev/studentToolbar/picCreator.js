@@ -5,7 +5,7 @@ define([
     'tpl!studentToolbar/creator/tpl/student-toolbar'
 ], 
 function(_, registry, Widget, markupTpl){
-
+    'use strict';
 
     /**
      * Retrieve data from manifest
