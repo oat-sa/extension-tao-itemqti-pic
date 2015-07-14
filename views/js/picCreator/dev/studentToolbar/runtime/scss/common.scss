@@ -143,7 +143,13 @@
         .sts-content {
             padding: 3px;
             overflow:hidden;
-            cursor: default;   
+            cursor: default;
+            .sts-header-controls {
+                .sts-button {
+                    margin: auto;
+                    padding: 0px;
+                }
+            }
             .sts-button {
                 margin: 2px;
                 float: left;

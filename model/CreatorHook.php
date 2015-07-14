@@ -35,7 +35,7 @@ class CreatorHook implements Hook
     /**
      * Affect the config
      * 
-     * @param oat\taoQtiItem\model\Config $config
+     * @param \oat\taoQtiItem\model\Config $config
      */
     public function init(Config $config){
 

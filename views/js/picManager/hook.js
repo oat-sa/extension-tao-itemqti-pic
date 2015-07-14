@@ -9,6 +9,7 @@ define([
     'tpl!qtiItemPic/picManager/tpl/manager',
     'css!qtiItemPicCss/pic-manager'
 ], function ($, _, tooltip, icRegistry, creatorRenderer, containerHelper, contentHelper, managerTpl) {
+    'use strict';
 
     var _studentToolTag = 'student-tool';
     var _studentToolbarId = 'studentToolbar';
@@ -270,7 +271,7 @@ define([
 
                             // continue with the next element of allInfoControls
                             processAllControls();
-                        })
+                        });
                 }
 
 
