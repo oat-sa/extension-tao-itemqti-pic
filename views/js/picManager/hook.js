@@ -125,7 +125,7 @@ define([
                         controlExists = _.indexOf(alreadySet, name) > -1,
                         defaultProperties = creator.getDefaultProperties(),
                         position = defaultProperties.position || 100 + i;
-                        
+
                     if (manifest.disabled) {
                         return;
                     }
@@ -234,10 +234,7 @@ define([
                  */
                 function renderControl(elt) {
 
-                    var widget,
-                        stsClassName = elt.typeIdentifier === _studentToolbarId
-                            ? 'sts-scope'
-                            : 'sts-scope sts-tmp-element';
+                    var stsClassName = (elt.typeIdentifier === _studentToolbarId) ? 'sts-scope' : 'sts-scope sts-tmp-element';
 
                     //add the student tool css scope
                     elt.attr('class', stsClassName);
@@ -253,12 +250,13 @@ define([
 
                     $placeholder = null;
 
-                    widget = elt.postRender({});
+                    elt.postRender({});
 
                     allInfoControls[elt.typeIdentifier].installed = true;
 
                     $.when(buttonAdded('#sts-' + elt.typeIdentifier))
                         .then(function() {
+                            var widget = elt.data('widget');
 
                             //inform height modification
                             widget.$container.trigger('contentChange.gridEdit');
