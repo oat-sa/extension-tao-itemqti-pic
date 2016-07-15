@@ -14,28 +14,28 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
- * Copyright (c) 2014 (original work) Open Assessment Technologies SA;
+ * Copyright (c) 2016 (original work) Open Assessment Technologies SA;
  *
  */
 
 namespace oat\qtiItemPic\controller;
 
-use oat\taoQtiItem\controller\AbstractPortableElementManager;
-use oat\qtiItemPic\model\CreatorRegistry;
+use oat\taoQtiItem\model\portableElement\common\PortableElementFactory;
+use oat\taoQtiItem\model\portableElement\pic\model\PicModel;
+use \tao_actions_CommonModule;
 
-/**
- * Class PicManager
- *
- * @deprecated
- * @package oat\qtiItemPic\controller
- */
-class PicManager extends AbstractPortableElementManager
+class PicLoader extends tao_actions_CommonModule
 {
-    
-    protected function getCreatorRegistry(){
-        return new CreatorRegistry();
+    /** @var PicRegistry */
+    protected $registry;
+
+    public function __construct()
+    {
+        $this->registry = PortableElementFactory::getRegistry(new PicModel());
     }
-
-
-
+    
+    public function load()
+    {
+        $this->returnJson($this->registry->getLatestRuntimes());
+    }
 }

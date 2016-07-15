@@ -10,7 +10,7 @@ function(_, registry, Widget, markupTpl){
     /**
      * Retrieve data from manifest
      */
-    var manifest = registry.get('studentToolbar').manifest;
+    var manifest = registry.getCreator('studentToolbar').manifest;
 
     /**
      * Configuration of the container

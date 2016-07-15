@@ -14,28 +14,20 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
- * Copyright (c) 2014 (original work) Open Assessment Technologies SA;
+ * Copyright (c) 2016 (original work) Open Assessment Technologies SA;
  *
- */
+ * */
 
-namespace oat\qtiItemPic\controller;
+namespace oat\qtiItemPic\scripts\install;
 
-use oat\taoQtiItem\controller\AbstractPortableElementManager;
-use oat\qtiItemPic\model\CreatorRegistry;
+use common_ext_action_InstallAction;
+use oat\taoQtiItem\model\portableElement\clientConfigRegistry\InfoControlRegistry;
 
-/**
- * Class PicManager
- *
- * @deprecated
- * @package oat\qtiItemPic\controller
- */
-class PicManager extends AbstractPortableElementManager
+class RegisterClientProvider extends common_ext_action_InstallAction
 {
-    
-    protected function getCreatorRegistry(){
-        return new CreatorRegistry();
+    public function __invoke($params)
+    {
+        InfoControlRegistry::getRegistry()->registerProvider('picRegistry', 'qtiItemPic/picProvider');
+        return new \common_report_Report(\common_report_Report::TYPE_SUCCESS, '"qtiItemPic/picProvider" PIC provider added');
     }
-
-
-
 }

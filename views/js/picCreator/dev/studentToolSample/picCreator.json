@@ -1,0 +1,33 @@
+{
+    "typeIdentifier": "studentToolSample",
+    "label": "Tool Sample",
+    "short": "Sample",
+    "description": "a sample student tool",
+    "version": "0.2.0",
+    "author": "Sam Sipasseuth",
+    "email": "sam@taotesting.com",
+    "tags": [
+        "student-tool"
+    ],
+    "runtime" : {
+        "hook" : "./runtime/studentToolSample.js",
+        "libraries" : [
+            "IMSGlobal/jquery_2_1_1"
+        ],
+        "stylesheets" : [
+            "./runtime/css/studentToolSample.css"
+        ],
+        "mediaFiles": [
+            "./runtime/media/tool-icon.svg"
+        ]
+    },
+    "creator" : {
+        "icon": "./creator/img/tool-icon.svg",
+        "hook": "./picCreator.js",
+        "libraries" : [
+            "./creator/tpl/markup.tpl",
+            "./creator/widget/Widget.js",
+            "./creator/widget/states/states.js"
+        ]
+    }
+}

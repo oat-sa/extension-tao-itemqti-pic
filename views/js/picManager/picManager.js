@@ -2,7 +2,7 @@ define([
     'jquery',
     'lodash',
     'ui/tooltipster',
-    'taoQtiItem/qtiCreator/editor/infoControlRegistry',
+    'taoQtiItem/portableElementRegistry/icRegistry',
     'taoQtiItem/qtiCreator/helper/creatorRenderer',
     'taoQtiItem/qtiCreator/model/helper/container',
     'taoQtiItem/qtiCreator/editor/gridEditor/content',
@@ -62,8 +62,8 @@ define([
 
 
 
-    function itemWidgetLoaded(config, callback) {
-        var $editor = config.dom.getEditorScope();
+    function itemWidgetLoaded($itemPanel, callback) {
+        var $editor = $itemPanel;//editor panel
         if ($editor.data('widget')) {
             callback($editor.data('widget'));
         }
@@ -87,26 +87,30 @@ define([
             .attr('data-qti-class', 'infoControl.' + typeIdentifier);
     }
 
-
     /**
      *
-     * @param config
+     * @param $container
+     * @param $itemPanel
+     * @param itemUri
      */
-    function initStudentToolManager(config) {
+    function initStudentToolManager($container, $itemPanel, itemUri) {
 
         var $placeholder;
 
         //get item
-        itemWidgetLoaded(config, function (itemWidget) {
+        //editor panel..
+        itemWidgetLoaded($itemPanel, function (itemWidget) {
 
             var item = itemWidget.element;
-            var $itemPropPanel = config.dom.getItemPropertyPanel();
+            //item prop panel, aka container
+            var $itemPropPanel = $container;
 
             //get list of all info controls available
             icRegistry.loadAll(function (allInfoControls) {
 
                 //get item body container
-                var $itemBody = config.dom.getEditorScope().find('.qti-itemBody');
+                //editor panel..
+                var $itemBody = $itemPanel.find('.qti-itemBody');
 
                 //prepare data for the tpl:
                 var tools = {},
@@ -347,7 +351,7 @@ define([
                                 // if the required resources have not been copied yet
                                 if (!control.copied) {
                                     $.when(icRegistry.addRequiredResources(
-                                            elt.typeIdentifier, config.uri))
+                                            elt.typeIdentifier, itemUri))
                                         .then(function (data, textStatus, jqXHR) {
 
                                             if (jqXHR.status !== 200) {
@@ -377,20 +381,15 @@ define([
 
     }
 
-    var pciManagerHook = {
-        init: function (config) {
+    return function picManager($container, $itemPanel, itemUri) {
+        //load infoControl model first into the creator renderer
+        creatorRenderer
+            .get()
+            .load(function () {
 
-            //load infoControl model first into the creator renderer
-            creatorRenderer
-                .get()
-                .load(function () {
+                initStudentToolManager($container, $itemPanel, itemUri);
 
-                    initStudentToolManager(config);
+            }, ['infoControl']);
+    }
 
-                }, ['infoControl']);
-
-        }
-    };
-
-    return pciManagerHook;
 });

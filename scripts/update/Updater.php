@@ -21,6 +21,9 @@
 
 namespace oat\qtiItemPic\scripts\update;
 
+use oat\qtiItemPic\scripts\install\RegisterClientProvider;
+use oat\qtiItemPic\scripts\install\RegisterPic;
+use oat\qtiItemPic\scripts\install\SetQtiCreatorConfig;
 
 class Updater extends \common_ext_ExtensionUpdater 
 {
@@ -32,7 +35,6 @@ class Updater extends \common_ext_ExtensionUpdater
      */
     public function update($initialVersion) {
         
-        $currentVersion = $initialVersion;
 		if (
 			$this->isVersion('0.1')   || 
 			$this->isVersion('0.1.1') || 
@@ -44,7 +46,14 @@ class Updater extends \common_ext_ExtensionUpdater
 			$this->setVersion('0.2.3');
 		}
 
-
-		return null;
+		if($this->isVersion('0.2.3')){
+			$registerClientProvider = new RegisterClientProvider();
+			$registerClientProvider([]);
+			$registerPic = new RegisterPic();
+			$registerPic([]);
+			$setQtiCreatorConfig = new SetQtiCreatorConfig();
+			$setQtiCreatorConfig([]);
+			$this->setVersion('1.0.0');
+		}
 	}
 }
