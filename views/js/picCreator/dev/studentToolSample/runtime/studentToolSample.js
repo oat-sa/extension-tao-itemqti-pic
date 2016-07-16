@@ -12,7 +12,7 @@ define(['IMSGlobal/jquery_2_1_1', 'qtiInfoControlContext'], function($, qtiInfoC
          * @param {Node} dom
          * @param {Object} config - json
          */
-        initialize : function(id, dom, config){
+        initialize : function(id, dom, config, assetManager){
 
             this.id = id;
             this.dom = dom;
@@ -20,14 +20,13 @@ define(['IMSGlobal/jquery_2_1_1', 'qtiInfoControlContext'], function($, qtiInfoC
 
             var $container = $(dom);
 
-            console.log('init', this.getTypeIdentifier(), $container);
-            
+            console.log('init', this.getTypeIdentifier(), $container, config);
+
+            $container.find('img').attr('src', assetManager.resolve('studentToolSample/runtime/media/tool-icon.svg'));
+
             //hook it into the toolbar:
-            var toolbarId = 'studentToolbar1'; // config.toolbarId
-            
-            this.$toolbar = $('#'+toolbarId);
+            this.$toolbar = $('#'+this.config.toolbarId);
             this.$toolbar.find('.sts-content').append($container);
-            
         },
         /**
          * Reverse operation performed by render()

@@ -14,13 +14,14 @@ define([
          * Initialize the plugin (called during runner's init)
          */
         init : function init(){
-            var itemUri = this.getHost().getItem().data('uri');
+            //the old picManager requires the renderer to be fully ready before intializing, so all logic moved to render()
+        },
+        render : function(){
+            var item = this.getHost().getItem();
             var areaBroker = this.getAreaBroker();
             var $container = areaBroker.getItemPropertyPanelArea();
             var $itemPanel = areaBroker.getItemPanelArea();
-            _.delay(function(){
-                picManager($container, $itemPanel, itemUri);
-            }, 3000);
+            picManager($container, $itemPanel, item);
         }
     });
 });

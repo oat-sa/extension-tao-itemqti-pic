@@ -22,7 +22,6 @@
         ]
     },
     "creator" : {
-        "icon": "./creator/img/tool-icon.svg",
         "hook": "./picCreator.js",
         "libraries" : [
             "./creator/tpl/markup.tpl",

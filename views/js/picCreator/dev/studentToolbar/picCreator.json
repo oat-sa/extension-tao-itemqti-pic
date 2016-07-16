@@ -18,7 +18,6 @@
         ]
     },
     "creator" : {
-        "icon": "./creator/img/icon.svg",
         "hook": "./picCreator.js",
         "libraries" : [
             "./creator/tpl/student-toolbar.tpl",
