@@ -22,6 +22,7 @@
 use oat\qtiItemPic\scripts\install\SetQtiCreatorConfig;
 use oat\qtiItemPic\scripts\install\RegisterClientProvider;
 use oat\qtiItemPic\scripts\install\RegisterPic;
+use oat\qtiItemPci\scripts\install\SetupPicRegistry;
 
 return array(
     'name' => 'qtiItemPic',
@@ -42,6 +43,7 @@ return array(
 		    dirname(__FILE__). '/install/ontology/role.rdf'
 		),
         'php'	=> array(
+			SetupPicRegistry::class,
 			SetQtiCreatorConfig::class,
 			RegisterClientProvider::class,
 			RegisterPic::class

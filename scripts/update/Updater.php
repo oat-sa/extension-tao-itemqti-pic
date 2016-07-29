@@ -21,6 +21,7 @@
 
 namespace oat\qtiItemPic\scripts\update;
 
+use oat\qtiItemPci\scripts\install\SetupPicRegistry;
 use oat\qtiItemPic\scripts\install\RegisterClientProvider;
 use oat\qtiItemPic\scripts\install\RegisterPic;
 use oat\qtiItemPic\scripts\install\SetQtiCreatorConfig;
@@ -53,6 +54,11 @@ class Updater extends \common_ext_ExtensionUpdater
 			$registerPic([]);
 			$setQtiCreatorConfig = new SetQtiCreatorConfig();
 			$setQtiCreatorConfig([]);
+
+			$setupPicRegistry = new SetupPicRegistry();
+			$setupPicRegistry->setServiceLocator($this->getServiceManager());
+			$setupPicRegistry->updateTo1_0_0();
+
 			$this->setVersion('1.0.0');
 		}
 	}

@@ -22,7 +22,6 @@ namespace oat\qtiItemPic\model;
 
 use oat\taoQtiItem\model\Hook;
 use oat\taoQtiItem\model\Config;
-use oat\qtiItemPic\model\CreatorRegistry;
 
 /**
  * The hook used in the item creator
