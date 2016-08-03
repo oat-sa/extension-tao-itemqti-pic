@@ -20,8 +20,6 @@ define(['IMSGlobal/jquery_2_1_1', 'qtiInfoControlContext'], function($, qtiInfoC
 
             var $container = $(dom);
 
-            console.log('init', this.getTypeIdentifier(), $container, config);
-
             $container.find('img').attr('src', assetManager.resolve('studentToolSample/runtime/media/tool-icon.svg'));
 
             //hook it into the toolbar:
