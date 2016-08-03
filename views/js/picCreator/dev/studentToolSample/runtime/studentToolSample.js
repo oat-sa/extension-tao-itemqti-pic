@@ -44,8 +44,6 @@ define(['IMSGlobal/jquery_2_1_1', 'qtiInfoControlContext'], function($, qtiInfoC
          * @param {Object} serializedState - json format
          */
         setSerializedState : function(state){
-
-            console.log('state set to', state);
         },
         /**
          * Get the current state of the interaction as a string.
