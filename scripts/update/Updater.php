@@ -47,17 +47,19 @@ class Updater extends \common_ext_ExtensionUpdater
 			$this->setVersion('0.2.3');
 		}
 
-		if($this->isVersion('0.2.3')){
-			$registerClientProvider = new RegisterClientProvider();
-			$registerClientProvider([]);
-			$registerPic = new RegisterPic();
-			$registerPic([]);
-			$setQtiCreatorConfig = new SetQtiCreatorConfig();
-			$setQtiCreatorConfig([]);
-
+		if ($this->isVersion('0.2.3')) {
 			$setupPicRegistry = new SetupPicRegistry();
 			$setupPicRegistry->setServiceLocator($this->getServiceManager());
 			$setupPicRegistry->updateTo1_0_0();
+
+			$setQtiCreatorConfig = new SetQtiCreatorConfig();
+			$setQtiCreatorConfig([]);
+
+			$registerClientProvider = new RegisterClientProvider();
+			$registerClientProvider([]);
+
+			$registerPic = new RegisterPic();
+			$registerPic([]);
 
 			$this->setVersion('1.0.0');
 		}

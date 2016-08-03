@@ -29,7 +29,7 @@ use oat\taoQtiItem\model\portableElement\PortableElementFileStorage;
  * This post-installation script creates a new local file source for file uploaded
  * by end-users through the TAO GUI.
  */
-class   SetupPicRegistry extends \common_ext_action_InstallAction
+class SetupPicRegistry extends \common_ext_action_InstallAction
 {
     /**
      * Install script
