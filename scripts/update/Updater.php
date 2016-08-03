@@ -21,7 +21,7 @@
 
 namespace oat\qtiItemPic\scripts\update;
 
-use oat\qtiItemPci\scripts\install\SetupPicRegistry;
+use oat\qtiItemPic\scripts\install\SetupPicRegistry;
 use oat\qtiItemPic\scripts\install\RegisterClientProvider;
 use oat\qtiItemPic\scripts\install\RegisterPic;
 use oat\qtiItemPic\scripts\install\SetQtiCreatorConfig;
