@@ -1,1 +1,1 @@
-<span id="sts-{{typeIdentifier}}" class="sts-button" data-typeIdentifier="{{typeIdentifier}}" title="{{title}}"><img src="{{icon}}" alt="{{alt}}" /></span>
+<span id="sts-{{typeIdentifier}}" class="sts-button" data-typeIdentifier="{{typeIdentifier}}" title="{{title}}"><img src="" alt="{{alt}}" /></span>
