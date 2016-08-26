@@ -113,7 +113,7 @@ define([
             var $itemPropPanel = $container;
 
             //get list of all info controls available
-            icRegistry.loadCreators(function(allInfoControls){
+            icRegistry.loadCreators().then(function(allInfoControls){
 
                 //get item body container
                 //editor panel..
@@ -370,9 +370,7 @@ define([
         creatorRenderer
             .get()
             .load(function () {
-
                 initStudentToolManager($container, $itemPanel, itemUri);
-
             }, ['infoControl']);
     }
 
