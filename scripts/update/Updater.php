@@ -25,13 +25,15 @@ use oat\qtiItemPic\scripts\install\SetupPicRegistry;
 use oat\qtiItemPic\scripts\install\RegisterClientProvider;
 use oat\qtiItemPic\scripts\install\RegisterPic;
 use oat\qtiItemPic\scripts\install\SetQtiCreatorConfig;
+use oat\taoQtiItem\model\HookRegistry;
 
 class Updater extends \common_ext_ExtensionUpdater 
 {
 
 	/**
-     * 
-     * @param string $currentVersion
+     * Updater
+	 *
+	 * @param string $initialVersion
      * @return string $versionUpdatedTo
      */
     public function update($initialVersion) {
@@ -60,6 +62,8 @@ class Updater extends \common_ext_ExtensionUpdater
 
 			$registerPic = new RegisterPic();
 			$registerPic([]);
+
+			HookRegistry::getRegistry()->remove('picCreator');
 
 			$this->setVersion('1.0.0');
 		}
