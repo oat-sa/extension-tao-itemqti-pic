@@ -14,15 +14,15 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  * 
- * Copyright (c) 2014 (original work) Open Assessment Technologies;
+ * Copyright (c) 2016 (original work) Open Assessment Technologies;
  *               
- * 
  */
 
 use oat\qtiItemPic\scripts\install\SetQtiCreatorConfig;
 use oat\qtiItemPic\scripts\install\RegisterClientProvider;
 use oat\qtiItemPic\scripts\install\RegisterPic;
-use oat\qtiItemPic\scripts\install\SetupPicRegistry;
+use oat\qtiItemPic\scripts\install\RegisterPicModel;
+use oat\taoQtiItem\scripts\SetupPortableElementFileStorage;
 
 return array(
     'name' => 'qtiItemPic',
@@ -31,7 +31,7 @@ return array(
     'license' => 'GPL-2.0',
     'version' => '1.0.0',
 	'author' => 'Open Assessment Technologies',
-	'requires' => array('taoQtiItem' => '>=4.3.0'),
+	'requires' => array('taoQtiItem' => '>=4.4.0'),
     'acl' => array(
         array('grant', 'http://www.tao.lu/Ontologies/generis.rdf#qtiItemPicManager', array('ext'=>'qtiItemPic')),
 		array('grant', 'http://www.tao.lu/Ontologies/TAOItem.rdf#QTIManagerRole', array('ext'=>'qtiItemPic', 'mod' => 'PicLoader')),
@@ -43,10 +43,11 @@ return array(
 		    dirname(__FILE__). '/install/ontology/role.rdf'
 		),
         'php'	=> array(
-			SetupPicRegistry::class,
+			SetupPortableElementFileStorage::class,
 			SetQtiCreatorConfig::class,
 			RegisterClientProvider::class,
-			RegisterPic::class
+			RegisterPic::class,
+			RegisterPicModel::class
 		)
     ),
     'uninstall' => array(

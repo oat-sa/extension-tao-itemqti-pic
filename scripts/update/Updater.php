@@ -21,14 +21,17 @@
 
 namespace oat\qtiItemPic\scripts\update;
 
-use oat\qtiItemPic\scripts\install\SetupPicRegistry;
+use oat\generis\model\OntologyAwareTrait;
+use oat\qtiItemPic\scripts\install\RegisterPicModel;
 use oat\qtiItemPic\scripts\install\RegisterClientProvider;
 use oat\qtiItemPic\scripts\install\RegisterPic;
 use oat\qtiItemPic\scripts\install\SetQtiCreatorConfig;
 use oat\taoQtiItem\model\HookRegistry;
+use oat\taoQtiItem\scripts\SetupPortableElementFileStorage;
 
 class Updater extends \common_ext_ExtensionUpdater 
 {
+	use OntologyAwareTrait;
 
 	/**
      * Updater
@@ -50,9 +53,9 @@ class Updater extends \common_ext_ExtensionUpdater
 		}
 
 		if ($this->isVersion('0.2.3')) {
-			$setupPicRegistry = new SetupPicRegistry();
-			$setupPicRegistry->setServiceLocator($this->getServiceManager());
-			$setupPicRegistry->updateTo1_0_0();
+			$setupPortableElementFileStorage = new SetupPortableElementFileStorage();
+			$setupPortableElementFileStorage->setServiceLocator($this->getServiceManager());
+			$setupPortableElementFileStorage([]);
 
 			$setQtiCreatorConfig = new SetQtiCreatorConfig();
 			$setQtiCreatorConfig([]);
@@ -62,6 +65,18 @@ class Updater extends \common_ext_ExtensionUpdater
 
 			$registerPic = new RegisterPic();
 			$registerPic([]);
+
+			$registerPicModel = new RegisterPicModel();
+			$registerPicModel([]);
+
+			$testManagerRole = $this->getResource('http://www.tao.lu/Ontologies/TAOItem.rdf#ItemsManagerRole');
+			$QTIManagerRole = $this->getResource('http://www.tao.lu/Ontologies/TAOItem.rdf#QTIManagerRole');
+			$testTakerRole = $this->getResource(INSTANCE_ROLE_DELIVERY);
+
+			$accessService = \funcAcl_models_classes_AccessService::singleton();
+			$accessService->grantModuleAccess($testManagerRole, 'qtiItemPic', 'PciLoader');
+			$accessService->grantModuleAccess($QTIManagerRole, 'qtiItemPic', 'PciLoader');
+			$accessService->grantModuleAccess($testTakerRole, 'qtiItemPic', 'PciLoader');
 
 			HookRegistry::getRegistry()->remove('picCreator');
 

@@ -20,22 +20,36 @@
 
 namespace oat\qtiItemPic\controller;
 
-use oat\taoQtiItem\model\portableElement\common\PortableElementFactory;
-use oat\taoQtiItem\model\portableElement\pic\model\PicModel;
+use oat\qtiItemPic\dataObject\PicModel;
+use oat\taoQtiItem\model\portableElement\common\exception\PortableElementException;
+use oat\taoQtiItem\model\portableElement\common\storage\PortableElementRegistry;
 use \tao_actions_CommonModule;
 
 class PicLoader extends tao_actions_CommonModule
 {
-    /** @var PicRegistry */
+    /** @var PortableElementRegistry */
     protected $registry;
 
-    public function __construct()
-    {
-        $this->registry = PortableElementFactory::getRegistry(new PicModel());
-    }
-    
+    /**
+     * Load latest PCI runtimes
+     */
     public function load()
     {
-        $this->returnJson($this->registry->getLatestRuntimes());
+        try {
+            $this->returnJson($this->getPicRegistry()->getLatestRuntimes());
+        } catch (PortableElementException $e) {
+            $this->returnJson($e->getMessage(), 500);
+        }
+    }
+
+    /**
+     * @return PortableElementRegistry
+     */
+    protected function getPicRegistry()
+    {
+        if (! $this->registry) {
+            $this->registry = (new PicModel())->getRegistry();
+        }
+        return $this->registry;
     }
 }
