@@ -44,10 +44,10 @@ return array(
 		),
         'php'	=> array(
 			SetupPortableElementFileStorage::class,
+			RegisterPicModel::class,
 			SetQtiCreatorConfig::class,
 			RegisterClientProvider::class,
 			RegisterPic::class,
-			RegisterPicModel::class
 		)
     ),
     'uninstall' => array(

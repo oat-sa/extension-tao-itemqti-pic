@@ -57,6 +57,9 @@ class Updater extends \common_ext_ExtensionUpdater
 			$setupPortableElementFileStorage->setServiceLocator($this->getServiceManager());
 			$setupPortableElementFileStorage([]);
 
+			$registerPicModel = new RegisterPicModel();
+			$registerPicModel([]);
+
 			$setQtiCreatorConfig = new SetQtiCreatorConfig();
 			$setQtiCreatorConfig([]);
 
@@ -65,9 +68,6 @@ class Updater extends \common_ext_ExtensionUpdater
 
 			$registerPic = new RegisterPic();
 			$registerPic([]);
-
-			$registerPicModel = new RegisterPicModel();
-			$registerPicModel([]);
 
 			$testManagerRole = $this->getResource('http://www.tao.lu/Ontologies/TAOItem.rdf#ItemsManagerRole');
 			$QTIManagerRole = $this->getResource('http://www.tao.lu/Ontologies/TAOItem.rdf#QTIManagerRole');
