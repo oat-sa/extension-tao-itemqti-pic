@@ -20,6 +20,7 @@
 
 namespace oat\qtiItemPic\model;
 
+use oat\oatbox\PhpSerializeStateless;
 use oat\oatbox\service\ServiceManager;
 
 use oat\qtiItemPic\model\portableElement\dataObject\PicDataObject;
@@ -32,6 +33,8 @@ use oat\taoQtiItem\model\portableElement\PortableElement;
 
 class PicModel implements PortableElement
 {
+    use PhpSerializeStateless;
+
     const PIC_IDENTIFIER = 'PIC';
 
     const PIC_MANIFEST = 'picCreator.json';
@@ -94,10 +97,5 @@ class PicModel implements PortableElement
     public function getQtiElementClassName()
     {
         return 'oat\taoQtiItem\model\qti\PortableInfoControl';
-    }
-
-    public function __toPhpCode()
-    {
-        return "new " . __CLASS__."()";
     }
 }
