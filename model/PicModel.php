@@ -24,7 +24,6 @@ use oat\oatbox\service\ServiceManager;
 
 use oat\qtiItemPic\model\portableElement\dataObject\PicDataObject;
 use oat\qtiItemPic\model\portableElement\parser\PicDirectoryParser;
-use oat\qtiItemPic\model\portableElement\parser\PicItemParser;
 use oat\qtiItemPic\model\portableElement\parser\PicPackagerParser;
 use oat\qtiItemPic\model\portableElement\storage\PicRegistry;
 use oat\qtiItemPic\model\portableElement\validator\PicValidator;
@@ -92,11 +91,9 @@ class PicModel implements PortableElement
         return $packageParser;
     }
 
-    public function getItemParser()
+    public function getQtiElementClassName()
     {
-        $itemParser = new PicItemParser();
-        $itemParser->setModel($this);
-        return $itemParser;
+        return 'oat\taoQtiItem\model\qti\PortableInfoControl';
     }
 
     public function __toPhpCode()
