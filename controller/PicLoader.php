@@ -20,7 +20,7 @@
 
 namespace oat\qtiItemPic\controller;
 
-use oat\qtiItemPic\dataObject\PicModel;
+use oat\qtiItemPic\model\PicModel;
 use oat\taoQtiItem\model\portableElement\common\exception\PortableElementException;
 use oat\taoQtiItem\model\portableElement\common\storage\PortableElementRegistry;
 use \tao_actions_CommonModule;
