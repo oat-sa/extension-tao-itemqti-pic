@@ -22,6 +22,7 @@ namespace oat\qtiItemPic\scripts\install;
 
 use common_ext_action_InstallAction;
 use oat\oatbox\service\ServiceManager;
+use oat\taoQtiItem\model\portableElement\exception\PortableElementVersionIncompatibilityException;
 use oat\taoQtiItem\model\portableElement\PortableElementService;
 
 class RegisterPic extends common_ext_action_InstallAction
@@ -33,10 +34,19 @@ class RegisterPic extends common_ext_action_InstallAction
 
         $viewDir = \common_ext_ExtensionsManager::singleton()->getExtensionById('qtiItemPic')->getConstant('DIR_VIEWS');
 
-        $sourceToolbar = $viewDir.implode(DIRECTORY_SEPARATOR, ['js', 'picCreator', 'dev', 'studentToolbar']).DIRECTORY_SEPARATOR;
-        $sourceToolSample = $viewDir.implode(DIRECTORY_SEPARATOR, ['js', 'picCreator', 'dev', 'studentToolSample']).DIRECTORY_SEPARATOR;
-        $service->registerFromDirectorySource($sourceToolbar);
-        $service->registerFromDirectorySource($sourceToolSample);
+        try {
+            $sourceToolbar = $viewDir.implode(DIRECTORY_SEPARATOR, ['js', 'picCreator', 'dev', 'studentToolbar']);
+            $service->registerFromDirectorySource($sourceToolbar);
+        } catch (PortableElementVersionIncompatibilityException $e) {
+            \common_Logger::i($e->getMessage());
+        }
+
+        try {
+            $sourceToolSample = $viewDir.implode(DIRECTORY_SEPARATOR, ['js', 'picCreator', 'dev', 'studentToolSample']);
+            $service->registerFromDirectorySource($sourceToolSample);
+        } catch (PortableElementVersionIncompatibilityException $e) {
+            \common_Logger::i($e->getMessage());
+        }
 
         return new \common_report_Report(\common_report_Report::TYPE_SUCCESS, 'PIC registered');
     }
