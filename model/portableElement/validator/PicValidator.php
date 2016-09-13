@@ -20,7 +20,7 @@
 
 namespace oat\qtiItemPic\model\portableElement\validator;
 
-use oat\taoQtiItem\model\portableElement\common\validator\PortableElementModelValidator;
+use oat\taoQtiItem\model\portableElement\validator\PortableElementModelValidator;
 
 class PicValidator extends PortableElementModelValidator
 {

@@ -20,7 +20,7 @@
 
 namespace oat\qtiItemPic\model\portableElement\storage;
 
-use oat\taoQtiItem\model\portableElement\common\storage\PortableElementRegistry;
+use oat\taoQtiItem\model\portableElement\storage\PortableElementRegistry;
 
 class PicRegistry extends PortableElementRegistry
 {

@@ -58,6 +58,7 @@ class Updater extends \common_ext_ExtensionUpdater
 			$setupPortableElementFileStorage([]);
 
 			$registerPicModel = new RegisterPicModel();
+			$registerPicModel->setServiceLocator($this->getServiceManager());
 			$registerPicModel([]);
 
 			$setQtiCreatorConfig = new SetQtiCreatorConfig();

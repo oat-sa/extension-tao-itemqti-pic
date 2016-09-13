@@ -21,7 +21,7 @@
 namespace oat\qtiItemPic\scripts\install;
 
 use oat\qtiItemPic\model\PicModel;
-use oat\taoQtiItem\model\portableElement\PortableElementFactory;
+use oat\taoQtiItem\model\portableElement\model\PortableElementFactory;
 
 class RegisterPicModel extends \common_ext_action_InstallAction
 {

@@ -28,10 +28,10 @@ use oat\qtiItemPic\model\portableElement\parser\PicDirectoryParser;
 use oat\qtiItemPic\model\portableElement\parser\PicPackagerParser;
 use oat\qtiItemPic\model\portableElement\storage\PicRegistry;
 use oat\qtiItemPic\model\portableElement\validator\PicValidator;
-use oat\taoQtiItem\model\portableElement\common\storage\PortableElementRegistry;
-use oat\taoQtiItem\model\portableElement\PortableElement;
+use oat\taoQtiItem\model\portableElement\storage\PortableElementRegistry;
+use oat\taoQtiItem\model\portableElement\model\PortableElementModel;
 
-class PicModel implements PortableElement
+class PicModel implements PortableElementModel
 {
     use PhpSerializeStateless;
 
