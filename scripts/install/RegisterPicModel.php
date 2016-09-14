@@ -21,24 +21,13 @@
 namespace oat\qtiItemPic\scripts\install;
 
 use oat\qtiItemPic\model\PicModel;
-use oat\taoQtiItem\model\portableElement\model\PortableElementFactory;
+use oat\taoQtiItem\model\portableElement\model\PortableModelRegistry;
 
 class RegisterPicModel extends \common_ext_action_InstallAction
 {
     public function __invoke($params)
     {
-        $modelToRegister = array(PicModel::PIC_IDENTIFIER => new PicModel());
-
-        if (! $this->getServiceLocator()->has(PortableElementFactory::SERVICE_ID)) {
-            $data = $modelToRegister;
-        } else {
-            $data = array_merge(
-                $this->getServiceLocator()->get(PortableElementFactory::SERVICE_ID)->getOptions(),
-                $modelToRegister
-            );
-        }
-
-        $this->getServiceManager()->register(PortableElementFactory::SERVICE_ID, new PortableElementFactory($data));
+        PortableModelRegistry::getRegistry()->register(new PicModel());
         return new \common_report_Report(\common_report_Report::TYPE_SUCCESS, 'Pic Model successfully registered.');
     }
 }
