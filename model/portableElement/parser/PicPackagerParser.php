@@ -20,7 +20,7 @@
 
 namespace oat\qtiItemPic\model\portableElement\parser;
 
-use oat\taoQtiItem\model\portableElement\parser\implementation\PortableElementPackageParser;
+use oat\taoQtiItem\model\portableElement\parser\element\PortableElementPackageParser;
 
 class PicPackagerParser extends PortableElementPackageParser
 {
