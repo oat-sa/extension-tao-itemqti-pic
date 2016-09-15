@@ -1,5 +1,4 @@
-<?php
-/**
+/*
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
  * as published by the Free Software Foundation; under version 2
@@ -14,20 +13,23 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
- * Copyright (c) 2014 (original work) Open Assessment Technologies SA;
+ * Copyright (c) 2016 (original work) Open Assessment Technologies SA;
  *
  */
-
-namespace oat\qtiItemPic\controller;
-
-use oat\taoQtiItem\controller\AbstractPortableElementManager;
-use oat\qtiItemPic\model\CreatorRegistry;
-
-class PicManager extends AbstractPortableElementManager
-{
+define(['jquery', 'helpers', 'core/promise'], function($, helpers, Promise){
+    'use strict';
     
-    protected function getCreatorRegistry(){
-        return new CreatorRegistry();
-    }
-
-}
+    var _serverUrl = helpers._url('load', 'PicLoader', 'qtiItemPic');
+    
+    return {
+        load: function load(){
+            return new Promise(function(resolve, reject){
+                $.ajax({
+                    url : _serverUrl,
+                    dataType : 'json',
+                    type : 'GET'
+                }).done(resolve).fail(reject);
+            });
+        }
+    };
+});

@@ -14,28 +14,42 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  * 
- * Copyright (c) 2014 (original work) Open Assessment Technologies;
+ * Copyright (c) 2016 (original work) Open Assessment Technologies;
  *               
- * 
- */               
+ */
+
+use oat\qtiItemPic\scripts\install\SetQtiCreatorConfig;
+use oat\qtiItemPic\scripts\install\RegisterClientProvider;
+use oat\qtiItemPic\scripts\install\RegisterPic;
+use oat\qtiItemPic\scripts\install\RegisterPicModel;
+use oat\taoQtiItem\scripts\SetupPortableElementFileStorage;
 
 return array(
     'name' => 'qtiItemPic',
-	'label' => 'QTI Portable Info Control',
-	'description' => '',
+    'label' => 'QTI Portable Info Control',
+    'description' => '',
     'license' => 'GPL-2.0',
-    'version' => '0.2.4',
-	'author' => 'Open Assessment Technologies',
-	'requires' => array('taoQtiItem' => '>=2.6'),
+    'version' => '1.0.0',
+    'author' => 'Open Assessment Technologies',
+    'requires' => array(
+        'taoQtiItem' => '>=5.0.0'
+    ),
     'acl' => array(
         array('grant', 'http://www.tao.lu/Ontologies/generis.rdf#qtiItemPicManager', array('ext'=>'qtiItemPic')),
+		array('grant', 'http://www.tao.lu/Ontologies/TAOItem.rdf#QTIManagerRole', array('ext'=>'qtiItemPic', 'mod' => 'PicLoader')),
+		array('grant', 'http://www.tao.lu/Ontologies/TAOItem.rdf#ItemsManagerRole', array('ext'=>'qtiItemPic', 'mod' => 'PicLoader')),
+		array('grant', 'http://www.tao.lu/Ontologies/TAO.rdf#DeliveryRole', array('ext'=>'qtiItemPic', 'mod' => 'PicLoader')),
     ),
     'install' => array(
         'rdf' => array(
 		    dirname(__FILE__). '/install/ontology/role.rdf'
 		),
         'php'	=> array(
-			dirname(__FILE__).'/scripts/install/addHook.php'
+			SetupPortableElementFileStorage::class,
+			RegisterPicModel::class,
+			SetQtiCreatorConfig::class,
+			RegisterClientProvider::class,
+			RegisterPic::class,
 		)
     ),
     'uninstall' => array(

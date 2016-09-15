@@ -1,8 +1,26 @@
+/*
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License
+ * as published by the Free Software Foundation; under version 2
+ * of the License (non-upgradable).
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+ *
+ * Copyright (c) 2016 (original work) Open Assessment Technologies SA;
+ *
+ */
 define([
     'jquery',
     'lodash',
     'ui/tooltipster',
-    'taoQtiItem/qtiCreator/editor/infoControlRegistry',
+    'taoQtiItem/portableElementRegistry/icRegistry',
     'taoQtiItem/qtiCreator/helper/creatorRenderer',
     'taoQtiItem/qtiCreator/model/helper/container',
     'taoQtiItem/qtiCreator/editor/gridEditor/content',
@@ -48,7 +66,7 @@ define([
         var cnt = 1;
         var checkSelector = setInterval(function () {
             if(cnt > 25) {
-                throw 'Tool takes too long to load';
+                dfd.reject('Tool takes too long to load');
             }
             if ($(selector).is(':visible')) {
                 dfd.resolve();
@@ -60,18 +78,8 @@ define([
         return dfd.promise();
     }
 
-
-
-    function itemWidgetLoaded(config, callback) {
-        var $editor = config.dom.getEditorScope();
-        if ($editor.data('widget')) {
-            callback($editor.data('widget'));
-        }
-        else {
-            $(document).one('widgetloaded.qticreator', function (e, item) {
-                callback(item);
-            });
-        }
+    function itemWidgetLoaded($itemPanel, callback) {
+        callback();
     }
 
     /**
@@ -87,41 +95,41 @@ define([
             .attr('data-qti-class', 'infoControl.' + typeIdentifier);
     }
 
-
     /**
      *
-     * @param config
+     * @param $container
+     * @param $itemPanel
+     * @param itemUri
      */
-    function initStudentToolManager(config) {
+    function initStudentToolManager($container, $itemPanel, item) {
 
         var $placeholder;
-
         //get item
-        itemWidgetLoaded(config, function (itemWidget) {
+        //editor panel..
+        itemWidgetLoaded($itemPanel, function () {
 
-            var item = itemWidget.element;
-            var $itemPropPanel = config.dom.getItemPropertyPanel();
+            var uri = item.data('uri');
+            //item prop panel, aka container
+            var $itemPropPanel = $container;
 
             //get list of all info controls available
-            icRegistry.loadAll(function (allInfoControls) {
+            icRegistry.loadCreators().then(function(allInfoControls){
 
                 //get item body container
-                var $itemBody = config.dom.getEditorScope().find('.qti-itemBody');
+                //editor panel..
+                var $itemBody = $itemPanel.find('.qti-itemBody');
 
                 //prepare data for the tpl:
                 var tools = {},
-                    toolArray = [],
+                    toolArray,
                     alreadySet = _.pluck(item.getElements('infoControl'), 'typeIdentifier'),
                     allInfoControlsSize,
                     $managerPanel,
                     i = 0;
 
-
-                //feed the tools lists (including checked or not)
-                _.each(allInfoControls, function (creator) {
+                _.each(allInfoControls, function(creator){
                     var name = creator.getTypeIdentifier(),
-                        ic = icRegistry.get(name),
-                        manifest = ic.manifest,
+                        manifest = icRegistry.get(name),
                         controlExists = _.indexOf(alreadySet, name) > -1,
                         defaultProperties = creator.getDefaultProperties(),
                         position = defaultProperties.position || 100 + i;
@@ -159,7 +167,6 @@ define([
                     allInfoControls[name].copied = false;
 
                     i++;
-
                 });
 
                 toolArray = _.sortBy(tools, 'position');
@@ -344,53 +351,27 @@ define([
                             // between processControl() and processAllControls()
                             _.each(newElts, function (elt) {
 
-                                // if the required resources have not been copied yet
-                                if (!control.copied) {
-                                    $.when(icRegistry.addRequiredResources(
-                                            elt.typeIdentifier, config.uri))
-                                        .then(function (data, textStatus, jqXHR) {
-
-                                            if (jqXHR.status !== 200) {
-                                                throw 'Failed to add required resources for the info control';
-                                            }
-
-                                            // update look-up list
-                                            allInfoControls[control.name].copied = true;
-                                            renderControl(elt);
-
-
-                                        });
-                                }
-                                else {
-                                    renderControl(elt);
-                                }
+                                // update look-up list
+                                allInfoControls[control.name].copied = true;
+                                renderControl(elt);
 
                             });
                         });
-
-
                 }
 
-            });
+            }, true);
 
         });
 
     }
 
-    var pciManagerHook = {
-        init: function (config) {
+    return function picManager($container, $itemPanel, itemUri) {
+        //load infoControl model first into the creator renderer
+        creatorRenderer
+            .get()
+            .load(function () {
+                initStudentToolManager($container, $itemPanel, itemUri);
+            }, ['infoControl']);
+    }
 
-            //load infoControl model first into the creator renderer
-            creatorRenderer
-                .get()
-                .load(function () {
-
-                    initStudentToolManager(config);
-
-                }, ['infoControl']);
-
-        }
-    };
-
-    return pciManagerHook;
 });
