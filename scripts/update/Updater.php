@@ -41,18 +41,9 @@ class Updater extends \common_ext_ExtensionUpdater
      */
     public function update($initialVersion) {
         
-		if (
-			$this->isVersion('0.1')   || 
-			$this->isVersion('0.1.1') || 
-			$this->isVersion('0.2')	  || 
-			$this->isVersion('0.2.1') || 
-			$this->isVersion('0.2.2') 
-			)
-		{
-			$this->setVersion('0.2.3');
-		}
+		$this->skip('0.1','0.2.4');
 
-		if ($this->isVersion('0.2.3')) {
+		if ($this->isVersion('0.2.4')) {
 			$setupPortableElementFileStorage = new SetupPortableElementFileStorage();
 			$setupPortableElementFileStorage->setServiceLocator($this->getServiceManager());
 			$setupPortableElementFileStorage([]);
