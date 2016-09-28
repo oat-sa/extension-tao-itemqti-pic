@@ -3,7 +3,7 @@
     "label": "Tool Sample",
     "short": "Sample",
     "description": "a sample student tool",
-    "version": "0.2.0",
+    "version": "0.3.0",
     "author": "Sam Sipasseuth",
     "email": "sam@taotesting.com",
     "tags": [
@@ -26,7 +26,8 @@
         "libraries" : [
             "./creator/tpl/markup.tpl",
             "./creator/widget/Widget.js",
-            "./creator/widget/states/states.js"
+            "./creator/widget/states/states.js",
+            "./creator/widget/states/Active.js"
         ]
     }
 }
