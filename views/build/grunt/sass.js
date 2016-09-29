@@ -15,8 +15,6 @@ module.exports = function(grunt) {
     sass.qtiitempic.files[root + 'js/picCreator/dev/studentToolSample/runtime/css/studentToolSample.css'] = root + 'js/picCreator/dev/studentToolSample/runtime/scss/studentToolSample.scss';
     sass.qtiitempic.files[root + 'js/picCreator/dev/studentToolSample/creator/css/studentToolSample.css'] = root + 'js/picCreator/dev/studentToolSample/creator/scss/studentToolSample.scss';
 
-    console.log(sass.qtiitempic.files);
-
     watch.qtiitempicsass = {
         files : [root + 'scss/*.scss', root + 'js/picCreator/dev/**/*.scss', root + 'scss/**/*.scss'],
         tasks : ['sass:qtiitempic', 'notify:qtiitempicsass'],

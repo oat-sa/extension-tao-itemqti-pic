@@ -1,7 +1,7 @@
 {
 "version": 3,
-"mappings": "AAAA,sBAAsB,CAClB,KAAK,CAAC,GAAG",
-"sources": ["../scss/studentToolSample.scss"],
+"mappings": "AAEA,sBAAuB,CACnB,QAAQ,CAAE,QAAQ,CAGtB,0CAA2C,CACvC,QAAQ,CAAE,QAAQ,CAClB,GAAG,CAAE,IAAI,CACT,IAAI,CAAE,IAAI,CACV,OAAO,CAAE,QAAQ,CACjB,SAAS,CAAE,KAAK,CAChB,aAAa,CAAE,GAAG,CAClB,gBAAgB,CC+BN,OAAiB,CD9B3B,MAAM,CAAE,iBAA0B",
+"sources": ["../scss/studentToolSample.scss","../../../../../../../../tao/views/scss/inc/_colors.scss"],
 "names": [],
 "file": "studentToolSample.css"
 }

@@ -1,3 +1,16 @@
-#sts-studentToolSample{
-    color:red;
+@import "inc/bootstrap";
+
+#sts-studentToolSample {
+    position: relative;
+}
+
+.sts-scope .sts-studentToolSample.hint-box {
+    position: absolute;
+    top: 70px;
+    left: -1px;
+    padding: 5px 10px;
+    min-width: 200px;
+    border-radius: 3px;
+    background-color: $infoBgColor;
+    border: 1px solid $infoBorderColor;
 }

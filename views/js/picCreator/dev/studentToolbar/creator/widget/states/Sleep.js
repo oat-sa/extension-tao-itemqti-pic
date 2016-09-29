@@ -21,7 +21,6 @@ define([
                 //find the student tool hosted in the toolbar and trigger the active state on it
                 var infoControl = _.find(item.getElements('infoControl'), {typeIdentifier : $tool.data('typeidentifier')});
                 infoControl.data('widget').changeState('active');
-                console.log('infoCOntrol', 'YES');
             }
         });
 

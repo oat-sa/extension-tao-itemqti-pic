@@ -13,7 +13,8 @@
     "runtime" : {
         "hook" : "./runtime/studentToolSample.js",
         "libraries" : [
-            "IMSGlobal/jquery_2_1_1"
+            "IMSGlobal/jquery_2_1_1",
+            "OAT/lodash"
         ],
         "stylesheets" : [
             "./runtime/css/studentToolSample.css"

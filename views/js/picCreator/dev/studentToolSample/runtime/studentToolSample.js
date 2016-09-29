@@ -1,4 +1,5 @@
-define(['IMSGlobal/jquery_2_1_1', 'qtiInfoControlContext'], function($, qtiInfoControlContext){
+define(['IMSGlobal/jquery_2_1_1', 'OAT/lodash', 'qtiInfoControlContext'], function($, _, qtiInfoControlContext){
+    'use strict';
 
     var studentToolSample = {
         id : -1,
@@ -14,17 +15,56 @@ define(['IMSGlobal/jquery_2_1_1', 'qtiInfoControlContext'], function($, qtiInfoC
          */
         initialize : function(id, dom, config, assetManager){
 
+            var self = this,
+                $container,
+                $stsScope,
+                timeout,
+                hints;
+
             this.id = id;
             this.dom = dom;
             this.config = config || {};
 
-            var $container = $(dom);
-
+            //init dom
+            $container = $(dom);
             $container.find('img').attr('src', assetManager.resolve('studentToolSample/runtime/media/tool-icon.svg')).css({height:20,width:20});
 
             //hook it into the toolbar:
             this.$toolbar = $('#'+this.config.toolbarId);
             this.$toolbar.find('.sts-content').append($container);
+            $stsScope = $container.closest('.sts-scope');
+
+            //setup hinting engine
+            hints = resetListing();
+            $container.click(function(){
+                var hint;
+                if(!hints.length){
+                    hints = resetListing();
+                }
+                hint = hints.shift();
+                showHint(hint);
+            });
+
+            function resetListing(){
+                var values = _.values(self.config.hints || []);
+                if(self.config.shuffle){
+                    return _.shuffle(values);
+                }
+                return values;
+            }
+
+            function showHint(hint){
+                $stsScope.children('.hint-box').remove();
+                $stsScope.append($('<div class="sts-studentToolSample hint-box"><span><></div>').html(hint));
+                clearTimeout(timeout);
+                timeout = setTimeout(function(){
+                    $stsScope.children('.hint-box').fadeOut(1000, function(){
+                        $(this).remove();
+                    });
+                }, 5000);
+            }
+
+
         },
         /**
          * Reverse operation performed by render()
