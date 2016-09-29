@@ -1,0 +1,7 @@
+{
+"version": 3,
+"mappings": "AAAA,sBAAsB,CAClB,KAAK,CAAC,GAAG",
+"sources": ["../scss/studentToolSample.scss"],
+"names": [],
+"file": "studentToolSample.css"
+}

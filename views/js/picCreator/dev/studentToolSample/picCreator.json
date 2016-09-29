@@ -1,13 +1,14 @@
 {
     "typeIdentifier": "studentToolSample",
-    "label": "Tool Sample",
-    "short": "Sample",
-    "description": "a sample student tool",
+    "label": "Hint",
+    "short": "Hint",
+    "description": "show a hint",
     "version": "0.3.0",
     "author": "Sam Sipasseuth",
     "email": "sam@taotesting.com",
     "tags": [
-        "student-tool"
+        "student-tool",
+        "hint"
     ],
     "runtime" : {
         "hook" : "./runtime/studentToolSample.js",
@@ -29,6 +30,9 @@
             "./creator/widget/Widget.js",
             "./creator/widget/states/states.js",
             "./creator/widget/states/Active.js"
+        ],
+        "stylesheets" : [
+            "./creator/css/studentToolSample.css"
         ]
     }
 }

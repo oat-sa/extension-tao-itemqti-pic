@@ -1,6 +1,7 @@
 define([
     'taoQtiItem/qtiCreator/widgets/Widget',
-    'studentToolSample/creator/widget/states/states'
+    'studentToolSample/creator/widget/states/states',
+    'css!studentToolSample/creator/css/studentToolSample'
 ], function(Widget, states){
 
     var StudentToolSampleWidget = Widget.clone();

@@ -25,13 +25,17 @@ define([
             $form = _widget.$form,
             tool = _widget.element,
             syncHints = function syncHints(){
+                var $formContainer = $form.children('.student-tool-hint');
                 var hints = {};
                 var i = 0;
-                $form.find('[name=hint]').each(function(){
-                    hints[i] = $(this).val();
-                    i++;
-                });
-                tool.prop('hints', hints);
+                //check that the form exists before sync to prevent from removing all hints if the callback is executed after the form has been destroyed
+                if($formContainer.length){
+                    $formContainer.find('[name=hint]').each(function(){
+                        hints[i] = $(this).val();
+                        i++;
+                    });
+                    tool.prop('hints', hints);
+                }
             };
 
         $form.off().html(formTpl({

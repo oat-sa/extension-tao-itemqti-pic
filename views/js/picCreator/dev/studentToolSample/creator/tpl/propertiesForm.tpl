@@ -16,15 +16,15 @@
 
         {{#each hints}}
         <div class="panel">
-            <span class="icon-bin" data-role="delete"></span>
             <textarea name="hint">{{.}}</textarea>
+            <span class="icon-bin" data-role="delete"></span>
         </div>
         {{/each}}
 
         <div class="panel">
-            <button type="button" class="btn-info small" data-role="add" value="add">
+            <button type="button" class="btn-info small add-hint" data-role="add" value="add">
                 <span class="icon-add"></span>
-                {{__ "new hint"}}
+                {{__ "New Hint"}}
             </button>
         </div>
     </div>
