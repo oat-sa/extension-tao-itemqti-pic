@@ -31,10 +31,14 @@ define([
          * 
          * @returns {Object}
          */
-        getDefaultProperties : function(pic){
+        getDefaultProperties : function(){
             return {
-                movable : false,
-                theme : 'tao-light'
+                shuffle:false,
+                hints : {
+                    '0' : "If there is no wind, row.",
+                    '1' : "You're never too old to learn.",
+                    '2' : "Fall seven times, stand up eight.",
+                }
             };
         },
         /**

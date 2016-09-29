@@ -1,17 +1,63 @@
 define([
     'jquery',
+    'lodash',
     'taoQtiItem/qtiCreator/widgets/states/factory',
-    'taoQtiItem/qtiCreator/widgets/static/states/Active'
-], function($, stateFactory, Active){
+    'taoQtiItem/qtiCreator/widgets/static/states/Active',
+    'taoQtiItem/qtiCreator/widgets/helpers/formElement',
+    'tpl!studentToolSample/creator/tpl/propertiesForm'
+], function($, _, stateFactory, Active, formElement, formTpl){
     'use strict';
 
-    return stateFactory.extend(Active, function(){
+    var StudentToolSampleStateActive = stateFactory.extend(Active, function(){
 
-        console.log('activce');
+        this.initForm();
 
     }, function(){
 
-        console.log('inactivce');
+        //destroy form
+        this.widget.$form.off().empty();
     });
 
+    StudentToolSampleStateActive.prototype.initForm = function initForm(){
+
+        var self = this,
+            _widget = this.widget,
+            $form = _widget.$form,
+            tool = _widget.element,
+            syncHints = function syncHints(){
+                var hints = {};
+                var i = 0;
+                $form.find('[name=hint]').each(function(){
+                    hints[i] = $(this).val();
+                    i++;
+                });
+                tool.prop('hints', hints);
+            };
+
+        $form.off().html(formTpl({
+            shuffle : (tool.prop('shuffle') === true || tool.prop('shuffle') === 'true'),
+            hints : _.values(tool.prop('hints'))
+        }));
+
+        formElement.initWidget($form);
+
+        //init data change callbacks
+        formElement.setChangeCallbacks($form, tool, {
+            shuffle : function(tool, shuffle){
+                tool.prop('shuffle', shuffle);
+            }
+        });
+
+        //init the custom event listener
+        $form.on('click', '[data-role=delete]', function(){
+            $(this).parent('.panel').remove();
+            syncHints();
+        }).on('click', '[data-role=add]', function(){
+            var hints = tool.prop('hints') || {};
+            hints[_.size(hints)] = '';
+            self.initForm();
+        }).on('keyup change', _.throttle(syncHints, 400));
+    };
+
+    return StudentToolSampleStateActive;
 });

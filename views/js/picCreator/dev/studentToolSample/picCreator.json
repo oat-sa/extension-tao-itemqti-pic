@@ -25,6 +25,7 @@
         "hook": "./picCreator.js",
         "libraries" : [
             "./creator/tpl/markup.tpl",
+            "./creator/tpl/propertiesForm.tpl",
             "./creator/widget/Widget.js",
             "./creator/widget/states/states.js",
             "./creator/widget/states/Active.js"
