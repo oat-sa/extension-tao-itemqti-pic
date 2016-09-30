@@ -56,8 +56,11 @@ define(['IMSGlobal/jquery_2_1_1', 'OAT/lodash', 'qtiInfoControlContext'], functi
             function showHint(hint){
                 $stsScope.children('.hint-box').remove();
                 $stsScope.append($('<div class="sts-studentToolSample hint-box"><span><></div>').html(hint));
-                clearTimeout(timeout);
+                if(timeout){
+                    clearTimeout(timeout);
+                }
                 timeout = setTimeout(function(){
+                    //todo use transition
                     $stsScope.children('.hint-box').fadeOut(1000, function(){
                         $(this).remove();
                     });

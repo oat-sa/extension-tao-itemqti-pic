@@ -7,13 +7,20 @@ module.exports = function(grunt) {
 
     sass.qtiitempic = {
         options : {
-            loadPath : ['../scss/', root + 'scss/inc']
+            loadPath : [
+                '../scss',
+                root + 'scss/inc',
+                root + 'js/picCreator/dev/studentToolbar/runtime/scss',
+                root + 'js/picCreator/dev/studentToolbar/runtime/scss/inc'
+            ]
         },
         files : {}        
     };
     sass.qtiitempic.files[root + 'css/pic-manager.css'] = root + 'scss/pic-manager.scss';
     sass.qtiitempic.files[root + 'js/picCreator/dev/studentToolSample/runtime/css/studentToolSample.css'] = root + 'js/picCreator/dev/studentToolSample/runtime/scss/studentToolSample.scss';
     sass.qtiitempic.files[root + 'js/picCreator/dev/studentToolSample/creator/css/studentToolSample.css'] = root + 'js/picCreator/dev/studentToolSample/creator/scss/studentToolSample.scss';
+    sass.qtiitempic.files[root + 'js/picCreator/dev/studentToolbar/runtime/css/common.css'] = root + 'js/picCreator/dev/studentToolbar/runtime/scss/common.scss';
+    sass.qtiitempic.files[root + 'js/picCreator/dev/studentToolbar/runtime/css/student-toolbar.css'] = root + 'js/picCreator/dev/studentToolbar/runtime/scss/student-toolbar.scss';
 
     watch.qtiitempicsass = {
         files : [root + 'scss/*.scss', root + 'js/picCreator/dev/**/*.scss', root + 'scss/**/*.scss'],

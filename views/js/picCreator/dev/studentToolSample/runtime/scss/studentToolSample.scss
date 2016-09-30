@@ -13,4 +13,8 @@
     border-radius: 3px;
     background-color: $infoBgColor;
     border: 1px solid $infoBorderColor;
+    z-index: 1;
+}
+.sts-scope .compact + .sts-studentToolSample.hint-box{
+    top: 45px;
 }
