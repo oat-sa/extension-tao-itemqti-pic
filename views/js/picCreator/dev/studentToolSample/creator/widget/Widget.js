@@ -1,5 +1,5 @@
 define([
-    'taoQtiItem/qtiCreator/widgets/static/portableInfoControl/Widget',
+    'qtiItemPic/picCreator/studentTool/Widget',
     'studentToolSample/creator/widget/states/states',
     'css!studentToolSample/creator/css/studentToolSample'
 ], function(Widget, states){
