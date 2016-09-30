@@ -1,5 +1,5 @@
 define([
-    'taoQtiItem/qtiCreator/widgets/Widget',
+    'taoQtiItem/qtiCreator/widgets/static/portableInfoControl/Widget',
     'studentToolSample/creator/widget/states/states',
     'css!studentToolSample/creator/css/studentToolSample'
 ], function(Widget, states){
@@ -7,17 +7,9 @@ define([
     var StudentToolSampleWidget = Widget.clone();
 
     StudentToolSampleWidget.initCreator = function(){
-        
         this.registerStates(states);
-        
         Widget.initCreator.call(this);
     };
-    
-    StudentToolSampleWidget.buildContainer = function(){
-        
-        this.$container = this.$original;
-        this.$container.addClass('widget-box');
-    };
-    
+
     return StudentToolSampleWidget;
 });
