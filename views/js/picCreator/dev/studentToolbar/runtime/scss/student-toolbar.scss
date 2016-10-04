@@ -36,13 +36,24 @@
 
 .qti-item.item-editor-item{
     .sts-scope {
-        .sts-container.sts-studentToolbar-container {
-            .widget-inline{
-                display: inline-block;
-                float: left;
-                .overlay{
+        .sts-container.sts-studentToolbar-container{
+            .sts-content{
+                .widget-inline{
+                    @include border-radius(2);
                     display: inline-block;
-                    background: transparent;
+                    float: left;
+                    height: 32px;
+                    margin: 1px 2px 2px 1px;
+                    .overlay{
+                        display: inline-block;
+                        background: transparent;
+                    }
+                    &:hover .sts-button, &.edit-active .sts-button{
+                        border-color: transparent;
+                    }
+                }
+                .sts-button{
+                    margin: 0;
                 }
             }
         }

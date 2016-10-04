@@ -27,7 +27,7 @@ define(['IMSGlobal/jquery_2_1_1', 'OAT/lodash', 'qtiInfoControlContext'], functi
 
             //init dom
             $container = $(dom);
-            $container.find('img').attr('src', assetManager.resolve('studentToolSample/runtime/media/tool-icon.svg')).css({height:20,width:20});
+            $container.find('img').attr('src', assetManager.resolve('studentToolSample/runtime/media/tool-icon.svg'));
 
             //hook it into the toolbar:
             this.$toolbar = $('#'+this.config.toolbarId);

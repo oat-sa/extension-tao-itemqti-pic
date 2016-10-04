@@ -59,6 +59,7 @@ define([
         }).on('click', '[data-role=add]', function(){
             var hints = tool.prop('hints') || {};
             hints[_.size(hints)] = '';
+            tool.prop('hints', hints);
             self.initForm();
         }).on('keyup change', _.throttle(syncHints, 400));
     };
