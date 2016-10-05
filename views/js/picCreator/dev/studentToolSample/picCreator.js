@@ -56,7 +56,8 @@ define([
                 hints : [
                     "You're never too old to learn.",
                     "If there is no wind, row.",
-                    "Fall seven times, stand up eight."
+                    "Fall seven times, stand up eight.",
+                    "The journey is the reward."
                 ]
             };
         },
