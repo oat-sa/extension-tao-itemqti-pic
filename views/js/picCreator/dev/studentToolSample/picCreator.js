@@ -18,7 +18,7 @@
  */
 define([
     'lodash',
-    'taoQtiItem/qtiCreator/editor/infoControlRegistry',
+    'taoQtiItem/portableElementRegistry/icRegistry',
     'studentToolSample/creator/widget/Widget',
     'tpl!studentToolSample/creator/tpl/markup'
 ], function(_, registry, Widget, markupTpl){
@@ -84,7 +84,7 @@ define([
          */
         getMarkupData : function(pic, defaultData){
             
-            var manifest = registry.get(_typeIdentifier).manifest;
+            var manifest = registry.get(_typeIdentifier);
 
             defaultData = _.defaults(defaultData, {
                 typeIdentifier : _typeIdentifier,
