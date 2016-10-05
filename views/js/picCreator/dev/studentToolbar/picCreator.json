@@ -3,7 +3,7 @@
     "label": "Student Toolbar",
     "short" : "Toolbar",
     "description": "The container of student tools",
-    "version": "0.2.0",
+    "version": "0.3.0",
     "author": "Sam Sipasseuth",
     "email": "sam@taotesting.com",
     "tags": [],
@@ -22,7 +22,8 @@
         "libraries" : [
             "./creator/tpl/student-toolbar.tpl",
             "./creator/widget/Widget.js",
-            "./creator/widget/states/states.js"
+            "./creator/widget/states/states.js",
+            "./creator/widget/states/Sleep.js"
         ]
     }
 }

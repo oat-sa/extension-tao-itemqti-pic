@@ -1,4 +1,33 @@
-define(['IMSGlobal/jquery_2_1_1', 'qtiInfoControlContext'], function($, qtiInfoControlContext){
+/*
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License
+ * as published by the Free Software Foundation; under version 2
+ * of the License (non-upgradable).
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+ *
+ * Copyright (c) 2016 (original work) Open Assessment Technologies SA;
+ *
+ */
+define(['IMSGlobal/jquery_2_1_1', 'OAT/lodash', 'qtiInfoControlContext'], function($, _, qtiInfoControlContext){
+    'use strict';
+
+    /**
+     * Global config for the hinter
+     *
+     * @private
+     */
+    var _config = {
+        timeout : 5000,
+        fadeoutDuration : 1000
+    };
 
     var studentToolSample = {
         id : -1,
@@ -14,17 +43,66 @@ define(['IMSGlobal/jquery_2_1_1', 'qtiInfoControlContext'], function($, qtiInfoC
          */
         initialize : function(id, dom, config, assetManager){
 
+            var self = this,
+                $container,
+                timeout,
+                hints;
+
             this.id = id;
             this.dom = dom;
             this.config = config || {};
 
-            var $container = $(dom);
-
+            //init dom
+            $container = $(dom);
             $container.find('img').attr('src', assetManager.resolve('studentToolSample/runtime/media/tool-icon.svg'));
 
             //hook it into the toolbar:
             this.$toolbar = $('#'+this.config.toolbarId);
             this.$toolbar.find('.sts-content').append($container);
+
+            //setup hinting engine
+            hints = resetListing();
+            $container.click(function(){
+                var hint;
+                if(!hints.length){
+                    hints = resetListing();
+                }
+                hint = hints.shift();
+                showHint(hint);
+            });
+
+            /**
+             * Reset the list of hints to be displayed and returns the array
+             *
+             * @returns {Array}
+             */
+            function resetListing(){
+                var values = _.values(self.config.hints || []);
+                if(self.config.shuffle){
+                    return _.shuffle(values);
+                }
+                return values;
+            }
+
+            /**
+             * Displays the hint
+             *
+             * @param hint
+             */
+            function showHint(hint){
+                $container.children('.hint-box').remove();
+                $container.append($('<div class="sts-studentToolSample hint-box">').html(hint));
+                if(timeout){
+                    clearTimeout(timeout);
+                }
+                timeout = setTimeout(function(){
+                    $container.children('.hint-box').fadeOut(_config.fadeoutDuration, function(){
+                        $(this).remove();
+                    });
+                }, _config.timeout);
+            }
+
+
         },
         /**
          * Reverse operation performed by render()
@@ -34,7 +112,6 @@ define(['IMSGlobal/jquery_2_1_1', 'qtiInfoControlContext'], function($, qtiInfoC
          * @param {Object} interaction
          */
         destroy : function(){
-
             $(this.dom).remove();
         },
         /**
@@ -53,7 +130,6 @@ define(['IMSGlobal/jquery_2_1_1', 'qtiInfoControlContext'], function($, qtiInfoC
          * @returns {Object} json format
          */
         getSerializedState : function(){
-
             return {};
         }
     };

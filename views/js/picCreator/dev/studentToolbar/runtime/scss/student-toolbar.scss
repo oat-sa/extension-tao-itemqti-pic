@@ -12,15 +12,47 @@
         transform: translate(0px, 0px);
         .sts-content {
             min-height: 36px;
-            .sts-toolcontainer {
-                display: block;
+        }
+        &.compact{
+            display: inline-block;
+            .sts-title-bar{
+                display: none;
+            }
+            .sts-content{
+                display: inline-block;
             }
         }
     }
 }
 
-.runtime.qti-item {
+.qti-item.runtime {
     .sts-container.sts-studentToolbar-container {
         margin-top: -15px;
+    }
+}
+
+.qti-item.item-editor-item{
+    .sts-scope {
+        .sts-container.sts-studentToolbar-container{
+            .sts-content{
+                .widget-inline{
+                    @include border-radius(2);
+                    display: inline-block;
+                    float: left;
+                    height: 32px;
+                    margin: 1px 2px 2px 1px;
+                    .overlay{
+                        display: inline-block;
+                        background: transparent;
+                    }
+                    &:hover .sts-button, &.edit-active .sts-button{
+                        border-color: transparent;
+                    }
+                }
+                .sts-button{
+                    margin: 0;
+                }
+            }
+        }
     }
 }
