@@ -25,7 +25,8 @@ define(['IMSGlobal/jquery_2_1_1', 'OAT/lodash', 'qtiInfoControlContext'], functi
      * @private
      */
     var _config = {
-        timeout : 5000
+        timeout : 5000,
+        fadeoutDuration : 1000
     };
 
     var studentToolSample = {
@@ -44,7 +45,6 @@ define(['IMSGlobal/jquery_2_1_1', 'OAT/lodash', 'qtiInfoControlContext'], functi
 
             var self = this,
                 $container,
-                $stsScope,
                 timeout,
                 hints;
 
@@ -59,7 +59,6 @@ define(['IMSGlobal/jquery_2_1_1', 'OAT/lodash', 'qtiInfoControlContext'], functi
             //hook it into the toolbar:
             this.$toolbar = $('#'+this.config.toolbarId);
             this.$toolbar.find('.sts-content').append($container);
-            $stsScope = $container.closest('.sts-scope');
 
             //setup hinting engine
             hints = resetListing();
@@ -87,17 +86,17 @@ define(['IMSGlobal/jquery_2_1_1', 'OAT/lodash', 'qtiInfoControlContext'], functi
 
             /**
              * Displays the hint
+             *
              * @param hint
              */
             function showHint(hint){
-                $stsScope.children('.hint-box').remove();
-                $stsScope.append($('<div class="sts-studentToolSample hint-box">').html(hint));
+                $container.children('.hint-box').remove();
+                $container.append($('<div class="sts-studentToolSample hint-box">').html(hint));
                 if(timeout){
                     clearTimeout(timeout);
                 }
                 timeout = setTimeout(function(){
-                    //todo use transition
-                    $stsScope.children('.hint-box').fadeOut(1000, function(){
+                    $container.children('.hint-box').fadeOut(_config.fadeoutDuration, function(){
                         $(this).remove();
                     });
                 }, _config.timeout);
@@ -113,7 +112,6 @@ define(['IMSGlobal/jquery_2_1_1', 'OAT/lodash', 'qtiInfoControlContext'], functi
          * @param {Object} interaction
          */
         destroy : function(){
-
             $(this.dom).remove();
         },
         /**
@@ -132,7 +130,6 @@ define(['IMSGlobal/jquery_2_1_1', 'OAT/lodash', 'qtiInfoControlContext'], functi
          * @returns {Object} json format
          */
         getSerializedState : function(){
-
             return {};
         }
     };
