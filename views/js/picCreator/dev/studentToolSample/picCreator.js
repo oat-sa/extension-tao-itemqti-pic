@@ -1,9 +1,28 @@
+/*
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License
+ * as published by the Free Software Foundation; under version 2
+ * of the License (non-upgradable).
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+ *
+ * Copyright (c) 2016 (original work) Open Assessment Technologies SA;
+ *
+ */
 define([
     'lodash',
     'taoQtiItem/qtiCreator/editor/infoControlRegistry',
     'studentToolSample/creator/widget/Widget',
     'tpl!studentToolSample/creator/tpl/markup'
 ], function(_, registry, Widget, markupTpl){
+    'use strict';
 
     var _typeIdentifier = 'studentToolSample';
 
@@ -34,11 +53,11 @@ define([
         getDefaultProperties : function(){
             return {
                 shuffle:false,
-                hints : {
-                    '0' : "If there is no wind, row.",
-                    '1' : "You're never too old to learn.",
-                    '2' : "Fall seven times, stand up eight.",
-                }
+                hints : [
+                    "You're never too old to learn.",
+                    "If there is no wind, row.",
+                    "Fall seven times, stand up eight."
+                ]
             };
         },
         /**

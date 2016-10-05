@@ -1,5 +1,32 @@
+/*
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License
+ * as published by the Free Software Foundation; under version 2
+ * of the License (non-upgradable).
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+ *
+ * Copyright (c) 2016 (original work) Open Assessment Technologies SA;
+ *
+ */
 define(['IMSGlobal/jquery_2_1_1', 'OAT/lodash', 'qtiInfoControlContext'], function($, _, qtiInfoControlContext){
     'use strict';
+
+    /**
+     * Global config for the hinter
+     *
+     * @private
+     */
+    var _config = {
+        timeout : 5000
+    };
 
     var studentToolSample = {
         id : -1,
@@ -45,6 +72,11 @@ define(['IMSGlobal/jquery_2_1_1', 'OAT/lodash', 'qtiInfoControlContext'], functi
                 showHint(hint);
             });
 
+            /**
+             * Reset the list of hints to be displayed and returns the array
+             *
+             * @returns {Array}
+             */
             function resetListing(){
                 var values = _.values(self.config.hints || []);
                 if(self.config.shuffle){
@@ -53,9 +85,13 @@ define(['IMSGlobal/jquery_2_1_1', 'OAT/lodash', 'qtiInfoControlContext'], functi
                 return values;
             }
 
+            /**
+             * Displays the hint
+             * @param hint
+             */
             function showHint(hint){
                 $stsScope.children('.hint-box').remove();
-                $stsScope.append($('<div class="sts-studentToolSample hint-box"><span><></div>').html(hint));
+                $stsScope.append($('<div class="sts-studentToolSample hint-box">').html(hint));
                 if(timeout){
                     clearTimeout(timeout);
                 }
@@ -64,7 +100,7 @@ define(['IMSGlobal/jquery_2_1_1', 'OAT/lodash', 'qtiInfoControlContext'], functi
                     $stsScope.children('.hint-box').fadeOut(1000, function(){
                         $(this).remove();
                     });
-                }, 5000);
+                }, _config.timeout);
             }
 
 
