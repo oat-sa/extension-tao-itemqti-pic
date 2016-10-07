@@ -10,7 +10,9 @@
 
 .sts-toolcontainer {
     display: none;
+    float: left;
 }
+
 .sts-scope {
 
     &.sts-tmp-element {
@@ -151,6 +153,7 @@
                 }
             }
             .sts-button {
+                cursor: pointer;
                 margin: 2px;
                 float: left;
                 width: 32px;
@@ -158,6 +161,8 @@
                 padding: 5px;  
                 img {
                     display: block;
+                    width: 20px;
+                    height: 20px;
                 }
             }
         }

@@ -1,0 +1,10 @@
+.item-editor-sidebar .tool-group .student-tool-hint .panel{
+    textarea, .add-hint{
+        width:calc(100% - 15px);
+    }
+    .icon-bin{
+        cursor : pointer;
+        top: -6px;
+        position: relative;
+    }
+}
