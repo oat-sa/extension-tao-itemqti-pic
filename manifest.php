@@ -20,7 +20,8 @@
 
 use oat\qtiItemPic\scripts\install\SetQtiCreatorConfig;
 use oat\qtiItemPic\scripts\install\RegisterClientProvider;
-use oat\qtiItemPic\scripts\install\RegisterPic;
+use oat\qtiItemPic\scripts\install\RegisterPicStudentToolbar;
+use oat\qtiItemPic\scripts\install\RegisterPicStudentToolSample;
 use oat\qtiItemPic\scripts\install\RegisterPicModel;
 use oat\taoQtiItem\scripts\SetupPortableElementFileStorage;
 
@@ -49,7 +50,8 @@ return array(
 			RegisterPicModel::class,
 			SetQtiCreatorConfig::class,
 			RegisterClientProvider::class,
-			RegisterPic::class,
+			RegisterPicStudentToolbar::class,
+			RegisterPicStudentToolSample::class
 		)
     ),
     'uninstall' => array(

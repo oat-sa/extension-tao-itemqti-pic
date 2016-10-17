@@ -59,9 +59,6 @@ class Updater extends \common_ext_ExtensionUpdater
 			$registerClientProvider = new RegisterClientProvider();
 			$registerClientProvider([]);
 
-			call_user_func(new RegisterPicStudentToolbar(), ['0.2.0']);
-			call_user_func(new RegisterPicStudentToolSample(), ['0.2.0']);
-
 			$testManagerRole = $this->getResource('http://www.tao.lu/Ontologies/TAOItem.rdf#ItemsManagerRole');
 			$QTIManagerRole = $this->getResource('http://www.tao.lu/Ontologies/TAOItem.rdf#QTIManagerRole');
 			$testTakerRole = $this->getResource(INSTANCE_ROLE_DELIVERY);
