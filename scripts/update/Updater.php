@@ -24,7 +24,8 @@ namespace oat\qtiItemPic\scripts\update;
 use oat\generis\model\OntologyAwareTrait;
 use oat\qtiItemPic\scripts\install\RegisterPicModel;
 use oat\qtiItemPic\scripts\install\RegisterClientProvider;
-use oat\qtiItemPic\scripts\install\RegisterPic;
+use oat\qtiItemPic\scripts\install\RegisterPicStudentToolbar;
+use oat\qtiItemPic\scripts\install\RegisterPicStudentToolSample;
 use oat\qtiItemPic\scripts\install\SetQtiCreatorConfig;
 use oat\taoQtiItem\model\HookRegistry;
 use oat\taoQtiItem\scripts\SetupPortableElementFileStorage;
@@ -58,9 +59,6 @@ class Updater extends \common_ext_ExtensionUpdater
 			$registerClientProvider = new RegisterClientProvider();
 			$registerClientProvider([]);
 
-			$registerPic = new RegisterPic();
-			$registerPic([]);
-
 			$testManagerRole = $this->getResource('http://www.tao.lu/Ontologies/TAOItem.rdf#ItemsManagerRole');
 			$QTIManagerRole = $this->getResource('http://www.tao.lu/Ontologies/TAOItem.rdf#QTIManagerRole');
 			$testTakerRole = $this->getResource(INSTANCE_ROLE_DELIVERY);
@@ -75,9 +73,12 @@ class Updater extends \common_ext_ExtensionUpdater
 			$this->setVersion('1.0.0');
 		}
 
-		if ($this->isVersion('1.0.0')) {
-			call_user_func(new RegisterPic(), []);
-			$this->setVersion('1.1.0');
+		$this->skip('1.0.0', '1.1.0');
+
+		if ($this->isVersion('1.1.0')) {
+			call_user_func(new RegisterPicStudentToolbar(), ['0.2.0']);
+			call_user_func(new RegisterPicStudentToolSample(), ['0.2.0']);
+			$this->setVersion('1.2.0');
 		}
 	}
 }
