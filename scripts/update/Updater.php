@@ -80,5 +80,7 @@ class Updater extends \common_ext_ExtensionUpdater
 			call_user_func(new RegisterPicStudentToolSample(), ['0.2.0']);
 			$this->setVersion('1.2.0');
 		}
-	}
+
+        $this->skip('1.2.0', '2.0.0');
+    }
 }
