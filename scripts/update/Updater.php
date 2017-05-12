@@ -27,6 +27,8 @@ use oat\qtiItemPic\scripts\install\RegisterClientProvider;
 use oat\qtiItemPic\scripts\install\RegisterPicStudentToolbar;
 use oat\qtiItemPic\scripts\install\RegisterPicStudentToolSample;
 use oat\qtiItemPic\scripts\install\SetQtiCreatorConfig;
+use oat\tao\model\accessControl\func\AccessRule;
+use oat\tao\model\accessControl\func\AclProxy;
 use oat\taoQtiItem\model\HookRegistry;
 use oat\taoQtiItem\scripts\SetupPortableElementFileStorage;
 
@@ -59,14 +61,26 @@ class Updater extends \common_ext_ExtensionUpdater
 			$registerClientProvider = new RegisterClientProvider();
 			$registerClientProvider([]);
 
-			$testManagerRole = $this->getResource('http://www.tao.lu/Ontologies/TAOItem.rdf#ItemsManagerRole');
-			$QTIManagerRole = $this->getResource('http://www.tao.lu/Ontologies/TAOItem.rdf#QTIManagerRole');
-			$testTakerRole = $this->getResource(INSTANCE_ROLE_DELIVERY);
+            // Grants access on PciLoader for TestManager role.
+            AclProxy::applyRule(new AccessRule(
+                AccessRule::GRANT,
+                'http://www.tao.lu/Ontologies/TAOItem.rdf#ItemsManagerRole',
+                ['ext' => 'qtiItemPic' , 'mod' => 'PciLoader']
+            ));
 
-			$accessService = \funcAcl_models_classes_AccessService::singleton();
-			$accessService->grantModuleAccess($testManagerRole, 'qtiItemPic', 'PciLoader');
-			$accessService->grantModuleAccess($QTIManagerRole, 'qtiItemPic', 'PciLoader');
-			$accessService->grantModuleAccess($testTakerRole, 'qtiItemPic', 'PciLoader');
+            // Grants access on PciLoader for QTIManager role.
+            AclProxy::applyRule(new AccessRule(
+                AccessRule::GRANT,
+                'http://www.tao.lu/Ontologies/TAOItem.rdf#QTIManagerRole',
+                ['ext' => 'qtiItemPic' , 'mod' => 'PciLoader']
+            ));
+
+            // Grants access on PciLoader for TestTaker role.
+            AclProxy::applyRule(new AccessRule(
+                AccessRule::GRANT,
+                INSTANCE_ROLE_DELIVERY,
+                ['ext' => 'qtiItemPic' , 'mod' => 'PciLoader']
+            ));
 
 			HookRegistry::getRegistry()->remove('picCreator');
 
@@ -81,6 +95,6 @@ class Updater extends \common_ext_ExtensionUpdater
 			$this->setVersion('1.2.0');
 		}
 
-        $this->skip('1.2.0', '2.0.0');
+        $this->skip('1.2.0', '2.0.1');
     }
 }
