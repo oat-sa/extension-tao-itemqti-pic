@@ -24,23 +24,6 @@ use oat\taoQtiItem\model\portableElement\storage\PortableElementRegistry;
 
 class PicRegistry extends PortableElementRegistry
 {
-    const REGISTRY_EXTENSION = 'qtiItemPic';
-    const REGISTRY_ID = 'picRegistryEntries';
+    protected $fileSystemId = 'qtiItemPic';
 
-    /**
-     * @return \common_ext_Extension
-     * @throws \common_ext_ExtensionException
-     */
-    protected function getExtension()
-    {
-        return \common_ext_ExtensionsManager::singleton()->getExtensionById(self::REGISTRY_EXTENSION);
-    }
-
-    /**
-     * @return string
-     */
-    protected function getConfigId()
-    {
-        return self::REGISTRY_ID;
-    }
 }
