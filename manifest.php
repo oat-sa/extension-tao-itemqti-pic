@@ -24,6 +24,7 @@ use oat\qtiItemPic\scripts\install\RegisterPicStudentToolbar;
 use oat\qtiItemPic\scripts\install\RegisterPicStudentToolSample;
 use oat\qtiItemPic\scripts\install\RegisterPicModel;
 use oat\taoQtiItem\scripts\SetupPortableElementFileStorage;
+use oat\qtiItemPic\scripts\install\RegisterPicFilesystem;
 
 return array(
     'name' => 'qtiItemPic',
@@ -46,12 +47,13 @@ return array(
 		    dirname(__FILE__). '/install/ontology/role.rdf'
 		),
         'php'	=> array(
+            RegisterPicFilesystem::class,
 			SetupPortableElementFileStorage::class,
 			RegisterPicModel::class,
 			SetQtiCreatorConfig::class,
 			RegisterClientProvider::class,
 			RegisterPicStudentToolbar::class,
-			RegisterPicStudentToolSample::class
+			RegisterPicStudentToolSample::class,
 		)
     ),
     'uninstall' => array(

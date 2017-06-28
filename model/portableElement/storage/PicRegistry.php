@@ -26,4 +26,9 @@ class PicRegistry extends PortableElementRegistry
 {
     protected $fileSystemId = 'qtiItemPic';
 
+    /** @deprecated */
+    const REGISTRY_EXTENSION = 'qtiItemPic';
+    /** @deprecated */
+    const REGISTRY_ID = 'picRegistryEntries';
+
 }
