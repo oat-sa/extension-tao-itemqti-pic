@@ -22,6 +22,9 @@
 namespace oat\qtiItemPic\scripts\update;
 
 use oat\generis\model\OntologyAwareTrait;
+use oat\qtiItemPic\model\PicModel;
+use oat\qtiItemPic\model\portableElement\storage\PicRegistry;
+use oat\qtiItemPic\scripts\install\RegisterPicFilesystem;
 use oat\qtiItemPic\scripts\install\RegisterPicModel;
 use oat\qtiItemPic\scripts\install\RegisterClientProvider;
 use oat\qtiItemPic\scripts\install\RegisterPicStudentToolbar;
@@ -96,5 +99,31 @@ class Updater extends \common_ext_ExtensionUpdater
 		}
 
         $this->skip('1.2.0', '2.0.1');
+
+
+        if($this->isVersion('2.0.1')){
+            $this->runExtensionScript(RegisterPicFilesystem::class);
+
+            $model = new PicModel();
+            $registry = PicRegistry::getRegistry();
+            $registry->setServiceLocator($this->getServiceManager());
+            $registry->setModel($model);
+
+            /** @var \common_ext_ExtensionsManager $extensionManager */
+            $extensionManager = $this->getServiceManager()->get(\common_ext_ExtensionsManager::SERVICE_ID);
+            $map = $extensionManager->getExtensionById(PicRegistry::REGISTRY_EXTENSION)->getConfig(PicRegistry::REGISTRY_ID);
+
+            foreach ($map as $key => $value){
+                uksort($value, function($a, $b) {
+                    return version_compare($a, $b, '<');
+                });
+                $portableElementObject = $model->createDataObject(reset($value));
+                //set it the new way
+                $registry->update($portableElementObject);
+            }
+
+            $extensionManager->getExtensionById(PicRegistry::REGISTRY_EXTENSION)->unsetConfig(PicRegistry::REGISTRY_ID);
+            $this->setVersion('3.0.0');
+        }
     }
 }
