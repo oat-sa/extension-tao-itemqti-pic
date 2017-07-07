@@ -24,16 +24,17 @@ use oat\qtiItemPic\scripts\install\RegisterPicStudentToolbar;
 use oat\qtiItemPic\scripts\install\RegisterPicStudentToolSample;
 use oat\qtiItemPic\scripts\install\RegisterPicModel;
 use oat\taoQtiItem\scripts\SetupPortableElementFileStorage;
+use oat\qtiItemPic\scripts\install\RegisterPicFilesystem;
 
 return array(
     'name' => 'qtiItemPic',
     'label' => 'QTI Portable Info Control',
     'description' => '',
     'license' => 'GPL-2.0',
-    'version' => '2.0.1',
+    'version' => '3.0.0',
     'author' => 'Open Assessment Technologies',
     'requires' => array(
-        'taoQtiItem' => '>=5.13.0'
+        'taoQtiItem' => '>=9.0.0'
     ),
     'acl' => array(
         array('grant', 'http://www.tao.lu/Ontologies/generis.rdf#qtiItemPicManager', array('ext'=>'qtiItemPic')),
@@ -46,12 +47,13 @@ return array(
 		    dirname(__FILE__). '/install/ontology/role.rdf'
 		),
         'php'	=> array(
+            RegisterPicFilesystem::class,
 			SetupPortableElementFileStorage::class,
 			RegisterPicModel::class,
 			SetQtiCreatorConfig::class,
 			RegisterClientProvider::class,
 			RegisterPicStudentToolbar::class,
-			RegisterPicStudentToolSample::class
+			RegisterPicStudentToolSample::class,
 		)
     ),
     'uninstall' => array(
