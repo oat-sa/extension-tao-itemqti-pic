@@ -45,9 +45,12 @@ class Updater extends \common_ext_ExtensionUpdater
 	 * @param string $initialVersion
      * @return string $versionUpdatedTo
      */
-    public function update($initialVersion) {
-        
-		$this->skip('0.1','0.2.4');
+    public function update($initialVersion)
+    {
+
+        $this->runExtensionScript(RegisterPicFilesystem::class);
+
+        $this->skip('0.1','0.2.4');
 
 		if ($this->isVersion('0.2.4')) {
 			$setupPortableElementFileStorage = new SetupPortableElementFileStorage();
@@ -125,5 +128,8 @@ class Updater extends \common_ext_ExtensionUpdater
             $extensionManager->getExtensionById(PicRegistry::REGISTRY_EXTENSION)->unsetConfig(PicRegistry::REGISTRY_ID);
             $this->setVersion('3.0.0');
         }
+
+        $this->skip('3.0.0', '3.0.1');
+
     }
 }
