@@ -1,7 +1,9 @@
 {
-"version": 3,
-"mappings": "AACI,wIAAmB,CACf,KAAK,CAAC,iBAAiB,CAE3B,oEAAS,CACL,MAAM,CAAG,OAAO,CAChB,GAAG,CAAE,IAAI,CACT,QAAQ,CAAE,QAAQ",
-"sources": ["../scss/studentToolSample.scss"],
-"names": [],
-"file": "studentToolSample.css"
+	"version": 3,
+	"file": "studentToolSample.css",
+	"sources": [
+		"../scss/studentToolSample.scss"
+	],
+	"names": [],
+	"mappings": "AAAA,AACI,oBADgB,CAAC,WAAW,CAAC,kBAAkB,CAAC,MAAM,CACtD,QAAQ,CADZ,AACc,oBADM,CAAC,WAAW,CAAC,kBAAkB,CAAC,MAAM,CAC5C,SAAS,AAAA,CACf,KAAK,CAAC,iBAAiB,CAC1B,AAHL,AAII,oBAJgB,CAAC,WAAW,CAAC,kBAAkB,CAAC,MAAM,CAItD,SAAS,AAAA,CACL,MAAM,CAAG,OAAO,CAChB,GAAG,CAAE,IAAI,CACT,QAAQ,CAAE,QAAQ,CACrB"
 }
