@@ -1,4 +1,5 @@
-module.exports = function(grunt) { 
+module.exports = function (grunt) {
+    'use strict';
 
     var sass    = grunt.config('sass') || {};
     var watch   = grunt.config('watch') || {};
@@ -7,14 +8,14 @@ module.exports = function(grunt) {
 
     sass.qtiitempic = {
         options : {
-            loadPath : [
+            includePaths : [
                 '../scss',
                 root + 'scss/inc',
                 root + 'js/picCreator/dev/studentToolbar/runtime/scss',
                 root + 'js/picCreator/dev/studentToolbar/runtime/scss/inc'
             ]
         },
-        files : {}        
+        files : {}
     };
     sass.qtiitempic.files[root + 'css/pic-manager.css'] = root + 'scss/pic-manager.scss';
     sass.qtiitempic.files[root + 'js/picCreator/dev/studentToolSample/runtime/css/studentToolSample.css'] = root + 'js/picCreator/dev/studentToolSample/runtime/scss/studentToolSample.scss';
@@ -32,7 +33,7 @@ module.exports = function(grunt) {
 
     notify.qtiitempicsass = {
         options: {
-            title: 'Grunt SASS', 
+            title: 'Grunt SASS',
             message: 'SASS files compiled to CSS'
         }
     };
