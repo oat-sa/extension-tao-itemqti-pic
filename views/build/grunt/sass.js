@@ -8,11 +8,9 @@ module.exports = function (grunt) {
 
     sass.qtiitempic = {
         options : {
-            includePaths : [
-                '../scss',
-                root + 'scss/inc',
-                root + 'js/picCreator/dev/studentToolbar/runtime/scss',
-                root + 'js/picCreator/dev/studentToolbar/runtime/scss/inc'
+            includePaths: [
+                '../scss/',
+                root + 'js/picCreator/dev/studentToolbar/runtime/scss'
             ]
         },
         files : {}
