@@ -1,7 +1,14 @@
 {
-"version": 3,
-"mappings": "AAEA,kBAAkB,CACd,OAAO,CAAG,YAAY,CACtB,qBAAG,CACC,QAAQ,CAAC,QAAQ,CACjB,aAAa,CAAC,GAAG,CACjB,gCAAU,CACN,QAAQ,CAAC,QAAQ,CACjB,KAAK,CAAC,GAAG,CACT,GAAG,CAAC,GAAG",
-"sources": ["../scss/pic-manager.scss"],
-"names": [],
-"file": "pic-manager.css"
+	"version": 3,
+	"file": "pic-manager.css",
+	"sources": [
+		"../scss/pic-manager.scss",
+		"../../../tao/views/scss/inc/_bootstrap.scss",
+		"../../../tao/views/scss/inc/_variables.scss",
+		"../../../tao/views/scss/inc/_functions.scss",
+		"../../../tao/views/scss/inc/_colors.scss",
+		"../../../tao/views/scss/inc/fonts/_tao-icon-vars.scss"
+	],
+	"names": [],
+	"mappings": "AAEA,AAAA,kBAAkB,AAAA,CACd,OAAO,CAAG,YAAY,CAUzB,AAXD,AAEI,kBAFc,CAEd,EAAE,AAAC,CACC,QAAQ,CAAC,QAAQ,CACjB,aAAa,CAAC,GAAG,CAMpB,AAVL,AAKQ,kBALU,CAEd,EAAE,CAGE,UAAU,AAAA,CACN,QAAQ,CAAC,QAAQ,CACjB,KAAK,CAAC,GAAG,CACT,GAAG,CAAC,GAAG,CACV"
 }
