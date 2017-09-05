@@ -19,7 +19,7 @@
 define([
     'jquery',
     'lodash',
-    'core/Promise',
+    'core/promise',
     'core/logger',
     'ui/tooltipster',
     'taoQtiItem/portableElementRegistry/icRegistry',
