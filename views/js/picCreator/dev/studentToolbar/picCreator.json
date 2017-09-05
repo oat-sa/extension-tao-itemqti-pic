@@ -8,14 +8,14 @@
     "email": "sam@taotesting.com",
     "tags": [],
     "runtime" : {
-        "hook" : "./runtime/studentToolbar.js",
+        "hook" : "./runtime/studentToolbar.min.js",
         "libraries" : [],
         "stylesheets" : [
             "./runtime/css/common.css",
             "./runtime/css/student-toolbar.css"
         ],
         "src" : [
-            "./runtime/hook.js"
+            "./runtime/studentToolbar.js"
         ]
     },
     "creator" : {

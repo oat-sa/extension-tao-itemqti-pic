@@ -11,7 +11,7 @@
         "hint"
     ],
     "runtime" : {
-        "hook" : "./runtime/studentToolSample.js",
+        "hook" : "./runtime/studentToolSample.min.js",
         "libraries" : [],
         "stylesheets" : [
             "./runtime/css/studentToolSample.css"
@@ -20,7 +20,7 @@
             "./runtime/media/tool-icon.svg"
         ],
         "src" : [
-            "./runtime/hook.js"
+            "./runtime/studentToolSample.js"
         ]
     },
     "creator" : {
