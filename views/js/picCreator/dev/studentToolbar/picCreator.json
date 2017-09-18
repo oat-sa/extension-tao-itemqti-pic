@@ -3,18 +3,19 @@
     "label": "Student Toolbar",
     "short" : "Toolbar",
     "description": "The container of student tools",
-    "version": "0.3.0",
+    "version": "0.4.0",
     "author": "Sam Sipasseuth",
     "email": "sam@taotesting.com",
     "tags": [],
     "runtime" : {
-        "hook" : "./runtime/studentToolbar.js",
-        "libraries" : [
-            "IMSGlobal/jquery_2_1_1"
-        ],
+        "hook" : "./runtime/studentToolbar.min.js",
+        "libraries" : [],
         "stylesheets" : [
             "./runtime/css/common.css",
             "./runtime/css/student-toolbar.css"
+        ],
+        "src" : [
+            "./runtime/studentToolbar.js"
         ]
     },
     "creator" : {
