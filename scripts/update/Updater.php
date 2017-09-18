@@ -86,7 +86,7 @@ class Updater extends \common_ext_ExtensionUpdater
             // Grants access on PciLoader for TestTaker role.
             AclProxy::applyRule(new AccessRule(
                 AccessRule::GRANT,
-				TaoOntology::INSTANCE_ROLE_DELIVERY,
+				TaoOntology::PROPERTY_INSTANCE_ROLE_DELIVERY,
                 ['ext' => 'qtiItemPic' , 'mod' => 'PciLoader']
             ));
 
