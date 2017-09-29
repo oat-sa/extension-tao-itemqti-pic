@@ -148,5 +148,11 @@ class Updater extends \common_ext_ExtensionUpdater
         }
 
         $this->skip('3.0.2', '4.0.0');
+
+        if($this->isVersion('4.0.0')) {
+            call_user_func(new RegisterPicStudentToolbar(), ['0.4.0']);
+            call_user_func(new RegisterPicStudentToolSample(), ['0.4.0']);
+            $this->setVersion('4.1.0');
+        }
     }
 }

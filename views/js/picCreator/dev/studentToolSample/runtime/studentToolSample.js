@@ -16,7 +16,7 @@
  * Copyright (c) 2016 (original work) Open Assessment Technologies SA;
  *
  */
-define(['IMSGlobal/jquery_2_1_1', 'OAT/lodash', 'qtiInfoControlContext'], function($, _, qtiInfoControlContext){
+define(['taoQtiItem/portableLib/jquery_2_1_1', 'taoQtiItem/portableLib/lodash', 'qtiInfoControlContext'], function($, _, qtiInfoControlContext){
     'use strict';
 
     /**
@@ -54,7 +54,10 @@ define(['IMSGlobal/jquery_2_1_1', 'OAT/lodash', 'qtiInfoControlContext'], functi
 
             //init dom
             $container = $(dom);
-            $container.find('img').attr('src', assetManager.resolve('studentToolSample/runtime/media/tool-icon.svg'));
+            $container.find('.sts-button').append($('<img>', {
+                src : assetManager.resolve('studentToolSample/runtime/media/tool-icon.svg'),
+                alt: 'Show Hint'
+            }));
 
             //hook it into the toolbar:
             this.$toolbar = $('#'+this.config.toolbarId);

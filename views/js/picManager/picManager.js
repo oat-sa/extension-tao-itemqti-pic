@@ -19,6 +19,8 @@
 define([
     'jquery',
     'lodash',
+    'core/promise',
+    'core/logger',
     'ui/tooltipster',
     'taoQtiItem/portableElementRegistry/icRegistry',
     'taoQtiItem/qtiCreator/helper/creatorRenderer',
@@ -26,12 +28,12 @@ define([
     'taoQtiItem/qtiCreator/editor/gridEditor/content',
     'tpl!qtiItemPic/picManager/tpl/manager',
     'css!qtiItemPicCss/pic-manager'
-], function ($, _, tooltip, icRegistry, creatorRenderer, containerHelper, contentHelper, managerTpl) {
+], function ($, _, Promise, loggerFactory, tooltip, icRegistry, creatorRenderer, containerHelper, contentHelper, managerTpl) {
     'use strict';
 
     var _studentToolTag = 'student-tool';
     var _studentToolbarId = 'studentToolbar';
-
+    var logger = loggerFactory('picManager');
 
     /**
      * Toggle the disabled state of checkboxes
@@ -52,30 +54,6 @@ define([
 
             this.disabled = state;
         });
-    }
-
-
-    /**
-     * Wait for a toolbar item to be completely rendered
-     *
-     * @param selector
-     * @returns {*}
-     */
-    function buttonAdded(selector) {
-        var dfd = $.Deferred();
-        var cnt = 1;
-        var checkSelector = setInterval(function () {
-            if(cnt > 25) {
-                dfd.reject('Tool takes too long to load');
-            }
-            if ($(selector).is(':visible')) {
-                dfd.resolve();
-                clearInterval(checkSelector);
-            }
-            cnt++;
-        }, 500);
-
-        return dfd.promise();
     }
 
     function itemWidgetLoaded($itemPanel, callback) {
@@ -257,26 +235,25 @@ define([
 
                     $placeholder = null;
 
-                    elt.postRender({});
+                    Promise.all(elt.postRender({})).then(function(){
+                        var widget = elt.data('widget');
 
-                    allInfoControls[elt.typeIdentifier].installed = true;
+                        allInfoControls[elt.typeIdentifier].installed = true;
 
-                    $.when(buttonAdded('#sts-' + elt.typeIdentifier))
-                        .then(function() {
-                            var widget = elt.data('widget');
+                        //inform height modification
+                        widget.$container.trigger('contentChange.gridEdit');
+                        widget.$container.trigger('resize.gridEdit');
 
-                            //inform height modification
-                            widget.$container.trigger('contentChange.gridEdit');
-                            widget.$container.trigger('resize.gridEdit');
+                        if(elt.typeIdentifier !== _studentToolbarId) {
+                            toggleCheckboxState($checkBoxes, false);
+                        }
 
-                            if(elt.typeIdentifier !== _studentToolbarId) {
-                                toggleCheckboxState($checkBoxes, false);
-                            }
+                        // continue with the next element of allInfoControls
+                        processAllControls();
 
-
-                            // continue with the next element of allInfoControls
-                            processAllControls();
-                        });
+                    }).catch(function(err){
+                        logger.error(err);
+                    });
                 }
 
 
@@ -372,6 +349,6 @@ define([
             .load(function () {
                 initStudentToolManager($container, $itemPanel, itemUri);
             }, ['infoControl']);
-    }
+    };
 
 });

@@ -31,11 +31,11 @@ return array(
     'label' => 'QTI Portable Info Control',
     'description' => '',
     'license' => 'GPL-2.0',
-    'version' => '4.0.0',
+    'version' => '4.1.0',
     'author' => 'Open Assessment Technologies',
     'requires' => array(
         'tao' => '>=12.0.0',
-        'taoQtiItem' => '>=9.2.2'
+        'taoQtiItem' => '>=10.0.0'
     ),
     'acl' => array(
         array('grant', 'http://www.tao.lu/Ontologies/generis.rdf#qtiItemPicManager', array('ext'=>'qtiItemPic')),
