@@ -37,6 +37,8 @@ class PicModel implements PortableElementModel
 
     const PIC_IDENTIFIER = 'PIC';
 
+    const PCI_LABEL = 'OAT PIC';
+
     const PIC_MANIFEST = 'picCreator.json';
 
     const PIC_ENGINE = 'picCreator.js';
@@ -44,6 +46,11 @@ class PicModel implements PortableElementModel
     public function getId()
     {
         return self::PIC_IDENTIFIER;
+    }
+
+    public function getLabel()
+    {
+        return self::PCI_LABEL;
     }
 
     public function getDefinitionFiles()
