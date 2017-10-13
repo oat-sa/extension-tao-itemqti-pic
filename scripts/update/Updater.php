@@ -154,5 +154,7 @@ class Updater extends \common_ext_ExtensionUpdater
             call_user_func(new RegisterPicStudentToolSample(), ['0.4.0']);
             $this->setVersion('4.1.0');
         }
+
+        $this->skip('4.1.0', '4.2.0');
     }
 }
