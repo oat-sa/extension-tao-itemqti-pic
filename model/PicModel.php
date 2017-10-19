@@ -43,6 +43,8 @@ class PicModel implements PortableElementModel
 
     const PIC_ENGINE = 'picCreator.js';
 
+    const PCI_NAMESPACE = 'http://www.imsglobal.org/xsd/portableInfoControl';
+
     public function getId()
     {
         return self::PIC_IDENTIFIER;
@@ -51,6 +53,11 @@ class PicModel implements PortableElementModel
     public function getLabel()
     {
         return self::PCI_LABEL;
+    }
+
+    public function getNamespace()
+    {
+        return self::PCI_NAMESPACE;
     }
 
     public function getDefinitionFiles()
