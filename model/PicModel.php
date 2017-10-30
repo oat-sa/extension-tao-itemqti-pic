@@ -30,6 +30,9 @@ use oat\qtiItemPic\model\portableElement\storage\PicRegistry;
 use oat\qtiItemPic\model\portableElement\validator\PicValidator;
 use oat\taoQtiItem\model\portableElement\storage\PortableElementRegistry;
 use oat\taoQtiItem\model\portableElement\model\PortableElementModel;
+use oat\qtiItemPic\model\export\OatPicExporter;
+use oat\taoQtiItem\model\Export\AbstractQTIItemExporter;
+use oat\taoQtiItem\model\portableElement\element\PortableElementObject;
 
 class PicModel implements PortableElementModel
 {
@@ -106,6 +109,11 @@ class PicModel implements PortableElementModel
         $packageParser = new PicPackagerParser();
         $packageParser->setModel($this);
         return $packageParser;
+    }
+
+    public function getExporter(PortableElementObject $dataObject, AbstractQTIItemExporter $qtiItemExporter)
+    {
+        return new OatPicExporter($dataObject, $qtiItemExporter);
     }
 
     public function getQtiElementClassName()
