@@ -36,7 +36,7 @@ define(['taoQtiItem/portableLib/jquery_2_1_1', 'taoQtiItem/portableLib/lodash', 
         },
         /**
          * Initialize the PIC
-         * 
+         *
          * @param {String} id
          * @param {Node} dom
          * @param {Object} config - json
@@ -94,7 +94,7 @@ define(['taoQtiItem/portableLib/jquery_2_1_1', 'taoQtiItem/portableLib/lodash', 
              */
             function showHint(hint){
                 $container.children('.hint-box').remove();
-                $container.append($('<div class="sts-studentToolSample hint-box">').html(hint));
+                $container.append($('<div class="sts-studentToolSample hint-box">').text(hint));
                 if(timeout){
                     clearTimeout(timeout);
                 }
@@ -111,7 +111,7 @@ define(['taoQtiItem/portableLib/jquery_2_1_1', 'taoQtiItem/portableLib/lodash', 
          * Reverse operation performed by render()
          * After this function is executed, only the initial naked markup remains
          * Event listeners are removed and the state and the response are reset
-         * 
+         *
          * @param {Object} interaction
          */
         destroy : function(){
@@ -119,7 +119,7 @@ define(['taoQtiItem/portableLib/jquery_2_1_1', 'taoQtiItem/portableLib/lodash', 
         },
         /**
          * Restore the state of the interaction from the serializedState.
-         * 
+         *
          * @param {Object} interaction
          * @param {Object} serializedState - json format
          */
@@ -128,7 +128,7 @@ define(['taoQtiItem/portableLib/jquery_2_1_1', 'taoQtiItem/portableLib/lodash', 
         /**
          * Get the current state of the interaction as a string.
          * It enables saving the state for later usage.
-         * 
+         *
          * @param {Object} interaction
          * @returns {Object} json format
          */
