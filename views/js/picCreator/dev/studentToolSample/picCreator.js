@@ -89,9 +89,7 @@ define([
 
             defaultData = _.defaults(defaultData, {
                 typeIdentifier : _typeIdentifier,
-                title : manifest.description,
-                icon : _typeIdentifier+'/runtime/media/tool-icon.svg',//referenced as a required file in manifest.media[]
-                alt : manifest.short
+                title : manifest.description
             });
             
             return defaultData;

@@ -16,7 +16,7 @@
  * Copyright (c) 2016 (original work) Open Assessment Technologies SA;
  *
  */
-define(['IMSGlobal/jquery_2_1_1', 'OAT/lodash', 'qtiInfoControlContext'], function($, _, qtiInfoControlContext){
+define(['taoQtiItem/portableLib/jquery_2_1_1', 'taoQtiItem/portableLib/lodash', 'qtiInfoControlContext'], function($, _, qtiInfoControlContext){
     'use strict';
 
     /**
@@ -36,7 +36,7 @@ define(['IMSGlobal/jquery_2_1_1', 'OAT/lodash', 'qtiInfoControlContext'], functi
         },
         /**
          * Initialize the PIC
-         * 
+         *
          * @param {String} id
          * @param {Node} dom
          * @param {Object} config - json
@@ -54,7 +54,10 @@ define(['IMSGlobal/jquery_2_1_1', 'OAT/lodash', 'qtiInfoControlContext'], functi
 
             //init dom
             $container = $(dom);
-            $container.find('img').attr('src', assetManager.resolve('studentToolSample/runtime/media/tool-icon.svg'));
+            $container.find('.sts-button').append($('<img>', {
+                src : assetManager.resolve('studentToolSample/runtime/media/tool-icon.svg'),
+                alt: 'Show Hint'
+            }));
 
             //hook it into the toolbar:
             this.$toolbar = $('#'+this.config.toolbarId);
@@ -91,7 +94,7 @@ define(['IMSGlobal/jquery_2_1_1', 'OAT/lodash', 'qtiInfoControlContext'], functi
              */
             function showHint(hint){
                 $container.children('.hint-box').remove();
-                $container.append($('<div class="sts-studentToolSample hint-box">').html(hint));
+                $container.append($('<div class="sts-studentToolSample hint-box">').text(hint));
                 if(timeout){
                     clearTimeout(timeout);
                 }
@@ -108,7 +111,7 @@ define(['IMSGlobal/jquery_2_1_1', 'OAT/lodash', 'qtiInfoControlContext'], functi
          * Reverse operation performed by render()
          * After this function is executed, only the initial naked markup remains
          * Event listeners are removed and the state and the response are reset
-         * 
+         *
          * @param {Object} interaction
          */
         destroy : function(){
@@ -116,7 +119,7 @@ define(['IMSGlobal/jquery_2_1_1', 'OAT/lodash', 'qtiInfoControlContext'], functi
         },
         /**
          * Restore the state of the interaction from the serializedState.
-         * 
+         *
          * @param {Object} interaction
          * @param {Object} serializedState - json format
          */
@@ -125,7 +128,7 @@ define(['IMSGlobal/jquery_2_1_1', 'OAT/lodash', 'qtiInfoControlContext'], functi
         /**
          * Get the current state of the interaction as a string.
          * It enables saving the state for later usage.
-         * 
+         *
          * @param {Object} interaction
          * @returns {Object} json format
          */

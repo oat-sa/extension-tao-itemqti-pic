@@ -27,7 +27,7 @@ define([
     return stateFactory.extend(SleepState, function(){
 
         var _widget = this.widget;
-        var item = this.widget.element.getRelatedItem();
+        var item = this.widget.element.getRootElement();
 
         _widget.$container.on('click.qti-widget.sleep', function(e){
 

@@ -3,7 +3,7 @@
     "label": "Hint",
     "short": "Hint",
     "description": "show a hint",
-    "version": "0.3.0",
+    "version": "0.4.1",
     "author": "Sam Sipasseuth",
     "email": "sam@taotesting.com",
     "tags": [
@@ -11,16 +11,16 @@
         "hint"
     ],
     "runtime" : {
-        "hook" : "./runtime/studentToolSample.js",
-        "libraries" : [
-            "IMSGlobal/jquery_2_1_1",
-            "OAT/lodash"
-        ],
+        "hook" : "./runtime/studentToolSample.min.js",
+        "libraries" : [],
         "stylesheets" : [
             "./runtime/css/studentToolSample.css"
         ],
         "mediaFiles": [
             "./runtime/media/tool-icon.svg"
+        ],
+        "src" : [
+            "./runtime/studentToolSample.js"
         ]
     },
     "creator" : {
