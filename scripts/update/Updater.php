@@ -32,6 +32,7 @@ use oat\qtiItemPic\scripts\install\RegisterPicStudentToolSample;
 use oat\qtiItemPic\scripts\install\SetQtiCreatorConfig;
 use oat\tao\model\accessControl\func\AccessRule;
 use oat\tao\model\accessControl\func\AclProxy;
+use oat\tao\model\TaoOntology;
 use oat\taoQtiItem\model\HookRegistry;
 use oat\taoQtiItem\model\portableElement\model\PortableModelRegistry;
 use oat\taoQtiItem\scripts\SetupPortableElementFileStorage;
@@ -85,7 +86,7 @@ class Updater extends \common_ext_ExtensionUpdater
             // Grants access on PciLoader for TestTaker role.
             AclProxy::applyRule(new AccessRule(
                 AccessRule::GRANT,
-                INSTANCE_ROLE_DELIVERY,
+				TaoOntology::PROPERTY_INSTANCE_ROLE_DELIVERY,
                 ['ext' => 'qtiItemPic' , 'mod' => 'PciLoader']
             ));
 
@@ -161,6 +162,8 @@ class Updater extends \common_ext_ExtensionUpdater
             call_user_func(new RegisterPicStudentToolSample(), ['0.4.1']);
             $this->setVersion('5.0.1');
         }
+
+        $this->skip('5.0.1', '5.1.0');
 
     }
 }
