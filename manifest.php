@@ -31,10 +31,10 @@ return array(
     'label' => 'QTI Portable Info Control',
     'description' => '',
     'license' => 'GPL-2.0',
-    'version' => '5.0.1',
+    'version' => '5.1.0',
     'author' => 'Open Assessment Technologies',
     'requires' => array(
-        'tao' => '>=12.0.0',
+        'tao' => '>=12.21.4',
         'taoQtiItem' => '>=11.0.0'
     ),
     'acl' => array(
