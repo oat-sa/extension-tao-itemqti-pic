@@ -29,12 +29,6 @@ use \DOMXPath;
 
 class OatPicExporter extends PortableElementExporter{
 
-    /**
-     * Copy the asset files of the PIC to the item exporter and return the list of copied assets
-     * @param $replacementList
-     * @return array
-     * @throws \oat\taoQtiItem\model\portableElement\exception\PortableElementInvalidAssetException
-     */
     public function copyAssetFiles(&$replacementList){
         $object = $this->object;
         $portableAssetsToExport = [];
@@ -55,7 +49,7 @@ class OatPicExporter extends PortableElementExporter{
             $portableAssetsToExport[$url] = $portableAssetToExport;
             \common_Logger::i('File copied: "' . $url . '" for portable element ' . $object->getTypeIdentifier());
         }
-        return $this->portableAssetsToExport = $portableAssetsToExport;
+        $this->portableAssetsToExport = $portableAssetsToExport;
     }
 
     public function getNodeName(){
