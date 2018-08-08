@@ -19,39 +19,45 @@
  *
  */
 
-namespace oat\qtiItemPic\test;
+namespace oat\qtiItemPic\test\unit;
+
+require_once dirname(__FILE__) . '/../../tao/includes/raw_start.php';
 
 use oat\tao\test\TaoPhpUnitTestRunner;
 use oat\qtiItemPic\model\CreatorHook;
 use oat\taoQtiItem\model\Config;
 use oat\qtiItemPic\model\CreatorRegistry;
 
-
+// @todo fix missing CreatorRegistry
+// @todo fix missing CreatorHook
 
 class CreatorHookTest extends TaoPhpUnitTestRunner
 {
 
     protected $qtiService;
 
+    protected $registry;
+
     /**
      * tests initialization
      * load registry service
      */
-    public function setUp(){
-        TaoPhpUnitTestRunner::initTest();
+    public function setUp()
+    {
         $this->registry = new CreatorRegistry();
     }
-    
-    public function testInit(){
-        
+
+    public function testInit()
+    {
+        // @todo fix instantiating abstract class
         $config = new Config();
         $hook = new CreatorHook();
-        
+
         $hook->init($config);
-        
+
         $configData = $config->toArray();
-        
+
         $this->assertEquals(count($configData['infoControls']), 2);
     }
-    
+
 }

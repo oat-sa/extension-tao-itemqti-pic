@@ -18,11 +18,13 @@
  *
  *
  */
-namespace oat\qtiItemPic\test;
+
+namespace oat\qtiItemPic\test\unit;
 
 use oat\tao\test\TaoPhpUnitTestRunner;
 use oat\qtiItemPic\model\CreatorRegistry;
 
+// @todo fix missing CreatorRegistry
 
 class CreatorRegistryTest extends TaoPhpUnitTestRunner
 {
@@ -33,25 +35,25 @@ class CreatorRegistryTest extends TaoPhpUnitTestRunner
      * tests initialization
      * load registry service
      */
-    public function setUp(){
-        TaoPhpUnitTestRunner::initTest();
+    public function setUp()
+    {
         $this->registry = new CreatorRegistry();
     }
-    
-    public function testGetDevInteractions(){
-        
+
+    public function testGetDevInteractions()
+    {
         $existingId = 'studentToolSample';
         $noExistingId = 'studenttoolsample';
-        
+
         $devInteractions = $this->registry->getDevImplementations();
         $this->assertEquals(2, count($devInteractions));
-        
+
         $this->assertNotNull($this->registry->getDevImplementation($existingId));
-        
+
         $this->assertNull($this->registry->getDevImplementation($noExistingId));
-        
+
         $this->assertNotNull($this->registry->getDevImplementationDirectory($existingId));
-        
+
         $this->setExpectedException('common_Exception');
         $this->assertNull($this->registry->getDevImplementationDirectory($noExistingId));
     }
