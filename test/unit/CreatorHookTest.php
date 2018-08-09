@@ -21,8 +21,6 @@
 
 namespace oat\qtiItemPic\test\unit;
 
-require_once dirname(__FILE__) . '/../../tao/includes/raw_start.php';
-
 use oat\tao\test\TaoPhpUnitTestRunner;
 use oat\qtiItemPic\model\CreatorHook;
 use oat\taoQtiItem\model\Config;
