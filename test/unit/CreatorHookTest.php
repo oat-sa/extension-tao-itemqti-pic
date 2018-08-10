@@ -18,14 +18,21 @@
  *
  *
  */
-namespace oat\qtiItemPic\test;
+
+namespace oat\qtiItemPic\test\unit;
 
 use oat\tao\test\TaoPhpUnitTestRunner;
+use oat\qtiItemPic\model\CreatorHook;
+use oat\taoQtiItem\model\Config;
 use oat\qtiItemPic\model\CreatorRegistry;
 
+// @todo fix missing CreatorRegistry
+// @todo fix missing CreatorHook
 
-class CreatorRegistryTest extends TaoPhpUnitTestRunner
+class CreatorHookTest extends TaoPhpUnitTestRunner
 {
+
+    protected $qtiService;
 
     protected $registry;
 
@@ -33,26 +40,22 @@ class CreatorRegistryTest extends TaoPhpUnitTestRunner
      * tests initialization
      * load registry service
      */
-    public function setUp(){
-        TaoPhpUnitTestRunner::initTest();
+    public function setUp()
+    {
         $this->registry = new CreatorRegistry();
     }
-    
-    public function testGetDevInteractions(){
-        
-        $existingId = 'studentToolSample';
-        $noExistingId = 'studenttoolsample';
-        
-        $devInteractions = $this->registry->getDevImplementations();
-        $this->assertEquals(2, count($devInteractions));
-        
-        $this->assertNotNull($this->registry->getDevImplementation($existingId));
-        
-        $this->assertNull($this->registry->getDevImplementation($noExistingId));
-        
-        $this->assertNotNull($this->registry->getDevImplementationDirectory($existingId));
-        
-        $this->setExpectedException('common_Exception');
-        $this->assertNull($this->registry->getDevImplementationDirectory($noExistingId));
+
+    public function testInit()
+    {
+        // @todo fix instantiating abstract class
+        $config = new Config();
+        $hook = new CreatorHook();
+
+        $hook->init($config);
+
+        $configData = $config->toArray();
+
+        $this->assertEquals(count($configData['infoControls']), 2);
     }
+
 }
