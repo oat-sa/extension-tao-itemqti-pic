@@ -31,7 +31,7 @@ return array(
     'label' => 'QTI Portable Info Control',
     'description' => '',
     'license' => 'GPL-2.0',
-    'version' => '5.2.4',
+    'version' => '5.2.5',
     'author' => 'Open Assessment Technologies',
     'requires' => array(
         'tao' => '>=12.21.4',
