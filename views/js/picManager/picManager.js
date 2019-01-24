@@ -157,7 +157,7 @@ define([
                 $itemPropPanel.append($managerPanel);
 
                 //init tooltips
-                tooltip($itemPropPanel);
+                tooltip.lookup($itemPropPanel);
 
                 //init event listeners:
                 var $checkBoxes = $('[data-role="pic-manager"]').find('input:checkbox');
