@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -27,14 +28,16 @@ use oat\taoQtiItem\model\portableElement\element\PortableElementObject;
 use \DOMDocument;
 use \DOMXPath;
 
-class OatPicExporter extends PortableElementExporter{
+class OatPicExporter extends PortableElementExporter
+{
 
     /**
      * Copy the asset files of the PIC to the item exporter and return the list of copied assets
      * @param $replacementList
      * @return array
      */
-    public function copyAssetFiles(&$replacementList){
+    public function copyAssetFiles(&$replacementList)
+    {
         $object = $this->object;
         $portableAssetsToExport = [];
         $service = new PortableElementService();
@@ -57,22 +60,26 @@ class OatPicExporter extends PortableElementExporter{
         return $this->portableAssetsToExport = $portableAssetsToExport;
     }
 
-    public function getNodeName(){
+    public function getNodeName()
+    {
         return 'portableInfoControl';
     }
 
-    public function getTypeIdentifierAttributeName(){
+    public function getTypeIdentifierAttributeName()
+    {
         return 'infoControlTypeIdentifier';
     }
 
-    public function getXmlnsName(){
+    public function getXmlnsName()
+    {
         return 'pic';
     }
 
-    public function exportDom(DOMDocument $dom){
+    public function exportDom(DOMDocument $dom)
+    {
 
         // If asset files list is empty for current identifier skip
-        if (empty($this->portableAssetsToExport)){
+        if (empty($this->portableAssetsToExport)) {
             return;
         }
 
@@ -84,34 +91,38 @@ class OatPicExporter extends PortableElementExporter{
         /** @var PortableElementObject $portableElement */
         $portableElement = $this->object;
 
-        for ($i=0; $i<$portableElementNodes->length; $i++) {
+        for ($i = 0; $i < $portableElementNodes->length; $i++) {
 
             /** @var \DOMElement $currentPortableNode */
             $currentPortableNode = $portableElementNodes->item($i);
 
             //get the local namespace prefix to be used in new node creation
-            $localNs = $currentPortableNode->hasAttribute('xmlns') ? '' : $this->getXmlnsName().':';
+            $localNs = $currentPortableNode->hasAttribute('xmlns') ? '' : $this->getXmlnsName() . ':';
 
             //get the portable element type identifier
             $identifier = $currentPortableNode->getAttribute($this->getTypeIdentifierAttributeName());
 
-            if($identifier != $portableElement->getTypeIdentifier()){
+            if ($identifier != $portableElement->getTypeIdentifier()) {
                 continue;
             }
 
             // Add hook and version as attributes
-            if ($portableElement->hasRuntimeKey('hook'))
-                $currentPortableNode->setAttribute('hook',
-                    preg_replace('/^(.\/)(.*)/', $portableElement->getTypeIdentifier() . "/$2",
+            if ($portableElement->hasRuntimeKey('hook')) {
+                $currentPortableNode->setAttribute(
+                    'hook',
+                    preg_replace(
+                        '/^(.\/)(.*)/',
+                        $portableElement->getTypeIdentifier() . "/$2",
                         $portableElement->getRuntimeKey('hook')
                     )
                 );
+            }
 
             //set version
             $currentPortableNode->setAttribute('version', $portableElement->getVersion());
 
             // If asset files list is empty for current identifier skip
-            if ( !isset($portableAssetsToExport) || !isset($portableAssetsToExport[$portableElement->getTypeIdentifier()]) ){
+            if (!isset($portableAssetsToExport) || !isset($portableAssetsToExport[$portableElement->getTypeIdentifier()])) {
                 continue;
             }
 
@@ -160,13 +171,13 @@ class OatPicExporter extends PortableElementExporter{
             if ($mediaFilesNode->hasChildNodes()) {
                 $resourcesNode->appendChild($mediaFilesNode);
             }
-
         }
 
         unset($xpath);
     }
 
-    private function getOatPciExportPath($file){
-        return $this->portableAssetsToExport[preg_replace('/^'.$this->object->getTypeIdentifier().'\//', './', $file)];
+    private function getOatPciExportPath($file)
+    {
+        return $this->portableAssetsToExport[preg_replace('/^' . $this->object->getTypeIdentifier() . '\//', './', $file)];
     }
 }

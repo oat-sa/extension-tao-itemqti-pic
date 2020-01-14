@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -22,7 +23,6 @@ namespace oat\qtiItemPic\model;
 
 use oat\oatbox\PhpSerializeStateless;
 use oat\oatbox\service\ServiceManager;
-
 use oat\qtiItemPic\model\portableElement\dataObject\PicDataObject;
 use oat\qtiItemPic\model\portableElement\parser\PicDirectoryParser;
 use oat\qtiItemPic\model\portableElement\parser\PicPackagerParser;

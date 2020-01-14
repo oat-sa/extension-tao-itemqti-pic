@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -26,51 +27,51 @@ use oat\qtiItemPic\scripts\install\RegisterPicModel;
 use oat\taoQtiItem\scripts\SetupPortableElementFileStorage;
 use oat\qtiItemPic\scripts\install\RegisterPicFilesystem;
 
-return array(
+return [
     'name' => 'qtiItemPic',
     'label' => 'QTI Portable Info Control',
     'description' => '',
     'license' => 'GPL-2.0',
     'version' => '5.3.3',
     'author' => 'Open Assessment Technologies',
-    'requires' => array(
+    'requires' => [
         'tao' => '>=23.0.0',
         'taoQtiItem' => '>=11.0.0'
-    ),
-    'acl' => array(
-        array('grant', 'http://www.tao.lu/Ontologies/generis.rdf#qtiItemPicManager', array('ext'=>'qtiItemPic')),
-		array('grant', 'http://www.tao.lu/Ontologies/TAOItem.rdf#QTIManagerRole', array('ext'=>'qtiItemPic', 'mod' => 'PicLoader')),
-		array('grant', 'http://www.tao.lu/Ontologies/TAOItem.rdf#ItemsManagerRole', array('ext'=>'qtiItemPic', 'mod' => 'PicLoader')),
-		array('grant', 'http://www.tao.lu/Ontologies/TAO.rdf#DeliveryRole', array('ext'=>'qtiItemPic', 'mod' => 'PicLoader')),
-    ),
-    'install' => array(
-        'rdf' => array(
-		    dirname(__FILE__). '/install/ontology/role.rdf'
-		),
-        'php'	=> array(
+    ],
+    'acl' => [
+        ['grant', 'http://www.tao.lu/Ontologies/generis.rdf#qtiItemPicManager', ['ext' => 'qtiItemPic']],
+        ['grant', 'http://www.tao.lu/Ontologies/TAOItem.rdf#QTIManagerRole', ['ext' => 'qtiItemPic', 'mod' => 'PicLoader']],
+        ['grant', 'http://www.tao.lu/Ontologies/TAOItem.rdf#ItemsManagerRole', ['ext' => 'qtiItemPic', 'mod' => 'PicLoader']],
+        ['grant', 'http://www.tao.lu/Ontologies/TAO.rdf#DeliveryRole', ['ext' => 'qtiItemPic', 'mod' => 'PicLoader']],
+    ],
+    'install' => [
+        'rdf' => [
+            dirname(__FILE__) . '/install/ontology/role.rdf'
+        ],
+        'php'   => [
             RegisterPicFilesystem::class,
-			SetupPortableElementFileStorage::class,
-			RegisterPicModel::class,
-			SetQtiCreatorConfig::class,
-			RegisterClientProvider::class,
-			RegisterPicStudentToolbar::class,
-			RegisterPicStudentToolSample::class,
-		)
-    ),
-    'uninstall' => array(
-    ),
+            SetupPortableElementFileStorage::class,
+            RegisterPicModel::class,
+            SetQtiCreatorConfig::class,
+            RegisterClientProvider::class,
+            RegisterPicStudentToolbar::class,
+            RegisterPicStudentToolSample::class,
+        ]
+    ],
+    'uninstall' => [
+    ],
     'update' => 'oat\\qtiItemPic\\scripts\\update\\Updater',
-    'routes' => array(
+    'routes' => [
         '/qtiItemPic' => 'oat\\qtiItemPic\\controller'
-    ),
-	'constants' => array(
-	    # views directory
-	    "DIR_VIEWS" => dirname(__FILE__).DIRECTORY_SEPARATOR."views".DIRECTORY_SEPARATOR,
+    ],
+    'constants' => [
+        # views directory
+        "DIR_VIEWS" => dirname(__FILE__) . DIRECTORY_SEPARATOR . "views" . DIRECTORY_SEPARATOR,
 
-		#BASE URL (usually the domain root)
-		'BASE_URL' => ROOT_URL.'qtiItemPic/',
-	),
-    'extra' => array(
-        'structures' => dirname(__FILE__).DIRECTORY_SEPARATOR.'controller'.DIRECTORY_SEPARATOR.'structures.xml',
-    )
-);
+        #BASE URL (usually the domain root)
+        'BASE_URL' => ROOT_URL . 'qtiItemPic/',
+    ],
+    'extra' => [
+        'structures' => dirname(__FILE__) . DIRECTORY_SEPARATOR . 'controller' . DIRECTORY_SEPARATOR . 'structures.xml',
+    ]
+];
