@@ -32,7 +32,7 @@ return [
     'label' => 'QTI Portable Info Control',
     'description' => '',
     'license' => 'GPL-2.0',
-    'version' => '5.3.3',
+    'version' => '5.3.4',
     'author' => 'Open Assessment Technologies',
     'requires' => [
         'tao' => '>=23.0.0',
@@ -46,7 +46,7 @@ return [
     ],
     'install' => [
         'rdf' => [
-            dirname(__FILE__) . '/install/ontology/role.rdf'
+            __DIR__ . '/install/ontology/role.rdf'
         ],
         'php'   => [
             RegisterPicFilesystem::class,
@@ -66,12 +66,12 @@ return [
     ],
     'constants' => [
         # views directory
-        "DIR_VIEWS" => dirname(__FILE__) . DIRECTORY_SEPARATOR . "views" . DIRECTORY_SEPARATOR,
+        "DIR_VIEWS" => __DIR__ . DIRECTORY_SEPARATOR . "views" . DIRECTORY_SEPARATOR,
 
         #BASE URL (usually the domain root)
         'BASE_URL' => ROOT_URL . 'qtiItemPic/',
     ],
     'extra' => [
-        'structures' => dirname(__FILE__) . DIRECTORY_SEPARATOR . 'controller' . DIRECTORY_SEPARATOR . 'structures.xml',
+        'structures' => __DIR__ . DIRECTORY_SEPARATOR . 'controller' . DIRECTORY_SEPARATOR . 'structures.xml',
     ]
 ];
