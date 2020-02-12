@@ -15,7 +15,7 @@ module.exports = function (grunt) {
             qtiitempic : {
                 options : {
                     includePaths: [
-                        '../../../tao/views/node_modules/@oat-sa/tao-core-ui/scss',
+                        '../../tao/views/node_modules/@oat-sa/tao-core-ui/scss',
                         '../scss/',
                         root + 'js/picCreator/dev/studentToolbar/runtime/scss'
                     ]
