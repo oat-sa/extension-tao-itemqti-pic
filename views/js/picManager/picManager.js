@@ -28,7 +28,18 @@ define([
     'taoQtiItem/qtiCreator/editor/gridEditor/content',
     'tpl!qtiItemPic/picManager/tpl/manager',
     'css!qtiItemPicCss/pic-manager'
-], function ($, _, Promise, loggerFactory, tooltip, icRegistry, creatorRenderer, containerHelper, contentHelper, managerTpl) {
+], function (
+    $,
+    _,
+    Promise,
+    loggerFactory,
+    tooltip,
+    icRegistry,
+    creatorRenderer,
+    containerHelper,
+    contentHelper,
+    managerTpl
+) {
     'use strict';
 
     var _studentToolTag = 'student-tool';
@@ -42,12 +53,10 @@ define([
      * @param state
      */
     function toggleCheckboxState($checkBoxes, state) {
-
-        $checkBoxes.each(function() {
-
+        $checkBoxes.each(function () {
             // @todo this is tmp code that needs to go as soon all tools are available
             // see also further down above check event for another portion of the code
-            if(this.className.indexOf('not-available') > -1) {
+            if (this.className.indexOf('not-available') > -1) {
                 return true;
             }
             // end tmp code
@@ -80,19 +89,15 @@ define([
      * @param itemUri
      */
     function initStudentToolManager($container, $itemPanel, item) {
-
         var $placeholder;
         //get item
         //editor panel..
         itemWidgetLoaded($itemPanel, function () {
-
-            var uri = item.data('uri');
             //item prop panel, aka container
             var $itemPropPanel = $container;
 
             //get list of all info controls available
-            icRegistry.loadCreators().then(function(allInfoControls){
-
+            icRegistry.loadCreators().then(function (allInfoControls) {
                 //get item body container
                 //editor panel..
                 var $itemBody = $itemPanel.find('.qti-itemBody');
@@ -105,7 +110,7 @@ define([
                     $managerPanel,
                     i = 0;
 
-                _.each(allInfoControls, function(creator){
+                _.each(allInfoControls, function (creator) {
                     var name = creator.getTypeIdentifier(),
                         manifest = icRegistry.get(name),
                         controlExists = _.indexOf(alreadySet, name) > -1,
@@ -162,8 +167,7 @@ define([
                 //init event listeners:
                 var $checkBoxes = $('[data-role="pic-manager"]').find('input:checkbox');
 
-                $checkBoxes.on('change.picmanager', function(e) {
-
+                $checkBoxes.on('change.picmanager', function (e) {
                     e.stopPropagation();
 
                     // install toolbar if required
@@ -176,21 +180,32 @@ define([
                     toggleCheckboxState($checkBoxes, true);
 
                     processAllControls();
-
                 });
 
+                /**
+                 * Creates array of PIC controllers names in order which the controller will be processed
+                 *
+                 * @returns {String[]}
+                 */
+                function getOrderedPICNames() {
+                    return _.keys(allInfoControls).reduce((ordered, infoContorolName) => {
+                        if (infoContorolName === _studentToolbarId) {
+                            ordered.unshift(infoContorolName);
+                        } else {
+                            ordered.push(infoContorolName);
+                        }
 
+                        return ordered;
+                    }, []);
+                }
                 /**
                  * Iterate over all controls and launch the actual installer/un-installer
                  */
                 function processAllControls() {
-
                     var cnt = 0;
 
-                    // _.forOwn callback args are value, name
-                    // name is also available as value.name
-                    _.forOwn(allInfoControls, function (control) {
-
+                    _.forEach(getOrderedPICNames(), controlName => {
+                        const control = allInfoControls[controlName];
                         // is there any action required at all?
                         // if not and if there are still items
                         // left proceed to the next one
@@ -206,11 +221,11 @@ define([
                         return false;
                     });
 
-                    if(cnt === allInfoControlsSize) {
+                    console.log('cnt === allInfoControlsSize', cnt, allInfoControlsSize);
+                    if (cnt === allInfoControlsSize) {
                         toggleCheckboxState($checkBoxes, false);
                     }
                 }
-
 
                 /**
                  * Render tool|toolbar
@@ -218,8 +233,8 @@ define([
                  * @param elt
                  */
                 function renderControl(elt) {
-
-                    var stsClassName = (elt.typeIdentifier === _studentToolbarId) ? 'sts-scope' : 'sts-scope sts-tmp-element';
+                    var stsClassName =
+                        elt.typeIdentifier === _studentToolbarId ? 'sts-scope' : 'sts-scope sts-tmp-element';
 
                     //add the student tool css scope
                     elt.attr('class', stsClassName);
@@ -232,30 +247,29 @@ define([
 
                     elt.render($placeholder);
 
-
                     $placeholder = null;
 
-                    Promise.all(elt.postRender({})).then(function(){
-                        var widget = elt.data('widget');
+                    Promise.all(elt.postRender({}))
+                        .then(function () {
+                            var widget = elt.data('widget');
 
-                        allInfoControls[elt.typeIdentifier].installed = true;
+                            allInfoControls[elt.typeIdentifier].installed = true;
 
-                        //inform height modification
-                        widget.$container.trigger('contentChange.gridEdit');
-                        widget.$container.trigger('resize.gridEdit');
+                            //inform height modification
+                            widget.$container.trigger('contentChange.gridEdit');
+                            widget.$container.trigger('resize.gridEdit');
 
-                        if(elt.typeIdentifier !== _studentToolbarId) {
-                            toggleCheckboxState($checkBoxes, false);
-                        }
+                            if (elt.typeIdentifier !== _studentToolbarId) {
+                                toggleCheckboxState($checkBoxes, false);
+                            }
 
-                        // continue with the next element of allInfoControls
-                        processAllControls();
-
-                    }).catch(function(err){
-                        logger.error(err);
-                    });
+                            // continue with the next element of allInfoControls
+                            processAllControls();
+                        })
+                        .catch(function (err) {
+                            logger.error(err);
+                        });
                 }
-
 
                 /**
                  * Remove a student tool
@@ -263,9 +277,7 @@ define([
                  * @param control
                  */
                 function removeControl(control) {
-
                     var infoControls = item.getElements('infoControl'),
-
                         remove = function (_control) {
                             var studentTool = _.find(infoControls, {
                                 typeIdentifier: _control.name
@@ -307,7 +319,6 @@ define([
                  * @returns {boolean}
                  */
                 function processControl(control) {
-
                     // what needs to be done to the control? install|uninstall
                     if (!control.checked) {
                         removeControl(control);
@@ -319,36 +330,30 @@ define([
                     $itemBody.prepend($placeholder);
 
                     // install procedure
-                    containerHelper.createElements(
-                        item.getBody(),
-                        contentHelper.getContent($itemBody),
-                        function (newElts) {
-                            // although newElts appears to be a collection it holds
-                            // only _one_ element due to the callback mechanism
-                            // between processControl() and processAllControls()
-                            _.each(newElts, function (elt) {
-
-                                // update look-up list
-                                allInfoControls[control.name].copied = true;
-                                renderControl(elt);
-
-                            });
+                    containerHelper.createElements(item.getBody(), contentHelper.getContent($itemBody), function (
+                        newElts
+                    ) {
+                        // although newElts appears to be a collection it holds
+                        // only _one_ element due to the callback mechanism
+                        // between processControl() and processAllControls()
+                        _.each(newElts, function (elt) {
+                            // update look-up list
+                            allInfoControls[control.name].copied = true;
+                            renderControl(elt);
                         });
+                    });
                 }
-
             }, true);
-
         });
-
     }
 
     return function picManager($container, $itemPanel, itemUri) {
         //load infoControl model first into the creator renderer
-        creatorRenderer
-            .get()
-            .load(function () {
+        creatorRenderer.get().load(
+            function () {
                 initStudentToolManager($container, $itemPanel, itemUri);
-            }, ['infoControl']);
+            },
+            ['infoControl']
+        );
     };
-
 });
