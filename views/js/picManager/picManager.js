@@ -87,7 +87,7 @@ define([
     function initStudentToolManager($container, $itemPanel, item) {
         var $placeholder;
         //get list of all info controls available
-        icRegistry.loadCreators().then(function (allInfoControls) {
+        icRegistry.loadCreators().then(allInfoControls => {
             //get item body container
             //editor panel..
             var $itemBody = $itemPanel.find('.qti-itemBody');
@@ -100,7 +100,7 @@ define([
                 $managerPanel,
                 i = 0;
 
-            _.each(allInfoControls, function (creator) {
+            _.each(allInfoControls, creator => {
                 var name = creator.getTypeIdentifier(),
                     manifest = icRegistry.get(name),
                     controlExists = _.indexOf(alreadySet, name) > -1,
@@ -157,7 +157,7 @@ define([
             //init event listeners:
             var $checkBoxes = $('[data-role="pic-manager"]').find('input:checkbox');
 
-            $checkBoxes.on('change.picmanager', function (e) {
+            $checkBoxes.on('change.picmanager', function onChangePicManager(e) {
                 e.stopPropagation();
 
                 // install toolbar if required
