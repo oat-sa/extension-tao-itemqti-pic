@@ -3,7 +3,7 @@
     "label": "Student Toolbar",
     "short" : "Toolbar",
     "description": "The container of student tools",
-    "version": "0.4.0",
+    "version": "0.4.1",
     "author": "Sam Sipasseuth",
     "email": "sam@taotesting.com",
     "tags": [],
