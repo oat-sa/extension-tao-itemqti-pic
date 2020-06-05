@@ -60,7 +60,7 @@ define(['taoQtiItem/portableLib/jquery_2_1_1', 'taoQtiItem/portableLib/lodash', 
             }));
 
             //hook it into the toolbar:
-            this.$toolbar = $('#'+this.config.toolbarId);
+            this.$toolbar = $container.closest('.qti-itemBody').find('#' + this.config.toolbarId);
             this.$toolbar.find('.sts-content').append($container);
 
             //setup hinting engine
