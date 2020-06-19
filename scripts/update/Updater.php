@@ -170,5 +170,7 @@ class Updater extends \common_ext_ExtensionUpdater
             call_user_func(new RegisterPicStudentToolSample(), ['0.4.2']);
             $this->setVersion('5.4.1');
         }
+
+        $this->skip('5.4.1', '5.5.1');
     }
 }
