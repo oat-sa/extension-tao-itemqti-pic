@@ -37,6 +37,9 @@ use oat\taoQtiItem\model\HookRegistry;
 use oat\taoQtiItem\model\portableElement\model\PortableModelRegistry;
 use oat\taoQtiItem\scripts\SetupPortableElementFileStorage;
 
+/**
+ * @deprecated use migrations instead. See https://github.com/oat-sa/generis/wiki/Tao-Update-Process
+ */
 class Updater extends \common_ext_ExtensionUpdater
 {
 	use OntologyAwareTrait;
@@ -172,5 +175,10 @@ class Updater extends \common_ext_ExtensionUpdater
         }
 
         $this->skip('5.4.1', '5.5.1');
+        
+        //Updater files are deprecated. Please use migrations.
+        //See: https://github.com/oat-sa/generis/wiki/Tao-Update-Process
+
+        $this->setVersion($this->getExtension()->getManifest()->getVersion());
     }
 }
