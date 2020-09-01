@@ -2,8 +2,8 @@
     "typeIdentifier": "studentToolSample",
     "label": "Hint",
     "short": "Hint",
-    "description": "show a hint",
-    "version": "0.4.2",
+    "description": "Show a hint",
+    "version": "0.4.3",
     "author": "Sam Sipasseuth",
     "email": "sam@taotesting.com",
     "tags": [
