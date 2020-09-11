@@ -87,7 +87,7 @@ define([
     function initStudentToolManager($container, $itemPanel, item) {
         var $placeholder;
         //get list of all info controls available
-        icRegistry.loadCreators().then(allInfoControls => {
+        icRegistry.loadCreators().then(function(allInfoControls) {
             //get item body container
             //editor panel..
             var $itemBody = $itemPanel.find('.qti-itemBody');
@@ -100,7 +100,7 @@ define([
                 $managerPanel,
                 i = 0;
 
-            _.each(allInfoControls, creator => {
+            _.each(allInfoControls, function(creator) {
                 var name = creator.getTypeIdentifier(),
                     manifest = icRegistry.get(name),
                     controlExists = _.indexOf(alreadySet, name) > -1,
@@ -178,7 +178,7 @@ define([
              * @returns {String[]}
              */
             function getOrderedPICNames() {
-                return _.keys(allInfoControls).reduce((ordered, infoContorolName) => {
+                return _.keys(allInfoControls).reduce(function(ordered, infoContorolName) {
                     if (infoContorolName === _studentToolbarId) {
                         ordered.unshift(infoContorolName);
                     } else {
@@ -194,7 +194,7 @@ define([
             function processAllControls() {
                 var cnt = 0;
 
-                _.forEach(getOrderedPICNames(), controlName => {
+                _.forEach(getOrderedPICNames(), function(controlName) {
                     const control = allInfoControls[controlName];
                     // is there any action required at all?
                     // if not and if there are still items
