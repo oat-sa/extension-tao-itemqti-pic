@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: TAO 3.4.0-sprint137\n"
-"PO-Revision-Date: 2020-09-11T08:36:00\n"
+"Project-Id-Version: TAO 3.4.0-sprint160\n"
+"PO-Revision-Date: 2021-07-27T12:35:59\n"
 "Last-Translator: TAO Translation Team <translation@tao.lu>\n"
 "MIME-Version: 1.0\n"
 "Language: ar-arb\n"
@@ -14,17 +14,16 @@ msgstr ""
 "X-Poedit-SearchPath-0: .\n"
 
 msgid "Hints"
-msgstr "تلميحات"
+msgstr "إشارات"
 
 msgid "New Hint"
-msgstr "تلميحة جديدة"
+msgstr "إشارة جديدة"
 
 msgid "Shuffle"
-msgstr "عشوائي"
+msgstr "خلط"
 
 msgid "shuffle the hints"
-msgstr "ترتيب التلميحات عشوائيا"
+msgstr "خلط التلميحات"
 
 msgid "Student tools"
-msgstr "أدوات الطلاب"
-
+msgstr "أدوات الطالب"
