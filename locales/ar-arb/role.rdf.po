@@ -13,10 +13,10 @@ msgstr ""
 # http://www.tao.lu/Ontologies/generis.rdf#qtiItemPicManager
 msgctxt "http://www.w3.org/2000/01/rdf-schema#label"
 msgid "QTI PIC Manager"
-msgstr "مدير QIT PIC"
+msgstr ""
 
 # http://www.tao.lu/Ontologies/generis.rdf#qtiItemPicManager
 msgctxt "http://www.w3.org/2000/01/rdf-schema#comment"
 msgid "QTI PIC Manager Role"
-msgstr "وظيفة مدير QTI PIC"
+msgstr ""
 
