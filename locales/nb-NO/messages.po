@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: TAO 3.4.0-sprint158\n"
-"PO-Revision-Date: 2021-08-17 08:56+0200\n"
+"Project-Id-Version: TAO 2021.10\n"
+"PO-Revision-Date: 2021-10-20T15:49:56\n"
 "Last-Translator: TAO Translation Team <translation@tao.lu>\n"
 "MIME-Version: 1.0\n"
 "Language: nb-NO\n"
@@ -9,30 +9,22 @@ msgstr ""
 "targetLanguage: nb-NO\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Poedit-Basepath: ../..\n"
+"X-Poedit-Basepath: ../../\n"
 "X-Poedit-KeywordsList: __\n"
-"POT-Creation-Date: \n"
-"Language-Team: \n"
-"X-Generator: Poedit 2.4.2\n"
 "X-Poedit-SearchPath-0: .\n"
 
-#, fuzzy
 msgid "Hints"
 msgstr "Hint"
 
-#, fuzzy
 msgid "New Hint"
 msgstr "Nytt hint"
 
-#, fuzzy
 msgid "Shuffle"
 msgstr "Bland"
 
-#, fuzzy
 msgid "shuffle the hints"
 msgstr "bland hintene"
 
-#, fuzzy
 msgid "Student tools"
 msgstr "Elev verktøy"
 
