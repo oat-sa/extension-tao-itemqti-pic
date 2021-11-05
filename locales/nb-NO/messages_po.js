@@ -1,1 +1,1 @@
-{"Authoring":"Innhold","Delete":"Slett","Export":"Eksporter","Import":"Importer","Move":"Flytt","New test":"Ny test","New test-taker":"Ny testkandidat","Properties":"Egenskaper","Users":"Brukere"}
+{"Hints":"Hint","Manage Access Rights":"Administrere tilgangsstyring","Manage test takers":"Manage test-takers","New Hint":"Nytt hint","Record and manage test takers.":"Record and manage test-takers.","Shuffle":"Bland","shuffle the hints":"bland hintene","Student tools":"Elev verkt\u00f8y","Test takers library":"Test-takers library","Users":"Brukere"}
