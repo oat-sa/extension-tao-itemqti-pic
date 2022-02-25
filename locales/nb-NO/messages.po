@@ -20,11 +20,10 @@ msgid "New Hint"
 msgstr "Nytt hint"
 
 msgid "Shuffle"
-msgstr "Bland"
+msgstr "Tilfeldig rekkefølge"
 
 msgid "shuffle the hints"
-msgstr "bland hintene"
+msgstr "tilfeldig rekkefølge på svaralternativene"
 
 msgid "Student tools"
-msgstr "Elev verktøy"
-
+msgstr "Elevverktøy"
