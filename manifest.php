@@ -23,6 +23,7 @@ use oat\qtiItemPic\scripts\install\RegisterClientProvider;
 use oat\qtiItemPic\scripts\install\RegisterPicStudentToolbar;
 use oat\qtiItemPic\scripts\install\RegisterPicStudentToolSample;
 use oat\qtiItemPic\scripts\install\RegisterPicModel;
+use oat\qtiItemPic\scripts\uninstall\UninstallPIC;
 use oat\taoQtiItem\scripts\SetupPortableElementFileStorage;
 use oat\qtiItemPic\scripts\install\RegisterPicFilesystem;
 
@@ -52,8 +53,11 @@ return array(
 			RegisterPicStudentToolSample::class,
 		)
     ),
-    'uninstall' => array(
-    ),
+    'uninstall' => [
+        'php' => [
+            UninstallPIC::class
+        ]
+    ],
     'update' => 'oat\\qtiItemPic\\scripts\\update\\Updater',
     'routes' => array(
         '/qtiItemPic' => 'oat\\qtiItemPic\\controller'
