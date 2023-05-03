@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -21,6 +22,7 @@
 namespace oat\qtiItemPic\scripts\install;
 
 use common_ext_action_InstallAction;
+use common_report_Report;
 use oat\taoQtiItem\model\portableElement\clientConfigRegistry\InfoControlRegistry;
 
 class RegisterClientProvider extends common_ext_action_InstallAction
@@ -28,6 +30,7 @@ class RegisterClientProvider extends common_ext_action_InstallAction
     public function __invoke($params)
     {
         InfoControlRegistry::getRegistry()->registerProvider('picRegistry', 'qtiItemPic/picProvider');
-        return new \common_report_Report(\common_report_Report::TYPE_SUCCESS, '"qtiItemPic/picProvider" PIC provider added');
+
+        return new common_report_Report(common_report_Report::TYPE_SUCCESS, '"qtiItemPic/picProvider" PIC provider added');
     }
 }

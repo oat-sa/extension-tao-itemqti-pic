@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -15,7 +16,6 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
  * Copyright (c) 2016 (original work) Open Assessment Technologies SA;
- *
  */
 
 namespace oat\qtiItemPic\controller;
@@ -23,7 +23,7 @@ namespace oat\qtiItemPic\controller;
 use oat\qtiItemPic\model\PicModel;
 use oat\taoQtiItem\model\portableElement\exception\PortableElementException;
 use oat\taoQtiItem\model\portableElement\storage\PortableElementRegistry;
-use \tao_actions_CommonModule;
+use tao_actions_CommonModule;
 
 class PicLoader extends tao_actions_CommonModule
 {
@@ -50,6 +50,7 @@ class PicLoader extends tao_actions_CommonModule
         if (! $this->registry) {
             $this->registry = (new PicModel())->getRegistry();
         }
+
         return $this->registry;
     }
 }
