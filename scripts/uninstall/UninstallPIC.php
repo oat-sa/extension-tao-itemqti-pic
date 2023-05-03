@@ -20,6 +20,7 @@
 
 namespace oat\qtiItemPic\scripts\uninstall;
 
+use Exception;
 use oat\oatbox\extension\InstallAction;
 use oat\oatbox\filesystem\FileSystemService;
 use oat\oatbox\reporting\Report;
@@ -46,11 +47,12 @@ class UninstallPIC extends InstallAction
         try {
             /** @var FileSystemService $fileSystemService */
             $fileSystemService = $this->getServiceLocator()->get(FileSystemService::SERVICE_ID);
+
             if ($fileSystemService->hasDirectory('qtiItemPic')) {
                 $fileSystemService->unregisterFileSystem('qtiItemPic');
                 $this->registerService(FileSystemService::SERVICE_ID, $fileSystemService);
             }
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             $report->add(Report::createError('Fail to remove qtiItemPic directory.'));
         }
 

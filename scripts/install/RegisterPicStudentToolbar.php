@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -20,12 +21,15 @@
 
 namespace oat\qtiItemPic\scripts\install;
 
+use common_ext_ExtensionsManager;
 use oat\taoQtiItem\model\portableElement\action\RegisterPortableElement;
 
 class RegisterPicStudentToolbar extends RegisterPortableElement
 {
-    protected function getSourceDirectory(){
-        $viewDir = \common_ext_ExtensionsManager::singleton()->getExtensionById('qtiItemPic')->getConstant('DIR_VIEWS');
-        return $viewDir.implode(DIRECTORY_SEPARATOR, ['js', 'picCreator', 'dev', 'studentToolbar']);
+    protected function getSourceDirectory()
+    {
+        $viewDir = common_ext_ExtensionsManager::singleton()->getExtensionById('qtiItemPic')->getConstant('DIR_VIEWS');
+
+        return $viewDir . implode(DIRECTORY_SEPARATOR, ['js', 'picCreator', 'dev', 'studentToolbar']);
     }
 }

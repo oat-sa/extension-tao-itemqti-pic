@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -20,14 +21,17 @@
 
 namespace oat\qtiItemPic\scripts\install;
 
+use common_ext_action_InstallAction;
+use common_report_Report;
 use oat\qtiItemPic\model\PicModel;
 use oat\taoQtiItem\model\portableElement\model\PortableModelRegistry;
 
-class RegisterPicModel extends \common_ext_action_InstallAction
+class RegisterPicModel extends common_ext_action_InstallAction
 {
     public function __invoke($params)
     {
         PortableModelRegistry::getRegistry()->register(new PicModel());
-        return new \common_report_Report(\common_report_Report::TYPE_SUCCESS, 'Pic Model successfully registered.');
+
+        return new common_report_Report(common_report_Report::TYPE_SUCCESS, 'Pic Model successfully registered.');
     }
 }
