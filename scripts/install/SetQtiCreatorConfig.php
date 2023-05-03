@@ -31,6 +31,9 @@ class SetQtiCreatorConfig extends common_ext_action_InstallAction
         $registry = QtiCreatorClientConfigRegistry::getRegistry();
         $registry->registerPlugin('picManager', 'qtiItemPic/qtiCreator/plugins/panel/picManager', 'panel');
 
-        return new common_report_Report(common_report_Report::TYPE_SUCCESS, 'Portable Element Plugins for Qti Creator added to Tao Qti Item extension');
+        return new common_report_Report(
+            common_report_Report::TYPE_SUCCESS,
+            'Portable Element Plugins for Qti Creator added to Tao Qti Item extension'
+        );
     }
 }

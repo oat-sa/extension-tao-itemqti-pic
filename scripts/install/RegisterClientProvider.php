@@ -31,6 +31,9 @@ class RegisterClientProvider extends common_ext_action_InstallAction
     {
         InfoControlRegistry::getRegistry()->registerProvider('picRegistry', 'qtiItemPic/picProvider');
 
-        return new common_report_Report(common_report_Report::TYPE_SUCCESS, '"qtiItemPic/picProvider" PIC provider added');
+        return new common_report_Report(
+            common_report_Report::TYPE_SUCCESS,
+            '"qtiItemPic/picProvider" PIC provider added'
+        );
     }
 }

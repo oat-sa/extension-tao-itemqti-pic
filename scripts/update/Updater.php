@@ -119,7 +119,9 @@ class Updater extends common_ext_ExtensionUpdater
 
             /** @var common_ext_ExtensionsManager $extensionManager */
             $extensionManager = $this->getServiceManager()->get(common_ext_ExtensionsManager::SERVICE_ID);
-            $map = $extensionManager->getExtensionById(PicRegistry::REGISTRY_EXTENSION)->getConfig(PicRegistry::REGISTRY_ID);
+            $map = $extensionManager
+                ->getExtensionById(PicRegistry::REGISTRY_EXTENSION)
+                ->getConfig(PicRegistry::REGISTRY_ID);
 
             foreach ($map as $key => $value) {
                 uksort($value, function ($a, $b) {

@@ -27,7 +27,10 @@ final class Version202009011223111298_qtiItemPic extends AbstractMigration
     public function down(Schema $schema): void
     {
         throw new IrreversibleMigration(
-            'In order to undo this migration, please revert the client-side changes and run ' . RegisterPicStudentToolSample::class
+            sprintf(
+                'In order to undo this migration, please revert the client-side changes and run %s',
+                RegisterPicStudentToolSample::class
+            )
         );
     }
 }
