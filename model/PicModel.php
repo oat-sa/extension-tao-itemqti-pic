@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -15,38 +16,36 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
  * Copyright (c) 2016 (original work) Open Assessment Technologies SA;
- *
  */
 
 namespace oat\qtiItemPic\model;
 
 use oat\oatbox\PhpSerializeStateless;
 use oat\oatbox\service\ServiceManager;
-
+use oat\qtiItemPic\model\export\OatPicExporter;
 use oat\qtiItemPic\model\portableElement\dataObject\PicDataObject;
 use oat\qtiItemPic\model\portableElement\parser\PicDirectoryParser;
 use oat\qtiItemPic\model\portableElement\parser\PicPackagerParser;
 use oat\qtiItemPic\model\portableElement\storage\PicRegistry;
 use oat\qtiItemPic\model\portableElement\validator\PicValidator;
-use oat\taoQtiItem\model\portableElement\storage\PortableElementRegistry;
-use oat\taoQtiItem\model\portableElement\model\PortableElementModel;
-use oat\qtiItemPic\model\export\OatPicExporter;
 use oat\taoQtiItem\model\Export\AbstractQTIItemExporter;
 use oat\taoQtiItem\model\portableElement\element\PortableElementObject;
+use oat\taoQtiItem\model\portableElement\model\PortableElementModel;
+use oat\taoQtiItem\model\portableElement\storage\PortableElementRegistry;
 
 class PicModel implements PortableElementModel
 {
     use PhpSerializeStateless;
 
-    const PIC_IDENTIFIER = 'PIC';
+    public const PIC_IDENTIFIER = 'PIC';
 
-    const PCI_LABEL = 'OAT PIC';
+    public const PCI_LABEL = 'OAT PIC';
 
-    const PIC_MANIFEST = 'picCreator.json';
+    public const PIC_MANIFEST = 'picCreator.json';
 
-    const PIC_ENGINE = 'picCreator.js';
+    public const PIC_ENGINE = 'picCreator.js';
 
-    const PCI_NAMESPACE = 'http://www.imsglobal.org/xsd/portableInfoControl';
+    public const PCI_NAMESPACE = 'http://www.imsglobal.org/xsd/portableInfoControl';
 
     public function getId()
     {
@@ -67,7 +66,7 @@ class PicModel implements PortableElementModel
     {
         return [
             self::PIC_MANIFEST,
-            self::PIC_ENGINE
+            self::PIC_ENGINE,
         ];
     }
 
@@ -80,6 +79,7 @@ class PicModel implements PortableElementModel
     {
         $object = (new PicDataObject())->exchangeArray($data);
         $object->setModel($this);
+
         return $object;
     }
 
@@ -89,6 +89,7 @@ class PicModel implements PortableElementModel
         $registry = PicRegistry::getRegistry();
         $registry->setServiceLocator(ServiceManager::getServiceManager());
         $registry->setModel($this);
+
         return $registry;
     }
 
@@ -101,6 +102,7 @@ class PicModel implements PortableElementModel
     {
         $directoryParser = new PicDirectoryParser();
         $directoryParser->setModel($this);
+
         return $directoryParser;
     }
 
@@ -108,6 +110,7 @@ class PicModel implements PortableElementModel
     {
         $packageParser = new PicPackagerParser();
         $packageParser->setModel($this);
+
         return $packageParser;
     }
 

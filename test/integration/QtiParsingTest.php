@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -16,16 +17,16 @@
  *
  * Copyright (c) 2020  (original work) Open Assessment Technologies SA;
  */
+
 declare(strict_types=1);
 
 namespace oat\qtiItemPic\test\integration;
 
-
-use oat\tao\test\TaoPhpUnitTestRunner;
-use oat\taoQtiItem\model\qti\Item;
 use common_Exception;
 use common_exception_Error;
 use common_ext_ExtensionsManager;
+use oat\tao\test\TaoPhpUnitTestRunner;
+use oat\taoQtiItem\model\qti\Item;
 use oat\taoQtiItem\model\qti\Parser;
 
 class QtiParsingTest extends TaoPhpUnitTestRunner
@@ -56,6 +57,7 @@ class QtiParsingTest extends TaoPhpUnitTestRunner
             $qtiParser = new Parser($file);
 
             $qtiParser->validate();
+
             if (!$qtiParser->isValid()) {
                 echo $qtiParser->displayErrors();
             }
