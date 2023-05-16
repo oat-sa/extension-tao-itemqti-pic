@@ -49,8 +49,8 @@ label {
     height: 150px;
     overflow-y: auto;
     border: solid 1px $uiGeneralContentBorder;
-    position: relative; 
-    .dragholder{ 
+    position: relative;
+    .dragholder{
         padding-top: 20px;
         text-align: center;
         color: $uiGeneralContentBorder;
@@ -79,15 +79,15 @@ label {
         list-style-type: none;
         position: relative;
         margin: 0;
-        padding: 0; 
+        padding: 0;
         & > li{
             position: relative;
             padding: 6px 60px 6px 6px;
             @include simple-border;
             @extend .truncate;
             &:before {
-               @include tao-icon-setup; 
-               @include tao-icon-setup-document; 
+               @include tao-icon-setup;
+               @include tao-icon-setup-document;
                @include font-size(14);
                line-height: 14px;
                margin-right: 5px;
@@ -96,34 +96,34 @@ label {
             .size {
                 color: $info;
                 margin-left: 5px;
-                font-style: italic; 
+                font-style: italic;
             }
             .status {
-               position: absolute; 
+               position: absolute;
                right: 30px;
                top: 6px;
                &.sending:before {
-                   @include tao-icon-setup; 
+                   @include tao-icon-setup;
                    @include icon-download;
                    @include fade(2s);
                    @include repeat;
                }
                &.success:before{
-                   @include tao-icon-setup; 
+                   @include tao-icon-setup;
                    @include icon-success;
                    color: $success;
                }
                &.error:before{
-                   @include tao-icon-setup; 
+                   @include tao-icon-setup;
                    @include icon-error;
                    color: $error;
                }
             }
             .icon-close {
-               position: absolute; 
+               position: absolute;
                right: 6px;
                top: 6px;
-             } 
+             }
         }
     }
 }
@@ -131,7 +131,7 @@ label {
 
 .pseudo-label-box {
     position: relative;
-    cursor: pointer; 
+    cursor: pointer;
     & > label {
         width: 20px;
         position: absolute;
@@ -194,7 +194,7 @@ select {
         color: $textColor;
         opacity: .55 !important;
     }
-   
+
 
     & ~ .validate-error {
         color: $error;
@@ -243,16 +243,16 @@ label {
             color: #222;
         }
         &:checked ~ .icon-checkbox:before {
-            @extend .icon-checkbox-checked:before;
+            @extend %icon-checkbox-checked-before;
         }
         &:checked ~ .icon-radio:before {
-            @extend .icon-radio-checked:before;
+            @extend %icon-radio-checked-before;
         }
         &:checked ~ .icon-checkbox.cross:before {
-            @extend .icon-checkbox-crossed:before;
+            @extend %icon-checkbox-crossed-before;
         }
         &.disabled, &[disabled], &[readonly] {
-            & ~[class^="icon-"], 
+            & ~[class^="icon-"],
             & ~[class*=" icon-"]{
                 cursor: not-allowed !important;
                 opacity: .4 !important;
