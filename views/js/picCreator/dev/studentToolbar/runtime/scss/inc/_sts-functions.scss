@@ -14,7 +14,7 @@
 
 @mixin grid-unit($span, $numCols: 12, $gutter: 0) {
     $gridPx: 840;
-    $rawSpanPx: (($gridPx - ($numCols * $gutter)) / $numCols);
+    $rawSpanPx: calc(($gridPx - ($numCols * $gutter)) / $numCols);
     $spanPx: $rawSpanPx * $span + (($span - 1) * $gutter);
     $spanPercent: widthPerc($spanPx, $gridPx);
     $marginPercent: widthPerc($gutter, $gridPx);
@@ -89,11 +89,11 @@
 }
 
 @function widthPerc($colWidth, $context) {
-    @return ($colWidth * 100 / $context) * 1%
+    @return calc(($colWidth * 100 / $context) * 1%);
 }
 
 @function remDist($fontSizePx) {
-    @return ($fontSizePx / 10) * 1rem
+    @return calc(($fontSizePx / 10) * 1rem);
 }
 
 @function black($alpha: 1) {
@@ -106,12 +106,12 @@
 
 @mixin font-size($remPx, $important: false) {
     @if $important == true {
-        font-size: ($remPx) * 1px !important;
-        font-size: ($remPx / 10) * 1rem !important;
+        font-size: calc($remPx * 1px) !important;
+        font-size: calc(($remPx / 10) * 1rem) !important;
     }
     @else {
-        font-size: ($remPx) * 1px;
-        font-size: ($remPx / 10) * 1rem;
+        font-size: calc($remPx * 1px);
+        font-size: calc(($remPx / 10) * 1rem);
     }
 }
 
@@ -142,7 +142,7 @@
 
 @mixin fade($duration: 1s, $frames: null){
 
-    @if $frames == null {        
+    @if $frames == null {
         $frames: (0,0), (50,1), (100,0);
     }
 

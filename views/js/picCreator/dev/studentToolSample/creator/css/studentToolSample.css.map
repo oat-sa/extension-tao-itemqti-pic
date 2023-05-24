@@ -1,9 +1,1 @@
-{
-	"version": 3,
-	"file": "studentToolSample.css",
-	"sources": [
-		"../scss/studentToolSample.scss"
-	],
-	"names": [],
-	"mappings": "AAAA,AACI,oBADgB,CAAC,WAAW,CAAC,kBAAkB,CAAC,MAAM,CACtD,QAAQ,CADZ,oBAAoB,CAAC,WAAW,CAAC,kBAAkB,CAAC,MAAM,CAC5C,SAAS,AAAA,CACf,KAAK,CAAC,iBAAiB,CAC1B,AAHL,AAII,oBAJgB,CAAC,WAAW,CAAC,kBAAkB,CAAC,MAAM,CAItD,SAAS,AAAA,CACL,MAAM,CAAG,OAAO,CAChB,GAAG,CAAE,IAAI,CACT,QAAQ,CAAE,QAAQ,CACrB"
-}
+{"version":3,"sourceRoot":"","sources":["../scss/studentToolSample.scss"],"names":[],"mappings":"AACI,yIACI,wBAEJ,qEACI,eACA,SACA","file":"studentToolSample.css"}
