@@ -1,14 +1,1 @@
-{
-	"version": 3,
-	"file": "studentToolSample.css",
-	"sources": [
-		"../scss/studentToolSample.scss",
-		"../../../../../../../../tao/views/node_modules/@oat-sa/tao-core-ui/scss/inc/_bootstrap.scss",
-		"../../../../../../../../tao/views/node_modules/@oat-sa/tao-core-ui/scss/inc/_variables.scss",
-		"../../../../../../../../tao/views/node_modules/@oat-sa/tao-core-ui/scss/inc/_functions.scss",
-		"../../../../../../../../tao/views/node_modules/@oat-sa/tao-core-ui/scss/inc/_colors.scss",
-		"../../../../../../../../tao/views/node_modules/@oat-sa/tao-core-ui/scss/inc/fonts/_tao-icon-vars.scss"
-	],
-	"names": [],
-	"mappings": "AAEA,AACI,UADM,CACN,sBAAsB,AAAA,SAAS,AAAC,CAC5B,QAAQ,CAAE,QAAQ,CAClB,GAAG,CAAE,IAAI,CACT,IAAI,CAAE,IAAI,CACV,OAAO,CAAE,QAAQ,CACjB,SAAS,CAAE,KAAK,CAChB,aAAa,CAAE,GAAG,CAClB,gBAAgB,CGiLZ,OAAsC,CHhL1C,MAAM,CAAE,GAAG,CAAC,KAAK,CGgLb,OAAsC,CH/K7C,AAVL,AAWI,UAXM,CAWN,QAAQ,CAAC,sBAAsB,AAAA,SAAS,AAAA,CACpC,GAAG,CAAE,IAAI,CACZ"
-}
+{"version":3,"sourceRoot":"","sources":["../scss/studentToolSample.scss","../../../../../../../../tao/views/node_modules/@oat-sa/tao-core-ui/scss/inc/_colors.scss"],"names":[],"mappings":"AAGI,2CACI,kBACA,SACA,UACA,iBACA,gBACA,kBACA,iBCoDM,QDnDN,yBAEJ,oDACI","file":"studentToolSample.css"}
