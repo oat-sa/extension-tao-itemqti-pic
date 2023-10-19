@@ -16,7 +16,7 @@
  * Copyright (c) 2016 (original work) Open Assessment Technologies SA;
  *
  */
-define(['taoQtiItem/portableLib/jquery_2_1_1', 'taoQtiItem/portableLib/lodash', 'qtiInfoControlContext'], function($, _, qtiInfoControlContext){
+define(['taoQtiItem/portableLib/jquery_2_1_1', 'qtiInfoControlContext'], function($, qtiInfoControlContext){
     'use strict';
 
     /**
@@ -80,9 +80,12 @@ define(['taoQtiItem/portableLib/jquery_2_1_1', 'taoQtiItem/portableLib/lodash', 
              * @returns {Array}
              */
             function resetListing(){
-                var values = _.values(self.config.hints || []);
-                if(self.config.shuffle){
-                    return _.shuffle(values);
+                let values = Object.values(self.config.hints || []);
+                if (self.config.shuffle) {
+                    for (let i = values.length - 1; i > 0; i--) {
+                        const j = Math.floor(Math.random() * (i + 1));
+                        [values[i], values[j]] = [values[j], values[i]];
+                    }
                 }
                 return values;
             }

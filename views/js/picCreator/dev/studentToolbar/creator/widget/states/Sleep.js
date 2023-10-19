@@ -17,11 +17,10 @@
  *
  */
 define([
-    'lodash',
     'jquery',
     'taoQtiItem/qtiCreator/widgets/states/factory',
     'taoQtiItem/qtiCreator/widgets/states/Sleep'
-], function(_, $, stateFactory, SleepState){
+], function($, stateFactory, SleepState){
     'use strict';
 
     return stateFactory.extend(SleepState, function(){
@@ -37,7 +36,7 @@ define([
 
             if($tool.length){
                 //find the student tool hosted in the toolbar and trigger the active state on it
-                var infoControl = _.find(item.getElements('infoControl'), {typeIdentifier : $tool.data('typeidentifier')});
+                var infoControl = item.getElements('infoControl').find(element => element.typeIdentifier === $tool.data('typeidentifier'));
                 infoControl.data('widget').changeState('active');
             }
         });

@@ -57,8 +57,8 @@ define([
             };
 
         $form.off().html(formTpl({
-            shuffle : (tool.prop('shuffle') === true || tool.prop('shuffle') === 'true'),
-            hints : _.values(tool.prop('hints'))
+            shuffle: (tool.prop('shuffle') === true || tool.prop('shuffle') === 'true'),
+            hints: Object.values(tool.prop('hints'))
         }));
 
         formElement.initWidget($form);
@@ -76,7 +76,7 @@ define([
             syncHints();
         }).on('click', '[data-role=add]', function(){
             var hints = tool.prop('hints') || {};
-            hints[_.size(hints)] = '';
+            hints[Object.keys(hints).length] = '';
             tool.prop('hints', hints);
             self.initForm();
         }).on('keyup change', _.throttle(syncHints, 400));

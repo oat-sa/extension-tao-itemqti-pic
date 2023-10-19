@@ -18,7 +18,6 @@
  */
 define([
     'jquery',
-    'lodash',
     'core/promise',
     'core/logger',
     'ui/tooltipster',
@@ -30,7 +29,6 @@ define([
     'css!qtiItemPicCss/pic-manager'
 ], function (
     $,
-    _,
     Promise,
     loggerFactory,
     tooltip,
@@ -95,15 +93,15 @@ define([
             //prepare data for the tpl:
             var tools = {},
                 toolArray,
-                alreadySet = _.pluck(item.getElements('infoControl'), 'typeIdentifier'),
+                alreadySet = item.getElements('infoControl').map(element => element.typeIdentifier),
                 allInfoControlsSize,
                 $managerPanel,
                 i = 0;
 
-            _.each(allInfoControls, function(creator) {
+            allInfoControls.forEach(function(creator) {
                 var name = creator.getTypeIdentifier(),
                     manifest = icRegistry.get(name),
-                    controlExists = _.indexOf(alreadySet, name) > -1,
+                    controlExists = alreadySet.includes(name),
                     defaultProperties = creator.getDefaultProperties(),
                     position = defaultProperties.position || 100 + i;
 
@@ -142,9 +140,9 @@ define([
                 i++;
             });
 
-            toolArray = _.sortBy(tools, 'position');
+            toolArray = tools.sort((a, b) => a.position - b.position);
 
-            allInfoControlsSize = _.size(allInfoControls);
+            allInfoControlsSize = allInfoControls.length;
 
             $managerPanel = managerTpl({
                 tools: toolArray
@@ -178,7 +176,7 @@ define([
              * @returns {String[]}
              */
             function getOrderedPICNames() {
-                return _.keys(allInfoControls).reduce(function(ordered, infoContorolName) {
+                return Object.keys(allInfoControls).reduce(function(ordered, infoContorolName) {
                     if (infoContorolName === _studentToolbarId) {
                         ordered.unshift(infoContorolName);
                     } else {
@@ -194,22 +192,22 @@ define([
             function processAllControls() {
                 var cnt = 0;
 
-                _.forEach(getOrderedPICNames(), function(controlName) {
+                for (const controlName of getOrderedPICNames()) {
                     const control = allInfoControls[controlName];
                     // is there any action required at all?
                     // if not and if there are still items
                     // left proceed to the next one
                     if (control.checked === control.installed) {
                         cnt++;
-                        return true;
+                        continue;
                     }
 
                     processControl(control);
 
                     // break here and wait for the next call
                     // to be executed from processControl()
-                    return false;
-                });
+                    break;
+                }
 
                 if (cnt === allInfoControlsSize) {
                     toggleCheckboxState($checkBoxes, false);
@@ -267,9 +265,7 @@ define([
             function removeControl(control) {
                 var infoControls = item.getElements('infoControl'),
                     remove = function (_control) {
-                        var studentTool = _.find(infoControls, {
-                            typeIdentifier: _control.name
-                        });
+                        const studentTool = infoControls.find(control => control.typeIdentifier === _control.name);
                         //call ic hook destroy() method
                         studentTool.data('pic').destroy();
 
@@ -288,7 +284,7 @@ define([
                 remove(control);
                 // in case there only two elements left, one of them
                 // must be the toolbar and needs to be removed too
-                if (_.size(infoControls) > 2) {
+                if (infoControls.length > 2) {
                     processAllControls();
                     return;
                 }
@@ -322,7 +318,7 @@ define([
                     // although newElts appears to be a collection it holds
                     // only _one_ element due to the callback mechanism
                     // between processControl() and processAllControls()
-                    _.each(newElts, function (elt) {
+                    newElts.forEach(elt => {
                         // update look-up list
                         allInfoControls[control.name].copied = true;
                         renderControl(elt);

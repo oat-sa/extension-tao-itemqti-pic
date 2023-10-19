@@ -17,11 +17,10 @@
  *
  */
 define([
-    'lodash',
     'taoQtiItem/portableElementRegistry/icRegistry',
     'studentToolSample/creator/widget/Widget',
     'tpl!studentToolSample/creator/tpl/markup'
-], function(_, registry, Widget, markupTpl){
+], function(registry, Widget, markupTpl){
     'use strict';
 
     var _typeIdentifier = 'studentToolSample';
@@ -29,7 +28,7 @@ define([
     var studentToolSampleCreator = {
         /**
          * (required) Get the typeIdentifier of the custom interaction
-         * 
+         *
          * @returns {String}
          */
         getTypeIdentifier : function(){
@@ -38,7 +37,7 @@ define([
         /**
          * (required) Get the widget prototype
          * Used in the renderer
-         * 
+         *
          * @returns {Object} Widget
          */
         getWidget : function(){
@@ -47,7 +46,7 @@ define([
         /**
          * (optional) Get the default properties values of the pic.
          * Used on new pic instance creation
-         * 
+         *
          * @returns {Object}
          */
         getDefaultProperties : function(){
@@ -62,17 +61,17 @@ define([
             };
         },
         /**
-         * (optional) Callback to execute on the 
+         * (optional) Callback to execute on the
          * Used on new pic instance creation
-         * 
+         *
          * @returns {Object}
          */
         afterCreate : function(pic){
             //do some stuff
         },
         /**
-         * (required) Gives the qti pic xml template 
-         * 
+         * (required) Gives the qti pic xml template
+         *
          * @returns {function} handlebar template
          */
         getMarkupTemplate : function(){
@@ -80,18 +79,21 @@ define([
         },
         /**
          * (optional) Allows passing additional data to xml template
-         * 
+         *
          * @returns {function} handlebar template
          */
         getMarkupData : function(pic, defaultData){
-            
+
             var manifest = registry.get(_typeIdentifier);
 
-            defaultData = _.defaults(defaultData, {
-                typeIdentifier : _typeIdentifier,
-                title : manifest.description
-            });
-            
+            defaultData = Object.assign(
+                {
+                    typeIdentifier: _typeIdentifier,
+                    title: manifest.description
+                },
+                defaultData
+            );
+
             return defaultData;
         }
     };
