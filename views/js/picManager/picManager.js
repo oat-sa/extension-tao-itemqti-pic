@@ -95,12 +95,12 @@ define([
             //prepare data for the tpl:
             var tools = {},
                 toolArray,
-                alreadySet = _.pluck(item.getElements('infoControl'), 'typeIdentifier'),
+                alreadySet = _.map(item.getElements('infoControl'), 'typeIdentifier'),
                 allInfoControlsSize,
                 $managerPanel,
                 i = 0;
 
-            _.each(allInfoControls, function(creator) {
+            _.forEach(allInfoControls, function(creator) {
                 var name = creator.getTypeIdentifier(),
                     manifest = icRegistry.get(name),
                     controlExists = _.indexOf(alreadySet, name) > -1,
@@ -322,7 +322,7 @@ define([
                     // although newElts appears to be a collection it holds
                     // only _one_ element due to the callback mechanism
                     // between processControl() and processAllControls()
-                    _.each(newElts, function (elt) {
+                    _.forEach(newElts, function (elt) {
                         // update look-up list
                         allInfoControls[control.name].copied = true;
                         renderControl(elt);
