@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: tao-open-source\n"
-"PO-Revision-Date: 2023-12-04 16:08\n"
+"PO-Revision-Date: 2024-04-09 08:23\n"
 "Last-Translator: TAO Translation Team <translation@tao.lu>\n"
 "MIME-Version: 1.0\n"
 "Language: ar\n"
@@ -20,10 +20,10 @@ msgstr ""
 # http://www.tao.lu/Ontologies/generis.rdf#qtiItemPicManager
 msgctxt "http://www.w3.org/2000/01/rdf-schema#label"
 msgid "QTI PIC Manager"
-msgstr ""
+msgstr "مدير QTI PIC"
 
 # http://www.tao.lu/Ontologies/generis.rdf#qtiItemPicManager
 msgctxt "http://www.w3.org/2000/01/rdf-schema#comment"
 msgid "QTI PIC Manager Role"
-msgstr ""
+msgstr "دور مدير QTI PIC"
 
