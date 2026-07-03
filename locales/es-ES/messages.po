@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: tao-open-source\n"
-"PO-Revision-Date: 2023-06-07 09:19\n"
+"PO-Revision-Date: 2026-07-03 14:25\n"
 "Last-Translator: TAO Translation Team <translation@tao.lu>\n"
 "MIME-Version: 1.0\n"
 "Language: es\n"
@@ -21,17 +21,17 @@ msgstr ""
 "Language-Team: Spanish\n"
 
 msgid "Hints"
-msgstr ""
+msgstr "Pistas"
 
 msgid "New Hint"
-msgstr ""
+msgstr "Nueva pista"
 
 msgid "Shuffle"
-msgstr ""
+msgstr "Aleatorio"
 
 msgid "shuffle the hints"
-msgstr ""
+msgstr "baraja las pistas"
 
 msgid "Student tools"
-msgstr ""
+msgstr "Herramientas de estudiantes"
 
